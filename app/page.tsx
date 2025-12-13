@@ -45,9 +45,11 @@ export default function Home() {
             <p className="mb-4 sm:mb-5 md:mb-6 text-sm sm:text-base md:text-lg font-serif text-gray-800">
               Welcome to my portfolio. I’m a student learning web development and design, and I’m excited to build beautiful and functional websites as I continue improving my skills.
             </p>
-            <button className="px-4 sm:px-5 md:px-6 py-2 sm:py-2.5 md:py-3 border-2 border-blue-500 text-blue-500 rounded hover:bg-blue-500 hover:text-white transition text-sm sm:text-base">
-              View My Work
-            </button>
+            <Link href="/projects">
+  <button className="px-4 sm:px-5 md:px-6 py-2 sm:py-2.5 md:py-3 border-2 border-blue-500 text-blue-500 rounded hover:bg-blue-500 hover:text-white transition text-sm sm:text-base">
+    View My Work
+  </button>
+</Link>
           </div>
 
           {/* Profile Image */}

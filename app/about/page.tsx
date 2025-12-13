@@ -20,7 +20,7 @@ export default function About() {
       {/* Fixed Navbar */}
       <header className="fixed top-0 left-0 w-full bg-white border-b border-gray-300 z-50 py-4 shadow-md">
   <nav className="flex flex-wrap justify-center md:justify-center space-x-2 sm:space-x-4 md:space-x-20 text-gray-700 font-sans font-semibold text-sm sm:text-base">
-    <Link href="/about" className="hover:text-blue-500 transition">About</Link>
+     <Link href="/" className="hover:text-blue-500 transition">Home</Link>
     <Link href="/projects" className="hover:text-blue-500 transition">Projects</Link>
     <Link href="/certificates" className="hover:text-blue-500 transition">Certificates</Link>
     <Link href="/journal" className="hover:text-blue-500 transition">Journal</Link>
