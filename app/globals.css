@@ -24,3 +24,182 @@ body {
   color: var(--foreground);
   font-family: Arial, Helvetica, sans-serif;
 }
+
+@keyframes marquee {
+  0% { transform: translateX(0); }
+  100% { transform: translateX(-50%); } /* moves half because of duplication */
+}
+
+.animate-marquee {
+  display: flex;
+  animation: marquee 30s linear infinite;
+}
+
+.scrollbar-hide::-webkit-scrollbar {
+  display: none;
+}
+.scrollbar-hide {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+
+.custom-footer {
+  width: 100%;
+  background-color: #4B2E2E; /* Dark brown */
+  color: #ffffff;
+  font-family: "Times New Roman", Times, serif;
+  text-align: center;
+  padding: 20px 0;
+}
+
+.custom-footer a {
+  color: #ffffff;
+  text-decoration: none;
+  margin: 0 5px;
+}
+
+.custom-footer a:hover {
+  text-decoration: underline;
+}
+
+/* Reset and base styles */
+html, body {
+  margin: 0;
+  padding: 0;
+  font-family: Arial, Helvetica, sans-serif; /* Updated to sans-serif */
+  min-height: 100%;
+}
+
+body {
+  display: flex;
+  flex-direction: column;
+}
+
+main {
+  flex: 1; /* Pushes footer to bottom */
+}
+
+/* Footer Styles */
+.custom-footer {
+  width: 100%;
+  background-color: hsl(34, 27%, 10%); /* Footer color */
+  color: #ffffff;
+  font-family: Arial, Helvetica, sans-serif; /* Sans-serif for footer */
+  padding: 30px 20px;
+}
+
+.footer-container {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.footer-left, .footer-center, .footer-right {
+  flex: 1;
+  min-width: 220px;
+  margin: 10px 0;
+}
+
+.footer-left h2 {
+  font-size: 1.25rem;
+  font-weight: bold;
+}
+
+.footer-left p {
+  margin-top: 5px;
+  line-height: 1.5;
+  font-size: 0.9rem;
+  text-align: left; /* left alignment */
+}
+
+/* Center section */
+.footer-center h3 {
+  font-size: 1.1rem;
+  font-weight: 600;
+  margin-bottom: 8px;
+}
+
+.footer-center ul {
+  list-style: none;
+  padding: 0;
+}
+
+.footer-center li {
+  margin-bottom: 5px;
+}
+
+.footer-center a {
+  color: #ffffff;
+  text-decoration: none;
+  transition: color 0.3s ease;
+}
+
+.footer-center a:hover {
+  color: #89CFF0; /* Light blue hover */
+}
+
+/* Right section */
+.footer-right h3 {
+  font-size: 1.1rem;
+  font-weight: 600;
+  margin-bottom: 8px;
+}
+
+.footer-right .flex {
+  display: flex;
+  gap: 15px;
+}
+
+.footer-right a {
+  color: #ffffff;
+  transition: color 0.3s ease;
+}
+
+.footer-right a:hover {
+  color: #89CFF0; /* Light blue hover */
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+  .footer-container {
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+  }
+
+  .footer-left, .footer-center, .footer-right {
+    min-width: auto;
+  }
+
+  .footer-right .flex {
+    justify-content: center;
+  }
+
+  .footer-left p {
+    text-align: center; /* optional: center text on mobile */
+  }
+}
+@keyframes modalFadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+@keyframes modalScaleIn {
+  from { transform: translateX(-50%) scale(0.8); opacity: 0; }
+  to { transform: translateX(-50%) scale(1); opacity: 1; }
+}
+@keyframes slideIn {
+  from { transform: translateX(100%); }
+  to { transform: translateX(0%); }
+}
+
+@keyframes slideOut {
+  from { transform: translateX(0%); }
+  to { transform: translateX(100%); }
+}
+
+.animate-slideIn { animation: slideIn 0.3s forwards; }
+.animate-slideOut { animation: slideOut 0.3s forwards; }
+
