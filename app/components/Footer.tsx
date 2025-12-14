@@ -7,7 +7,8 @@ export default function Footer() {
     <footer className="custom-footer">
       <div className="footer-container">
         {/* Left Side */}
-<div className="footer-left text-left">
+<div className="footer-left text-center md:text-left">
+
   <h2 className="text-xl font-bold">Aaron Seth Nagtalon</h2>
   <p className="text-sm mt-2">
     Aspiring Frontend Developer passionate about building responsive, 
@@ -27,9 +28,11 @@ export default function Footer() {
         </div>
 
         {/* Right Side */}
-<div className="footer-right text-right">
+<div className="footer-right text-center md:text-right">
+
   <h3 className="text-lg font-semibold mb-2">Connect</h3>
-  <div className="flex justify-end space-x-4">
+  <div className="flex justify-center md:justify-end space-x-4">
+
     {/* GitHub */}
     <a href="https://github.com/Aaeyron" target="_blank" rel="noopener noreferrer" className="hover:text-blue-400 transition">
       <svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" className="w-6 h-6" viewBox="0 0 24 24">

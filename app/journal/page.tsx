@@ -568,8 +568,9 @@ const paperImages: string[] = [
 
          {/* Icons - Camera & Writing Paper */}
 <div className="relative flex justify-center gap-10 mt-10 mb-20" id="icon-row">
+
   {/* Camera Icon */}
-  <svg
+  <svg  
     onClick={() => openModal("camera")}
     xmlns="http://www.w3.org/2000/svg"
     width="40"
@@ -608,19 +609,18 @@ const paperImages: string[] = [
 
   {isModalOpen && (
   <div
-    className="absolute bg-white border-2 border-black flex items-center justify-center z-50"
-    style={{
-      top: -400,
-      left: "50%",
-      transform: "translateX(-50%)",
-      width: "800px",
-      maxWidth: "95vw",
-      height: "780px",
-      maxHeight: "95vh",
-      borderRadius: 0,
-      animation: "modalScaleIn 0.3s ease-out forwards",
-    }}
-  >
+  className="absolute bg-white border-2 border-black flex items-center justify-center z-50"
+  style={{
+    top: -400,
+    left: "50%",
+    transform: "translateX(-50%)",
+    width: "800px",
+    maxWidth: "95vw",
+    height: "780px",
+    maxHeight: "95vh",
+  }}
+>
+
     {/* Close Button */}
     <button
       onClick={closeModal}

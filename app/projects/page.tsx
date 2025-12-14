@@ -154,87 +154,89 @@ export default function Projects() {
           </div>
         </section>
 
-        {/* Modal */}
-        {selectedProject !== null && (
-          <div
-            className={`fixed inset-0 z-50 flex items-center justify-center bg-black/50 p-4 transition-opacity duration-300 ${
-              showModal ? "opacity-100" : "opacity-0 pointer-events-none"
-            }`}
-          >
-            <div
-              className={`bg-white rounded-lg w-full max-w-5xl overflow-y-auto max-h-[90vh] relative p-4 sm:p-6 md:p-8 border border-black transform transition-transform duration-300 ${
-                showModal ? "scale-100" : "scale-95"
-              }`}
-            >
-              <button
-                className="absolute top-3 right-3 sm:top-4 sm:right-4 text-gray-500 hover:text-gray-700 cursor-pointer text-lg sm:text-xl"
-                onClick={closeModal}
-              >
-                ✕
-              </button>
+       {/* Modal */}
+{selectedProject !== null && (
+  <div
+    className={`fixed inset-0 z-50 flex items-center justify-center bg-black/60 px-3 sm:px-4 transition-opacity duration-300 ${
+      showModal ? "opacity-100" : "opacity-0 pointer-events-none"
+    }`}
+  >
+    <div
+      className={`relative bg-white w-full max-w-5xl max-h-[90vh] overflow-y-auto border border-black transform transition-all duration-300 ${
+        showModal ? "scale-100" : "scale-95"
+      }`}
+    >
+      {/* Close Button */}
+      <button
+        onClick={closeModal}
+        className="sticky top-0 ml-auto block p-3 text-xl text-gray-600 hover:text-black z-10"
+      >
+        ✕
+      </button>
 
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-6 items-center">
-                {/* Modal Image */}
-                <div className="relative w-full aspect-square md:aspect-[1/1] rounded-lg bg-gray-200 flex items-center justify-center border border-black">
-                  {projects[selectedProject].modalImage ? (
-                    <Image
-                      src={projects[selectedProject].modalImage}
-                      alt={projects[selectedProject].title}
-                      fill
-                      className="object-cover rounded-lg"
-                    />
-                  ) : (
-                    <span className="text-gray-500 text-lg">No Image Available</span>
-                  )}
-                </div>
-
-                {/* Modal Details */}
-                <div className="flex flex-col p-2 sm:p-4">
-                  <h2 className="tracking-tight text-2xl sm:text-3xl md:text-3xl font-serif font-medium mb-4 text-black">
-                    {projects[selectedProject].title}
-                  </h2>
-
-                  {/* Modal Tech Badges */}
-                  <div className="flex flex-wrap gap-2 mb-4 sm:mb-6">
-                    {projects[selectedProject].tech.map((t, i) => (
-                      <span
-                        key={i}
-                        className="text-xs sm:text-sm font-medium px-2 py-1 rounded-md"
-                        style={{
-                          color: badgeColor,
-                          backgroundColor: "white",
-                          border: `1px solid ${badgeColor}`,
-                        }}
-                      >
-                        {t}
-                      </span>
-                    ))}
-                  </div>
-
-                  {/* Modal Long Description */}
-                  <p
-                    className="leading-relaxed text-gray-600 mb-4 sm:mb-6 text-sm sm:text-base"
-                    style={{ fontFamily: "Times New Roman, serif" }}
-                  >
-                    {projects[selectedProject].longDescription}
-                  </p>
-
-                  {/* GitHub Button */}
-                  <div className="flex items-center gap-4 mt-auto">
-                    <a
-                      href={projects[selectedProject].githubLink}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="inline-flex items-center justify-center w-10 h-10 sm:w-12 sm:h-12 bg-white text-black border border-black rounded-full hover:bg-gray-100 transition-colors"
-                    >
-                      <Github size={20} className="sm:text-black" />
-                    </a>
-                  </div>
-                </div>
-              </div>
-            </div>
+      {/* Modal Content */}
+      <div className="flex flex-col md:grid md:grid-cols-2 gap-6 px-4 pb-6 sm:px-6 md:px-8">
+        
+        {/* Image Section */}
+        <div className="w-full">
+          <div className="relative w-full aspect-[4/3] sm:aspect-[16/10] md:aspect-square bg-gray-200 border border-black rounded-lg overflow-hidden">
+            <Image
+              src={projects[selectedProject].modalImage}
+              alt={projects[selectedProject].title}
+              fill
+              className="object-cover"
+            />
           </div>
-        )}
+        </div>
+
+        {/* Details Section */}
+        <div className="flex flex-col">
+          <h2 className="text-2xl sm:text-3xl font-serif font-medium mb-4 text-black">
+            {projects[selectedProject].title}
+          </h2>
+
+          {/* Tech Badges */}
+          <div className="flex flex-wrap gap-2 mb-4">
+            {projects[selectedProject].tech.map((t, i) => (
+              <span
+                key={i}
+                className="text-xs sm:text-sm font-medium px-2 py-1 rounded-md"
+                style={{
+                  color: badgeColor,
+                  backgroundColor: "white",
+                  border: `1px solid ${badgeColor}`,
+                }}
+              >
+                {t}
+              </span>
+            ))}
+          </div>
+
+          {/* Description */}
+          <p
+            className="text-gray-600 text-sm sm:text-base leading-relaxed mb-6"
+            style={{ fontFamily: "Times New Roman, serif" }}
+          >
+            {projects[selectedProject].longDescription}
+          </p>
+
+          {/* GitHub Button */}
+          <div className="mt-auto">
+            <a
+              href={projects[selectedProject].githubLink}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-flex items-center justify-center w-11 h-11 sm:w-12 sm:h-12 border border-black rounded-full hover:bg-gray-100 transition"
+            >
+              <Github size={20} />
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+)}
+
       </main>
 
       {/* Footer */}

@@ -8,27 +8,33 @@ export default function ContactWrapper() {
 
   return (
     <>
+      {/* Floating Contact Button */}
       <button
         onClick={() => setIsContactOpen(true)}
+        aria-label="Open Contact"
         className="
-          fixed 
-          top-4 
-          right-4 
-          z-50 
-          text-black 
-          hover:text-blue-600 
-          transition 
-          text-2xl
-          sm:top-3 sm:right-3
-          xs:top-3 xs:right-3
-          cursor-pointer
+          fixed
+          top-4 right-4
+          sm:top-5 sm:right-5
+          z-50
+          flex items-center justify-center
+          w-12 h-12 sm:w-14 sm:h-14
+          rounded-full
+          bg-white
+          border border-black
+          text-black
+          shadow-md
+          hover:bg-blue-500 hover:text-white
+          transition-all
+          active:scale-95
         "
-        aria-label="Open Contact Slide"
       >
-        <FaPhone />
+        <FaPhone className="text-lg sm:text-xl" />
       </button>
 
-      {isContactOpen && <ContactSlide onClose={() => setIsContactOpen(false)} />}
+      {isContactOpen && (
+        <ContactSlide onClose={() => setIsContactOpen(false)} />
+      )}
     </>
   );
 }

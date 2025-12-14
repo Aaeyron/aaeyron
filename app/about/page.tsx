@@ -237,35 +237,49 @@ export default function About() {
 </p>
 
 
-    {/* Continuous marquee container */}
-    <div className="overflow-hidden relative">
-      <div className="flex space-x-8 animate-marquee">
-        {[
-          { name: "HTML5", src: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/html5/html5-original.svg" },
-          { name: "CSS3", src: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/css3/css3-original.svg" },
-          { name: "JavaScript", src: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/javascript/javascript-original.svg" },
-          { name: "React", src: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/react/react-original.svg" },
-          { name: "Node.js", src: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/nodejs/nodejs-original.svg" },
-          { name: "Firebase", src: "https://www.vectorlogo.zone/logos/firebase/firebase-icon.svg" },
-          { name: "PHP", src: "https://www.php.net/images/logos/php-logo.svg" },
-          { name: "MySQL", src: "https://www.mysql.com/common/logos/logo-mysql-170x115.png" }
-        ].concat([
-          { name: "HTML5", src: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/html5/html5-original.svg" },
-          { name: "CSS3", src: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/css3/css3-original.svg" },
-          { name: "JavaScript", src: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/javascript/javascript-original.svg" },
-          { name: "React", src: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/react/react-original.svg" },
-          { name: "Node.js", src: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/nodejs/nodejs-original.svg" },
-          { name: "Firebase", src: "https://www.vectorlogo.zone/logos/firebase/firebase-icon.svg" },
-          { name: "PHP", src: "https://www.php.net/images/logos/php-logo.svg" },
-          { name: "MySQL", src: "https://www.mysql.com/common/logos/logo-mysql-170x115.png" }
-        ]).map((tech, idx) => (
-          <div key={idx} className="flex flex-col items-center justify-center flex-shrink-0 hover:scale-110 transition-transform">
-            <img src={tech.src} alt={tech.name} className="w-16 h-16 mb-2 rotate-12 hover:rotate-0 transition-transform" />
-            <span className="text-gray-700 font-medium text-sm">{tech.name}</span>
-          </div>
-        ))}
+   {/* Continuous marquee container */}
+<div className="overflow-hidden relative">
+  <div className="flex space-x-4 sm:space-x-6 md:space-x-8 animate-marquee">
+    {[
+      { name: "HTML5", src: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/html5/html5-original.svg" },
+      { name: "CSS3", src: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/css3/css3-original.svg" },
+      { name: "JavaScript", src: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/javascript/javascript-original.svg" },
+      { name: "React", src: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/react/react-original.svg" },
+      { name: "Node.js", src: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/nodejs/nodejs-original.svg" },
+      { name: "Firebase", src: "https://www.vectorlogo.zone/logos/firebase/firebase-icon.svg" },
+      { name: "PHP", src: "https://www.php.net/images/logos/php-logo.svg" },
+      { name: "MySQL", src: "https://www.mysql.com/common/logos/logo-mysql-170x115.png" }
+    ].concat([
+      { name: "HTML5", src: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/html5/html5-original.svg" },
+      { name: "CSS3", src: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/css3/css3-original.svg" },
+      { name: "JavaScript", src: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/javascript/javascript-original.svg" },
+      { name: "React", src: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/react/react-original.svg" },
+      { name: "Node.js", src: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/nodejs/nodejs-original.svg" },
+      { name: "Firebase", src: "https://www.vectorlogo.zone/logos/firebase/firebase-icon.svg" },
+      { name: "PHP", src: "https://www.php.net/images/logos/php-logo.svg" },
+      { name: "MySQL", src: "https://www.mysql.com/common/logos/logo-mysql-170x115.png" }
+    ]).map((tech, idx) => (
+      <div
+        key={idx}
+        className="flex flex-col items-center justify-center flex-shrink-0
+                   hover:scale-110 transition-transform
+                   w-20 sm:w-24 md:w-auto"
+      >
+        <img
+          src={tech.src}
+          alt={tech.name}
+          className="w-10 h-10 sm:w-12 sm:h-12 md:w-16 md:h-16
+                     mb-1 sm:mb-2
+                     rotate-12 hover:rotate-0 transition-transform"
+        />
+        <span className="text-gray-700 font-medium text-[10px] sm:text-xs md:text-sm text-center">
+          {tech.name}
+        </span>
       </div>
-    </div>
+    ))}
+  </div>
+</div>
+
 
   </div>
 </section>
