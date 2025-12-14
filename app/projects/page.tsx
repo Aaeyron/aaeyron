@@ -228,7 +228,7 @@ export default function Projects() {
               rel="noopener noreferrer"
               className="inline-flex items-center justify-center w-11 h-11 sm:w-12 sm:h-12 border border-black rounded-full hover:bg-gray-100 transition"
             >
-              <Github size={20} />
+              <Github size={20} className="text-black" />
             </a>
           </div>
         </div>
