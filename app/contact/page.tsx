@@ -57,7 +57,7 @@ export default function ContactSlide({ onClose }: ContactSlideProps) {
       <div className="flex flex-col gap-4 mt-16 mb-8">
         <div className="flex items-center gap-3 text-black text-base">
           <FaEnvelope size={20} />
-          <span>aaronseth.nagtalon@hcdc.edu.ph</span>
+          <span>aaronseth041@gmail.com</span>
         </div>
         <div className="flex items-center gap-3 text-black text-base">
           <FaPhone size={20} />
@@ -65,7 +65,7 @@ export default function ContactSlide({ onClose }: ContactSlideProps) {
         </div>
         <div className="flex items-center gap-3 text-black text-base">
           <FaMapMarkerAlt size={20} />
-          <span>Davao, Philippines</span>
+          <span>Davao City, Philippines</span>
         </div>
       </div>
 

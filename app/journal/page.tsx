@@ -15,7 +15,7 @@ export default function Journal() {
 
   const cameraImages: string[] = [
   "/images/Dump1.jpg",
-  "/images/Dump2.jpg",
+  "/images/Dumpic2.jpg",
   "/images/Dump3.jpg",
   "/images/Dump4.jpg",
   "/images/Dump5.jpg",
