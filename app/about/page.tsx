@@ -238,8 +238,8 @@ export default function About() {
 
 
    {/* Continuous marquee container */}
-<div className="overflow-hidden relative">
-  <div className="flex space-x-4 sm:space-x-6 md:space-x-8 animate-marquee">
+<div className="overflow-hidden relative  w-full">
+  <div className="flex w-max space-x-4 sm:space-x-6 md:space-x-8 animate-marquee">
     {[
       { name: "HTML5", src: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/html5/html5-original.svg" },
       { name: "CSS3", src: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/css3/css3-original.svg" },

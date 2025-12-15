@@ -169,7 +169,7 @@ export default function Projects() {
       {/* Close Button */}
       <button
         onClick={closeModal}
-        className="sticky top-0 ml-auto block p-3 text-xl text-gray-600 hover:text-black z-10"
+        className="sticky top-0 ml-auto block p-3 text-xl text-gray-600 hover:text-black z-10 cursor-pointer"
       >
         ✕
       </button>

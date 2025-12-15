@@ -27,6 +27,7 @@ export default function ContactWrapper() {
           hover:bg-blue-500 hover:text-white
           transition-all
           active:scale-95
+          cursor-pointer
         "
       >
         <FaPhone className="text-lg sm:text-xl" />
