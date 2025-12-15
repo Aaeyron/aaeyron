@@ -7,6 +7,14 @@ import Image from "next/image";
 import Link from "next/link";
 import Footer from "../components/Footer"; // Import Footer
 
+type Certificate = {
+  title: string;
+  issuer: string;
+  year: string;
+  image: string;
+  isPlaceholder?: boolean;
+};
+
 export default function Certificates() {
   useEffect(() => {
     AOS.init({
@@ -16,19 +24,27 @@ export default function Certificates() {
     });
   }, []);
 
-  const certificates = [
+  const certificates: Certificate[] = [
     {
       title: "CODECHUM Certificate",
       issuer: "Codechum Academy",
-      year: "2025",
+      year: "May 18, 2025",
       image: "/images/Certificate1.png",
     },
     {
       title: "WATT Certificate",
       issuer: "Educational Tour",
-      year: "2025",
+      year: "November 22, 2025",
       image: "/images/Certificate2.jpg",
     },
+    
+    {
+      title: "Introduction to Cybersecurity",
+      issuer: "Networking Academy",
+      year: "Dec 15, 2025",
+      image: "/images/Certificate3.png", 
+    },
+
   ];
 
   const [selectedCert, setSelectedCert] = useState<number | null>(null);
@@ -45,13 +61,13 @@ export default function Certificates() {
     <div className="bg-white min-h-screen flex flex-col">
       {/* Fixed Navbar */}
       <header className="fixed top-0 left-0 w-full bg-white border-b border-gray-300 z-50 py-4 shadow-md">
-  <nav className="flex flex-wrap justify-center md:justify-center space-x-2 sm:space-x-4 md:space-x-20 text-gray-700 font-sans font-semibold text-sm sm:text-base">
-    <Link href="/about" className="hover:text-blue-500 transition">About</Link>
-    <Link href="/projects" className="hover:text-blue-500 transition">Projects</Link>
-    <Link href="/certificates" className="hover:text-blue-500 transition">Certificates</Link>
-    <Link href="/journal" className="hover:text-blue-500 transition">Journal</Link>
-  </nav>
-</header>
+        <nav className="flex flex-wrap justify-center md:justify-center space-x-2 sm:space-x-4 md:space-x-20 text-gray-700 font-sans font-semibold text-sm sm:text-base">
+          <Link href="/about" className="hover:text-blue-500 transition">About</Link>
+          <Link href="/projects" className="hover:text-blue-500 transition">Projects</Link>
+          <Link href="/certificates" className="hover:text-blue-500 transition">Certificates</Link>
+          <Link href="/journal" className="hover:text-blue-500 transition">Journal</Link>
+        </nav>
+      </header>
 
       {/* Main Section */}
       <main className="pt-28 px-4 sm:px-6 pb-50 flex-grow">
@@ -69,12 +85,16 @@ export default function Certificates() {
           </div>
 
           {/* Certificates Grid */}
-          <div className="grid grid-cols-1 sm:grid-cols-2 gap-6 md:gap-8">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8">
             {certificates.map((cert, idx) => (
               <div
                 key={idx}
-                className="group bg-white border border-gray-200 rounded-xl overflow-hidden shadow-xs hover:shadow-md transition-all flex flex-col cursor-pointer"
-                onClick={() => setSelectedCert(idx)}
+                className={`group bg-white border border-gray-200 rounded-xl overflow-hidden shadow-xs hover:shadow-md transition-all flex flex-col ${
+                  cert.isPlaceholder ? "cursor-default opacity-80" : "cursor-pointer"
+                }`}
+                onClick={() => {
+                  if (!cert.isPlaceholder) setSelectedCert(idx);
+                }}
               >
                 <div className="relative aspect-[4/3] w-full overflow-hidden bg-gray-100">
                   <Image
