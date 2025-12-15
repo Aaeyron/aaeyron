@@ -78,14 +78,14 @@ const paperImages: string[] = [
       title: "WORLDTECH INFORMATION SOLUTIONS, INC.",
       date: "November 19, 2025",
       description:
-        "Our visit to WORLDTECH Information Solutions, Inc. was really eye-opening. Their team explained how they deal with cybersecurity, including how they track digital activities, protect systems from threats, and understand different hacking methods. They also showed us how important security is in today’s technology, especially in protecting data and preventing attacks. Overall, it was a fun and interesting experience that gave me a clearer idea of how cybersecurity works in real life.",
+        "Our visit to WORLDTECH Information Solutions, Inc. was very helpful and interesting. The team explained how they handle cybersecurity, including keeping websites safe, watching online activities, and protecting systems from online threats. They also talked about how dangerous the online world can be, such as hackers, scams, and data theft. The staff were very friendly and easy to talk to, especially the head of the company, who was very approachable and made us feel comfortable asking questions. They showed us why security is very important today, especially to protect personal information and prevent online attacks. Overall, the visit was enjoyable and gave me a better understanding of how cybersecurity works in real life.",
       image: "/images/WORLDTECH (DAY1).jpg",
     },
     {
       title: "Davao Airport",
       date: "November 19, 2025",
       description:
-        "Here’s a group photo of our team, Bus B, right before our flight to Cebu! Everyone was full of excitement and energy, ready to start our adventure together. It was fun seeing all of us gathered, laughing, and sharing the anticipation for the experiences ahead. This moment really captured the start of an unforgettable journey with my team.",
+        "This is a group photo of our team, Bus B, taken right before our flight to Cebu. Everyone was smiling and full of excitement as we waited together at the airport, feeling happy and ready for the trip. We were laughing, talking, and sharing stories, which made the waiting time fun and enjoyable. The mood was light, cheerful, and full of positive energy because everyone was excited about what was ahead. This moment shows our teamwork, friendship, and strong bond as a group, as we supported and enjoyed each other’s company. It captures the very start of our journey and the memories we were about to make together. This trip felt meaningful, exciting, and special, and this photo reminds us of togetherness, shared goals, happiness, and the joy we felt at the beginning of this unforgettable experience.",
       image: "/images/DAVAOAIRP(DAY1).jpg",
     },
   ];
@@ -95,14 +95,14 @@ const paperImages: string[] = [
       title: "CODECHUM",
       date: "November 20, 2025",
       description:
-        "During our visit to Codechum, I got a closer look at how a modern software development team works together. I observed their coding methods, learned about simple project management techniques, and saw how team members solve problems and collaborate day to day.",
+        "During our visit to Codechum, I was able to learn how their technology platform helps students and teachers in academics. I observed how Codechum is used to take quizzes, solve coding problems, and understand lessons through code and data flowcharts. The platform was built by Filipino developers from Cebu, and it shows how technology can make learning easier and more interactive for everyone. They also shared their story about how they started from scratch, with no special talent or background, only hard work, teamwork, and dedication. Hearing their journey was inspiring because it showed how far they have come through patience and commitment. The team members were very friendly and approachable during our visit, which made the experience comfortable and enjoyable. It was clear that they are truly committed to their group and support one another, making their teamwork strong and successful.",
       image: "/images/CCODECHUM(DAY2).jpeg",
     },
     {
       title: "RIVAN IT CEBU",
       date: "November 20, 2025",
       description:
-        "Visiting Rivan IT Cebu taught us a lot about how networking works, especially with Cisco systems. We learned how data moves across networks and the basics of network security.",
+        "Visiting Rivan IT Cebu helped us understand more about networking and how it works in real life. We learned how data moves from one device to another and how Cisco systems are used to manage and control networks. They also introduced us to different parts of networking, including basic network setup, maintenance, and cybersecurity. The visit showed us how important network security is in protecting data and systems. Overall, it helped us see how networking plays a big role in companies and how these technologies are applied in real work situations.",
       image: "/images/RIVAN (DAY2).jpg",
     },
   ];
@@ -112,14 +112,14 @@ const paperImages: string[] = [
       title: "MATA TECHNOLOGIES, INC",
       date: "November 21, 2025",
       description:
-        "At Mata Technologies, Inc., we learned a lot about UI/UX design which is all about making websites and apps easy and enjoyable for people to use.",
+        "At Mata Technologies, Inc., we learned more about UI/UX design and why it is important in technology. UI/UX design is about making websites, apps, and systems easy to use, easy to understand, and pleasant for users. They explained how good design helps people find what they need without getting confused. We were also able to try a VR game, which showed how design can make experiences more fun, realistic, and interactive. In addition, they showed how Google Maps can be designed better using UI/UX principles to make it look cleaner, more attractive, and easier to navigate. This visit helped us realize that good design is not just about looks, but also about making technology simple and helpful for everyone.",
       image: "/images/MATA TECHNO(DAY3).jpeg",
     },
     {
       title: "MATA TECHNOLOGIES, INC",
       date: "November 21, 2025",
       description:
-        "Here’s a group photo of Bus B at Mata Technologies! We were all excited to be there and explore how design and creativity come together.",
+        "Here’s a group photo of Bus B at Mata Technologies! We were all very happy and excited to be there and to experience the visit together as a group. It was a great opportunity for us to learn outside the classroom and see how design and creativity are used in real companies. We were able to listen, observe, and understand how ideas are turned into useful and attractive designs. Everyone was active, interested, and enjoyed the whole experience. We also had fun talking, laughing, and sharing our thoughts with one another. This group photo shows not only our smiles, but also the learning, friendship, and good memories we gained during our visit to Mata Technologies.",
       image: "/images/MATATECHNOLOGIES (DAY3).jpg",
     },
   ];
@@ -129,21 +129,21 @@ const paperImages: string[] = [
       title: "BOHOL TARSIER",
       date: "November 22, 2025",
       description:
-        "Before heading into the forest to see the tarsiers, our Bus B team gathered for a group photo.",
+        "Before heading into the forest to see the tarsiers, our Bus B team gathered for a group photo. Everyone was excited and curious about the experience ahead. We took this moment to come together as a group and enjoy the trip before starting our walk. It was a fun and happy time filled with smiles and laughter. This group photo captures our excitement, teamwork, and the shared experience we had before exploring and learning more about nature and tarsiers.",
       image: "/images/TARSIER(DAY4).jpg",
     },
     {
       title: "CHOCOLATE HILLS",
       date: "November 22, 2025",
       description:
-        "Group photo at the Chocolate Hills in Bohol. Surrounded by the unique, rolling hills.",
+        "Here’s a group photo at the Chocolate Hills in Bohol, surrounded by the many rolling hills. We were all amazed by the view and how the hills went on as far as we could see. Everyone was happy, taking pictures, laughing, and enjoying the moment together. It was a fun time to explore and see the beauty of nature. This group photo shows not only our smiles but also the joy, friendship, and good memories we shared while visiting one of Bohol’s most famous places.",
       image: "/images/BOHOL DAY4.jpg",
     },
     {
       title: "T.A.R.S.I.E.R 177",
       date: "November 22, 2025",
       description:
-        "During our visit to T.A.R.S.I.E.R 177, we got to see how emergency response systems work.",
+        "During our visit to T.A.R.S.I.E.R 177, we learned how emergency response systems work and how important they are for keeping people safe. Their team is always active, ready, and prepared to help at any time. We saw how they respond quickly to emergencies and use proper tools to assist people in need. Their strong security measures ensure that everyone is protected. It was inspiring to see how dedicated and committed the team is to keeping the community safe..",
       image: "/images/TARSIERRRR117.jpg",
     },
   ];
