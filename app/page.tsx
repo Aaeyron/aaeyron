@@ -1,13 +1,14 @@
 "use client";
 
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import AOS from "aos";
-import "aos/dist/aos.css";
 import Image from "next/image";
 import Link from "next/link";
 import Footer from "./components/Footer";
 
 export default function Home() {
+  const [isOpen, setIsOpen] = useState(false);
+
   useEffect(() => {
     AOS.init({
       duration: 800,
@@ -16,24 +17,45 @@ export default function Home() {
     });
   }, []);
 
+
   return (
     <>
       {/* Fixed Navbar */}
       <header className="fixed top-0 left-0 w-full bg-white border-b border-gray-300 z-50 py-4 shadow-md">
-        <nav className="flex flex-wrap justify-center space-x-2 sm:space-x-4 md:space-x-20 text-gray-700 font-sans font-semibold text-sm sm:text-base">
-          <Link href="/about" className="hover:text-blue-500 transition">
-            About
-          </Link>
-          <Link href="/projects" className="hover:text-blue-500 transition">
-            Projects
-          </Link>
-          <Link href="/certificates" className="hover:text-blue-500 transition">
-            Certificates
-          </Link>
-          <Link href="/journal" className="hover:text-blue-500 transition">
-            Journal
-          </Link>
-        </nav>
+        <div className="flex flex-col items-center justify-center px-4">
+          
+          {/* Mobile Menu Toggle Button (Shows only on small screens) */}
+          <button 
+            onClick={() => setIsOpen(!isOpen)}
+            className="md:hidden w-10 h-10 flex items-center justify-center transition focus:outline-none mb-1"
+          >
+            <svg
+              className={`w-5 h-5 text-black transform transition-transform duration-200 ${isOpen ? "rotate-180" : ""}`}
+              fill="none"
+              stroke="currentColor"
+              viewBox="0 0 24 24"
+            >
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2.5" d="M19 9l-7 7-7-7" />
+            </svg>
+          </button>
+
+          {/* Nav Container - Desktop horizontal row / Mobile conditional slide down */}
+          <nav className={`grid transition-all duration-300 ease-in-out overflow-hidden w-full md:w-auto text-gray-700 font-sans font-semibold text-sm sm:text-base
+            ${isOpen ? "grid-rows-[1fr] opacity-100" : "grid-rows-[0fr] opacity-0 md:opacity-100 md:grid-rows-none"}
+          `}>
+            <div className={`overflow-hidden flex flex-col items-center space-y-3 pt-3 md:pt-0 md:space-y-0 md:flex-row md:justify-center md:space-x-2 sm:space-x-4 md:space-x-20`}>
+              <Link href="/about" onClick={() => setIsOpen(false)} className="hover:text-blue-500 transition">
+                About
+              </Link>
+              <Link href="/projects" onClick={() => setIsOpen(false)} className="hover:text-blue-500 transition">
+                Projects
+              </Link>
+              <Link href="/certificates" onClick={() => setIsOpen(false)} className="hover:text-blue-500 transition">
+                Certificates
+              </Link>
+            </div>
+          </nav>
+        </div>
       </header>
 
       {/* Main Content */}
@@ -48,11 +70,8 @@ export default function Home() {
               className="flex-1 max-w-md md:max-w-lg text-center md:text-left mt-16 md:mt-28 md:mx-auto lg:ml-24"
               data-aos="fade-right"
             >
-              <h1 className="text-3xl sm:text-4xl md:text-5xl font-serif font-bold mb-2 text-gray-900">
+              <h1 className="text-3xl sm:text-4xl md:text-5xl font-serif font-bold mb-2 text-gray-900 whitespace-nowrap">
                 Hello! I'm Aaron Seth
-              </h1>
-              <h1 className="text-3xl sm:text-4xl md:text-5xl font-serif font-bold mb-4 text-gray-900">
-                Nagtalon
               </h1>
 
               <p className="mb-6 text-sm sm:text-base md:text-lg font-serif text-gray-800">
@@ -71,7 +90,7 @@ export default function Home() {
               className="flex-1 flex items-start mt-10 md:mt-16 justify-center md:justify-end pr-0 md:pr-10 lg:pr-24"
               data-aos="fade-left"
             >
-              <div className="w-48 sm:w-56 md:w-64 lg:w-72 xl:w-80 h-48 sm:h-56 md:h-64 lg:h-72 xl:h-80 relative rounded-full overflow-hidden border-4 border-black">
+              <div className="w-48 sm:w-56 md:w-64 lg:w-72 xl:w-80 h-48 sm:h-56 md:h-64 lg:h-72 xl:w-80 relative rounded-full overflow-hidden border-4 border-black">
                 <Image
                   src="/images/Okayy.jpg"
                   alt="Profile Picture"
@@ -85,13 +104,13 @@ export default function Home() {
           {/* About Me Section */}
           <section
             id="about"
-            className="mt-32 md:mt-60 py-16 md:py-20 bg-gray-50"
+            className="mt-32 md:mt-60 py-16 md:py-20"
           >
             <h2
               className="text-3xl md:text-4xl font-serif font-bold text-gray-900 text-center mb-6"
               data-aos="fade-up"
             >
-              About Me
+              Aspiring Web Developer
             </h2>
 
             <p
@@ -99,7 +118,7 @@ export default function Home() {
               data-aos="fade-up"
               data-aos-delay="100"
             >
-              I am an aspiring frontend developer passionate about creating clean, responsive, and user-friendly websites. I love exploring new technologies, learning modern web frameworks, and continuously improving my skills to build beautiful and functional web experiences.
+              I am an aspiring web developer passionate about creating clean, responsive, and user-friendly websites. I love exploring new technologies, learning modern web frameworks, and continuously improving my skills to build beautiful and functional web experiences.
             </p>
 
             <div className="max-w-5xl mx-auto flex flex-col sm:flex-row flex-wrap justify-center items-center gap-6">

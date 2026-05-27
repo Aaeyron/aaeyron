@@ -80,7 +80,7 @@ export default function ContactSlide({ onClose }: ContactSlideProps) {
         {/* Social Icons */}
         <div className="flex gap-6 mt-4"> {/* Added mt-4 to lower icons slightly */}
           <a
-            href="https://www.facebook.com/aaronsethnagtalon"
+            href="https://www.facebook.com/Aaeyronn"
             target="_blank"
             className="text-black hover:text-blue-600 transition"
           >

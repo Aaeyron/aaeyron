@@ -11,7 +11,7 @@ export default function Footer() {
 
   <h2 className="text-xl font-bold">Aaron Seth Nagtalon</h2>
   <p className="text-sm mt-2">
-    Aspiring Frontend Developer passionate about building responsive, 
+    Aspiring Web Developer passionate about building responsive, 
     clean, and modern web applications. Always learning, always growing.
   </p>
 </div>
@@ -41,7 +41,7 @@ export default function Footer() {
     </a>
 
     {/* Facebook */}
-    <a href="https://www.facebook.com/aaronsethnagtalon" target="_blank" rel="noopener noreferrer" className="hover:text-blue-400 transition">
+    <a href="https://www.facebook.com/Aaeyronn" target="_blank" rel="noopener noreferrer" className="hover:text-blue-400 transition">
       <svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" className="w-6 h-6" viewBox="0 0 24 24">
         <path d="M22.675 0H1.325C.593 0 0 .593 0 1.325v21.351C0 23.407.593 24 1.325 24h11.494v-9.294H9.692v-3.622h3.127V8.413c0-3.1 1.893-4.788 4.657-4.788 1.325 0 2.464.098 2.796.142v3.24l-1.918.001c-1.504 0-1.796.716-1.796 1.766v2.317h3.587l-.467 3.622h-3.12V24h6.116c.73 0 1.324-.593 1.324-1.324V1.325C24 .593 23.407 0 22.675 0z"/>
       </svg>

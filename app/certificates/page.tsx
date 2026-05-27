@@ -2,7 +2,6 @@
 
 import { useEffect, useState } from "react";
 import AOS from "aos";
-import "aos/dist/aos.css";
 import Image from "next/image";
 import Link from "next/link";
 import Footer from "../components/Footer"; // Import Footer
@@ -16,6 +15,8 @@ type Certificate = {
 };
 
 export default function Certificates() {
+  const [isOpen, setIsOpen] = useState(false);
+
   useEffect(() => {
     AOS.init({
       duration: 800,
@@ -61,12 +62,40 @@ export default function Certificates() {
     <div className="bg-white min-h-screen flex flex-col">
       {/* Fixed Navbar */}
       <header className="fixed top-0 left-0 w-full bg-white border-b border-gray-300 z-50 py-4 shadow-md">
-        <nav className="flex flex-wrap justify-center md:justify-center space-x-2 sm:space-x-4 md:space-x-20 text-gray-700 font-sans font-semibold text-sm sm:text-base">
-          <Link href="/about" className="hover:text-blue-500 transition">About</Link>
-          <Link href="/projects" className="hover:text-blue-500 transition">Projects</Link>
-          <Link href="/certificates" className="hover:text-blue-500 transition">Certificates</Link>
-          <Link href="/journal" className="hover:text-blue-500 transition">Journal</Link>
-        </nav>
+        <div className="flex flex-col items-center justify-center px-4">
+          
+          {/* Mobile Menu Toggle Button (Shows only on small screens) */}
+          <button 
+            onClick={() => setIsOpen(!isOpen)}
+            className="md:hidden w-10 h-10 flex items-center justify-center transition focus:outline-none mb-1"
+          >
+            <svg
+              className={`w-5 h-5 text-black transform transition-transform duration-200 ${isOpen ? "rotate-180" : ""}`}
+              fill="none"
+              stroke="currentColor"
+              viewBox="0 0 24 24"
+            >
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2.5" d="M19 9l-7 7-7-7" />
+            </svg>
+          </button>
+
+          {/* Nav Container - Desktop horizontal row / Mobile conditional slide down */}
+          <nav className={`grid transition-all duration-300 ease-in-out overflow-hidden w-full md:w-auto text-gray-700 font-sans font-semibold text-sm sm:text-base
+            ${isOpen ? "grid-rows-[1fr] opacity-100" : "grid-rows-[0fr] opacity-0 md:opacity-100 md:grid-rows-none"}
+          `}>
+            <div className={`overflow-hidden flex flex-col items-center space-y-3 pt-3 md:pt-0 md:space-y-0 md:flex-row md:justify-center md:space-x-2 sm:space-x-4 md:space-x-20`}>
+              <Link href="/about" onClick={() => setIsOpen(false)} className="hover:text-blue-500 transition">
+                About
+              </Link>
+              <Link href="/projects" onClick={() => setIsOpen(false)} className="hover:text-blue-500 transition">
+                Projects
+              </Link>
+              <Link href="/certificates" onClick={() => setIsOpen(false)} className="hover:text-blue-500 transition">
+                Certificates
+              </Link>
+            </div>
+          </nav>
+        </div>
       </header>
 
       {/* Main Section */}
