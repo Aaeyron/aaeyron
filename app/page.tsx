@@ -17,7 +17,6 @@ export default function Home() {
     });
   }, []);
 
-
   return (
     <>
       {/* Fixed Navbar */}
@@ -79,7 +78,7 @@ export default function Home() {
               </p>
 
               <Link href="/projects">
-                <button className="px-4 sm:px-5 md:px-6 py-2 sm:py-2.5 md:py-3 border-2 border-blue-500 text-blue-500 rounded hover:bg-blue-500 hover:text-white transition text-sm sm:text-base">
+                <button className="px-4 sm:px-5 md:px-6 py-2 sm:py-2.5 md:py-3 border-2 border-blue-500 text-blue-500 rounded hover:bg-blue-500 hover:text-white transition text-sm sm:text-base cursor-pointer">
                   View My Work
                 </button>
               </Link>
@@ -96,6 +95,7 @@ export default function Home() {
                   alt="Profile Picture"
                   fill
                   className="object-cover"
+                  priority
                 />
               </div>
             </div>
@@ -123,18 +123,18 @@ export default function Home() {
 
             <div className="max-w-5xl mx-auto flex flex-col sm:flex-row flex-wrap justify-center items-center gap-6">
               
-              {/* Card 1 */}
+              {/* Card 1 - Clean & Semantic Code */}
               <div
-                className="w-56 sm:w-64 h-56 border-2 border-black rounded-lg flex flex-col items-center justify-center p-4"
+                className="group w-56 sm:w-64 h-56 border-2 border-black rounded-lg flex flex-col items-center justify-center p-4 cursor-pointer"
                 style={{ backgroundColor: "rgba(245, 245, 220, 0.6)" }}
                 data-aos="fade-up"
               >
-                <div className="w-16 h-16 border-2 border-black rounded-md flex items-center justify-center mb-4 relative">
-                  <span className="absolute text-black font-mono text-lg">
+                <div className="w-16 h-16 border-2 border-black rounded-md flex items-center justify-center mb-4 relative transition-all duration-300 group-hover:border-blue-500 group-hover:bg-white group-hover:scale-105">
+                  <span className="absolute text-black font-mono text-lg transition-transform duration-300 group-hover:scale-110 group-hover:text-blue-500">
                     &lt; / &gt;
                   </span>
                 </div>
-                <h3 className="text-lg sm:text-xl font-semibold text-gray-900 mb-2 text-center">
+                <h3 className="text-lg sm:text-xl font-semibold text-gray-900 mb-2 text-center transition-colors duration-300 group-hover:text-blue-500">
                   Clean & Semantic Code
                 </h3>
                 <p className="text-gray-700 text-center text-xs sm:text-sm">
@@ -142,9 +142,9 @@ export default function Home() {
                 </p>
               </div>
 
-              {/* Card 2 */}
+              {/* Card 2 - UI/UX Styling */}
               <div
-                className="w-56 sm:w-64 h-56 border-2 border-black rounded-lg flex flex-col items-center justify-center p-4"
+                className="group w-56 sm:w-64 h-56 border-2 border-black rounded-lg flex flex-col items-center justify-center p-4 cursor-pointer"
                 style={{ backgroundColor: "rgba(245, 245, 220, 0.6)" }}
                 data-aos="fade-up"
                 data-aos-delay="100"
@@ -155,7 +155,7 @@ export default function Home() {
                   viewBox="0 0 24 24"
                   strokeWidth={2}
                   stroke="black"
-                  className="w-12 h-12 mb-4"
+                  className="w-12 h-12 mb-4 transition-all duration-300 transform group-hover:scale-110 group-hover:stroke-blue-500 group-hover:rotate-6"
                 >
                   <path
                     strokeLinecap="round"
@@ -163,17 +163,17 @@ export default function Home() {
                     d="M3 3h7v7H3V3zM14 3h7v7h-7V3zM3 14h7v7H3v-7zM14 14h7v7h-7v-7z"
                   />
                 </svg>
-                <h3 className="text-lg sm:text-xl font-semibold text-gray-900 mb-2 text-center">
+                <h3 className="text-lg sm:text-xl font-semibold text-gray-900 mb-2 text-center transition-colors duration-300 group-hover:text-blue-500">
                   UI/UX Styling
                 </h3>
                 <p className="text-gray-700 text-center text-xs sm:text-sm">
-                  I design clean, modern, and user-friendly interfaces with attention to visual hierarchy and responsiveness.
+                  I design clean, modern, and user-friendly interfaces and making sure they work well on all screen sizes.
                 </p>
               </div>
 
-              {/* Card 3 */}
+              {/* Card 3 - Responsive Components */}
               <div
-                className="w-56 sm:w-64 h-56 border-2 border-black rounded-lg flex flex-col items-center justify-center p-4"
+                className="group w-56 sm:w-64 h-56 border-2 border-black rounded-lg flex flex-col items-center justify-center p-4 cursor-pointer"
                 style={{ backgroundColor: "rgba(245, 245, 220, 0.6)" }}
                 data-aos="fade-up"
                 data-aos-delay="200"
@@ -184,7 +184,7 @@ export default function Home() {
                   viewBox="0 0 24 24"
                   strokeWidth={2}
                   stroke="black"
-                  className="w-12 h-12 mb-4"
+                  className="w-12 h-12 mb-4 transition-all duration-300 transform group-hover:scale-110 group-hover:stroke-blue-500"
                 >
                   <path
                     strokeLinecap="round"
@@ -192,11 +192,11 @@ export default function Home() {
                     d="M3 5h18v14H3V5zM3 7h18M6 21h12a2 2 0 002-2V5a2 2 0 00-2-2H6a2 2 0 00-2 2v14a2 2 0 002 2z"
                   />
                 </svg>
-                <h3 className="text-lg sm:text-xl font-semibold text-gray-900 mb-2 text-center">
+                <h3 className="text-lg sm:text-xl font-semibold text-gray-900 mb-2 text-center transition-colors duration-300 group-hover:text-blue-500">
                   Responsive Components
                 </h3>
                 <p className="text-gray-700 text-center text-xs sm:text-sm">
-                  I build interfaces that adapt seamlessly across devices, ensuring consistent usability.
+                  I build interfaces that adapt perfectly across devices, ensuring consistent usability.
                 </p>
               </div>
             </div>

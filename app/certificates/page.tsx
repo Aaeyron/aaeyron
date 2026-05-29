@@ -45,6 +45,18 @@ export default function Certificates() {
       year: "Dec 15, 2025",
       image: "/images/Certificate3.png", 
     },
+    {
+      title: "Developing Applications with Google Cloud",
+      issuer: "Google Developer Group",
+      year: "May 16, 2026",
+      image: "/images/GdG Certificate.png", 
+    },
+    {
+      title: "Cyber Hygiene and Security Best Practices",
+      issuer: "Holy Cross of Davao College - IAES",
+      year: "January 28, 2026",
+      image: "/images/Cyber Hygiene Cert.png", 
+    },
 
   ];
 
