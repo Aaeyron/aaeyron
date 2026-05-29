@@ -49,7 +49,7 @@ export default function Certificates() {
       title: "Developing Applications with Google Cloud",
       issuer: "Google Developer Group",
       year: "May 16, 2026",
-      image: "/images/GdG Certificate.png", 
+      image: "/images/GDG Certificate.png", 
     },
     {
       title: "Cyber Hygiene and Security Best Practices",
