@@ -1,36 +1,77 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+<h1 align="center">Hi, I'm Aaron</h1>
 
-## Getting Started
+<h3 align="center">
+  Aspiring Software Developer
+</h3>
 
-First, run the development server:
+<p align="center">
+  <i>Student • Developer • AI-Assisted Learner</i>
+</p>
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+<p align="center">
+  I build web, mobile, and backend applications while continuously learning modern software development technologies.
+</p>
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+---
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+<h2>About Me</h2>
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+<p>
+  I am currently a student pursuing my journey in software development.
+</p>
 
-## Learn More
+<p>
+  I enjoy developing web, mobile, and backend applications.
+</p>
 
-To learn more about Next.js, take a look at the following resources:
+<p>
+  I utilize AI tools to support development, research, problem-solving, and continuous learning.
+</p>
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+<p>
+  I am continuously improving my programming skills and exploring new technologies.
+</p>
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+<p>
+  My goal is to become a professional software developer and build useful real-world applications.
+</p>
 
-## Deploy on Vercel
+---
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+<h2>Tech Stack</h2>
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+<h3>Frontend</h3>
+
+<p>
+  <img src="https://skillicons.dev/icons?i=react,nextjs,vite,html,css,js,ts" />
+</p>
+
+<h3>Backend</h3>
+
+<p>
+  <img src="https://skillicons.dev/icons?i=nodejs,python,django,php" />
+</p>
+
+<h3>Mobile Development</h3>
+
+<p>
+  <img src="https://skillicons.dev/icons?i=flutter,dart" />
+</p>
+
+<h3>Databases</h3>
+
+<p>
+  <img src="https://skillicons.dev/icons?i=mysql,postgres" />
+</p>
+
+<h3>Tools & Deployment</h3>
+
+<p>
+  <img src="https://skillicons.dev/icons?i=git,github,vscode,vercel" />
+</p>
+
+---
+
+<p align="center">
+  <b>Always Learning • Always Building • Always Improving</b>
+</p>
