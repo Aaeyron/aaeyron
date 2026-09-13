@@ -1,211 +1,147 @@
 "use client";
 
-import { useEffect, useState } from "react";
-import AOS from "aos";
 import Image from "next/image";
 import Link from "next/link";
-import Footer from "./components/Footer";
+import { ArrowDownRight, ArrowUpRight, Code2, Layers3, Smartphone } from "lucide-react";
+import SiteNav from "./components/SiteNav";
+import ScrollAnimations from "./components/ScrollAnimations";
+
+const projects = [
+  {
+    number: "01",
+    title: "Library Management System",
+    description: "A role-based library platform connecting a React interface to a Django REST backend.",
+    image: "/images/LMS1.png",
+    tags: ["React", "Django", "REST API"],
+  },
+  {
+    number: "02",
+    title: "Jana’s Boutique",
+    description: "A storefront and inventory experience built for a local clothing business in Davao.",
+    image: "/images/Boutique1.png",
+    tags: ["Next.js", "PHP", "MySQL"],
+  },
+  {
+    number: "03",
+    title: "FlashMind",
+    description: "A focused flashcard experience designed around active recall and better study habits.",
+    image: "/images/FlashMind Display.png",
+    tags: ["React", "UI/UX", "Learning Tool"],
+  },
+];
 
 export default function Home() {
-  const [isOpen, setIsOpen] = useState(false);
-
-  useEffect(() => {
-    AOS.init({
-      duration: 800,
-      easing: "ease-in-out",
-      once: true,
-    });
-  }, []);
-
   return (
-    <>
-      {/* Fixed Navbar */}
-      <header className="fixed top-0 left-0 w-full bg-white border-b border-gray-300 z-50 py-4 shadow-md">
-        <div className="flex flex-col items-center justify-center px-4">
-          
-          {/* Mobile Menu Toggle Button (Shows only on small screens) */}
-          <button 
-            onClick={() => setIsOpen(!isOpen)}
-            className="md:hidden w-10 h-10 flex items-center justify-center transition focus:outline-none mb-1"
-          >
-            <svg
-              className={`w-5 h-5 text-black transform transition-transform duration-200 ${isOpen ? "rotate-180" : ""}`}
-              fill="none"
-              stroke="currentColor"
-              viewBox="0 0 24 24"
-            >
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2.5" d="M19 9l-7 7-7-7" />
-            </svg>
-          </button>
+    <div className="site-shell">
+      <SiteNav />
+      <ScrollAnimations />
 
-          {/* Nav Container - Desktop horizontal row / Mobile conditional slide down */}
-          <nav className={`grid transition-all duration-300 ease-in-out overflow-hidden w-full md:w-auto text-gray-700 font-sans font-semibold text-sm sm:text-base
-            ${isOpen ? "grid-rows-[1fr] opacity-100" : "grid-rows-[0fr] opacity-0 md:opacity-100 md:grid-rows-none"}
-          `}>
-            <div className={`overflow-hidden flex flex-col items-center space-y-3 pt-3 md:pt-0 md:space-y-0 md:flex-row md:justify-center md:space-x-2 sm:space-x-4 md:space-x-20`}>
-              <Link href="/about" onClick={() => setIsOpen(false)} className="hover:text-blue-500 transition">
-                About
-              </Link>
-              <Link href="/projects" onClick={() => setIsOpen(false)} className="hover:text-blue-500 transition">
-                Projects
-              </Link>
-              <Link href="/certificates" onClick={() => setIsOpen(false)} className="hover:text-blue-500 transition">
-                Certificates
-              </Link>
-            </div>
-          </nav>
-        </div>
-      </header>
+      <main>
+        <section className="hero-section">
+          <div className="hero-kicker" data-aos="fade-down">
+            <span className="status-dot" />
+            Open to opportunities
+          </div>
 
-      {/* Main Content */}
-      <main className="pt-28 min-h-screen bg-white overflow-x-hidden pb-50">
-        <div className="max-w-7xl mx-auto px-2 sm:px-4 md:px-6">
-
-          {/* Hero Section */}
-          <section className="flex flex-col md:flex-row items-center justify-center mt-20 gap-6 md:gap-0">
-            
-            {/* Text */}
-            <div
-              className="flex-1 max-w-md md:max-w-lg text-center md:text-left mt-16 md:mt-28 md:mx-auto lg:ml-24"
-              data-aos="fade-right"
-            >
-              <h1 className="text-3xl sm:text-4xl md:text-5xl font-serif font-bold mb-2 text-gray-900 whitespace-nowrap">
-                Hello! I'm Aaron Seth
+          <div className="hero-grid">
+            <div className="hero-copy" data-aos="fade-up">
+              <p className="eyebrow">SOFTWARE DEVELOPER / DIGITAL BUILDER</p>
+              <h1>
+                I build ideas into
+                <span> useful software.</span>
               </h1>
-
-              <p className="mb-6 text-sm sm:text-base md:text-lg font-serif text-gray-800">
-                Welcome to my portfolio. I’m a student learning web development and design, and I’m excited to build beautiful and functional websites as I continue improving my skills.
+              <p className="hero-summary">
+                I’m Aaron Seth—a developer shaping <span>thoughtful web, mobile, and backend experiences</span> while learning fast and building in public.
               </p>
 
-              <Link href="/projects">
-                <button className="px-4 sm:px-5 md:px-6 py-2 sm:py-2.5 md:py-3 border-2 border-blue-500 text-blue-500 rounded hover:bg-blue-500 hover:text-white transition text-sm sm:text-base cursor-pointer">
-                  View My Work
-                </button>
-              </Link>
-            </div>
-
-            {/* Profile Image */}
-            <div
-              className="flex-1 flex items-start mt-10 md:mt-16 justify-center md:justify-end pr-0 md:pr-10 lg:pr-24"
-              data-aos="fade-left"
-            >
-              <div className="w-48 sm:w-56 md:w-64 lg:w-72 xl:w-80 h-48 sm:h-56 md:h-64 lg:h-72 xl:w-80 relative rounded-full overflow-hidden border-4 border-black">
-                <Image
-                  src="/images/Okayy.jpg"
-                  alt="Profile Picture"
-                  fill
-                  className="object-cover"
-                  priority
-                />
+              <div className="hero-actions">
+                <Link href="/projects" className="button-primary">
+                  Explore my work <ArrowDownRight size={19} />
+                </Link>
+                <Link href="/about" className="button-secondary">More about me</Link>
               </div>
             </div>
-          </section>
 
-          {/* About Me Section */}
-          <section
-            id="about"
-            className="mt-32 md:mt-60 py-16 md:py-20"
-          >
-            <h2
-              className="text-3xl md:text-4xl font-serif font-bold text-gray-900 text-center mb-6"
-              data-aos="fade-up"
-            >
-              Aspiring Web Developer
-            </h2>
+            <div className="portrait-wrap" aria-label="Portrait of Aaron Seth" data-aos="fade-left" data-aos-delay="140">
+              <div className="portrait-frame">
+                <Image src="/images/MeAgain.jpeg" alt="Aaron Seth Nagtalon" fill priority sizes="(max-width: 768px) 82vw, 36vw" className="portrait-image" />
+              </div>
+              <div className="portrait-note">BUILDING · LEARNING · ITERATING</div>
+              <div className="portrait-index">001</div>
+            </div>
+          </div>
 
-            <p
-              className="max-w-3xl mx-auto text-center text-sm sm:text-base md:text-lg text-gray-800 mb-12"
-              data-aos="fade-up"
-              data-aos-delay="100"
-            >
-              I am an aspiring web developer passionate about creating clean, responsive, and user-friendly websites. I love exploring new technologies, learning modern web frameworks, and continuously improving my skills to build beautiful and functional web experiences.
-            </p>
+        </section>
 
-            <div className="max-w-5xl mx-auto flex flex-col sm:flex-row flex-wrap justify-center items-center gap-6">
-              
-              {/* Card 1 - Clean & Semantic Code */}
-              <div
-                className="group w-56 sm:w-64 h-56 border-2 border-black rounded-lg flex flex-col items-center justify-center p-4 cursor-pointer"
-                style={{ backgroundColor: "rgba(245, 245, 220, 0.6)" }}
-                data-aos="fade-up"
-              >
-                <div className="w-16 h-16 border-2 border-black rounded-md flex items-center justify-center mb-4 relative transition-all duration-300 group-hover:border-blue-500 group-hover:bg-white group-hover:scale-105">
-                  <span className="absolute text-black font-mono text-lg transition-transform duration-300 group-hover:scale-110 group-hover:text-blue-500">
-                    &lt; / &gt;
-                  </span>
+        <section className="work-section">
+          <div className="section-heading" data-aos="fade-up">
+            <div>
+              <p className="eyebrow">SELECTED WORK / 2025—2026</p>
+              <h2>Projects with a <span>purpose.</span></h2>
+            </div>
+            <Link href="/projects" className="text-link">See all projects <ArrowUpRight size={18} /></Link>
+          </div>
+
+          <div className="project-list">
+            {projects.map((project, index) => (
+              <Link href="/projects" className="project-row" key={project.title} data-aos="fade-up" data-aos-delay={String(index * 90)}>
+                <div className="project-number">{project.number}</div>
+                <div className="project-image-wrap">
+                  <Image src={project.image} alt={`${project.title} project preview`} fill sizes="(max-width: 768px) 100vw, 42vw" className="project-image" />
                 </div>
-                <h3 className="text-lg sm:text-xl font-semibold text-gray-900 mb-2 text-center transition-colors duration-300 group-hover:text-blue-500">
-                  Clean & Semantic Code
-                </h3>
-                <p className="text-gray-700 text-center text-xs sm:text-sm">
-                  I write organized and semantic HTML, maintainable CSS, and clean JavaScript for readable and scalable web projects.
-                </p>
-              </div>
+                <div className="project-copy">
+                  <div className="project-title-line">
+                    <h3>{project.title}</h3>
+                    <ArrowUpRight size={24} />
+                  </div>
+                  <p>{project.description}</p>
+                  <div className="tag-list">
+                    {project.tags.map((tag) => <span key={tag}>{tag}</span>)}
+                  </div>
+                </div>
+              </Link>
+            ))}
+          </div>
+        </section>
 
-              {/* Card 2 - UI/UX Styling */}
-              <div
-                className="group w-56 sm:w-64 h-56 border-2 border-black rounded-lg flex flex-col items-center justify-center p-4 cursor-pointer"
-                style={{ backgroundColor: "rgba(245, 245, 220, 0.6)" }}
-                data-aos="fade-up"
-                data-aos-delay="100"
-              >
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  fill="none"
-                  viewBox="0 0 24 24"
-                  strokeWidth={2}
-                  stroke="black"
-                  className="w-12 h-12 mb-4 transition-all duration-300 transform group-hover:scale-110 group-hover:stroke-blue-500 group-hover:rotate-6"
-                >
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    d="M3 3h7v7H3V3zM14 3h7v7h-7V3zM3 14h7v7H3v-7zM14 14h7v7h-7v-7z"
-                  />
-                </svg>
-                <h3 className="text-lg sm:text-xl font-semibold text-gray-900 mb-2 text-center transition-colors duration-300 group-hover:text-blue-500">
-                  UI/UX Styling
-                </h3>
-                <p className="text-gray-700 text-center text-xs sm:text-sm">
-                  I design clean, modern, and user-friendly interfaces and making sure they work well on all screen sizes.
-                </p>
-              </div>
+        <section className="capabilities-section">
+          <div className="capabilities-intro" data-aos="fade-up">
+            <p className="eyebrow">HOW I LIKE TO WORK</p>
+            <h2>Curious by default. <span>Practical by design.</span></h2>
+            <p>I care about the whole journey—from understanding the problem to shipping an interface that feels <span>clear, responsive, and genuinely useful.</span></p>
+          </div>
 
-              {/* Card 3 - Responsive Components */}
-              <div
-                className="group w-56 sm:w-64 h-56 border-2 border-black rounded-lg flex flex-col items-center justify-center p-4 cursor-pointer"
-                style={{ backgroundColor: "rgba(245, 245, 220, 0.6)" }}
-                data-aos="fade-up"
-                data-aos-delay="200"
-              >
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  fill="none"
-                  viewBox="0 0 24 24"
-                  strokeWidth={2}
-                  stroke="black"
-                  className="w-12 h-12 mb-4 transition-all duration-300 transform group-hover:scale-110 group-hover:stroke-blue-500"
-                >
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    d="M3 5h18v14H3V5zM3 7h18M6 21h12a2 2 0 002-2V5a2 2 0 00-2-2H6a2 2 0 00-2 2v14a2 2 0 002 2z"
-                  />
-                </svg>
-                <h3 className="text-lg sm:text-xl font-semibold text-gray-900 mb-2 text-center transition-colors duration-300 group-hover:text-blue-500">
-                  Responsive Components
-                </h3>
-                <p className="text-gray-700 text-center text-xs sm:text-sm">
-                  I build interfaces that adapt perfectly across devices, ensuring consistent usability.
-                </p>
-              </div>
+          <div className="capability-grid">
+            <article data-aos="fade-up">
+              <Code2 /><span>01</span><h3>Web experiences</h3>
+              <p>Responsive interfaces with React, Next.js, TypeScript, and modern CSS.</p>
+            </article>
+            <article data-aos="fade-up" data-aos-delay="90">
+              <Smartphone /><span>02</span><h3>Mobile thinking</h3>
+              <p>Cross-platform concepts designed for real screens, real hands, and real constraints.</p>
+            </article>
+            <article data-aos="fade-up" data-aos-delay="180">
+              <Layers3 /><span>03</span><h3>Connected systems</h3>
+              <p>Backend logic, databases, and APIs that make the visible product work reliably.</p>
+            </article>
+          </div>
+        </section>
+
+        <section className="home-about-section">
+          <div className="home-about-index" data-aos="fade-right">ABOUT / 004</div>
+          <div className="home-about-copy" data-aos="fade-up" data-aos-delay="100">
+            <p className="eyebrow">A SHORT INTRO</p>
+            <h2>Developer, student, and <span>thoughtful problem solver.</span></h2>
+            <p>
+              I’m Aaron Seth Nagtalon. I enjoy turning practical ideas into <span>clear digital experiences</span>, learning new tools along the way, and improving every project through careful iteration.
+            </p>
+            <div className="home-about-links">
+              <Link href="/about">Read more about me <ArrowUpRight size={21} /></Link>
+              <Link href="/contact">Start a conversation <ArrowUpRight size={21} /></Link>
             </div>
-          </section>
-        </div>
+          </div>
+        </section>
       </main>
-
-      {/* Footer */}
-      <Footer />
-    </>
+    </div>
   );
 }

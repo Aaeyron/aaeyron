@@ -1,354 +1,121 @@
-"use client";
-
-import { useEffect, useState } from "react";
-import AOS from "aos";
+import Image from "next/image";
 import Link from "next/link";
-import Footer from "../components/Footer";
+import { ArrowUpRight } from "lucide-react";
+import SiteNav from "../components/SiteNav";
+import ScrollAnimations from "../components/ScrollAnimations";
+
+const milestones = [
+  {
+    date: "May 2026",
+    title: "Build With AI: Davao",
+    organization: "Google Developer Groups Davao",
+    detail: "Explored agentic AI, Google’s AI ecosystem, and practical ways developers can build AI-powered products.",
+  },
+  {
+    date: "January 2026",
+    title: "Cloud Catchup Session",
+    organization: "AWS User Group Davao",
+    detail: "Learned from local developers about AWS re:Invent updates, cloud services, and real-world deployment practices.",
+  },
+  {
+    date: "January 2026",
+    title: "Cyber Hygiene Training",
+    organization: "Holy Cross of Davao College · IAES",
+    detail: "Completed four days of training in threat awareness, data protection, safer systems, and incident response.",
+  },
+];
 
 export default function About() {
-  const [isOpen, setIsOpen] = useState(false);
-
-  useEffect(() => {
-    AOS.init({
-      duration: 800,
-      easing: "ease-in-out",
-      once: true,
-    });
-  }, []);
-
   return (
-    <>
-      {/* Fixed Navbar */}
-      <header className="fixed top-0 left-0 w-full bg-white border-b border-gray-300 z-50 py-4 shadow-md">
-        <div className="flex flex-col items-center justify-center px-4">
-          
-          {/* Mobile Menu Toggle Button (Shows only on small screens) */}
-          <button 
-            onClick={() => setIsOpen(!isOpen)}
-            className="md:hidden w-10 h-10 flex items-center justify-center transition focus:outline-none mb-1"
-          >
-            <svg
-              className={`w-5 h-5 text-black transform transition-transform duration-200 ${isOpen ? "rotate-180" : ""}`}
-              fill="none"
-              stroke="currentColor"
-              viewBox="0 0 24 24"
-            >
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2.5" d="M19 9l-7 7-7-7" />
-            </svg>
-          </button>
+    <div className="site-shell">
+      <SiteNav />
+      <ScrollAnimations />
 
-          {/* Nav Container - Desktop horizontal row / Mobile conditional slide down */}
-          <nav className={`grid transition-all duration-300 ease-in-out overflow-hidden w-full md:w-auto text-gray-700 font-sans font-semibold text-sm sm:text-base
-            ${isOpen ? "grid-rows-[1fr] opacity-100" : "grid-rows-[0fr] opacity-0 md:opacity-100 md:grid-rows-none"}
-          `}>
-            <div className={`overflow-hidden flex flex-col items-center space-y-3 pt-3 md:pt-0 md:space-y-0 md:flex-row md:justify-center md:space-x-2 sm:space-x-4 md:space-x-20`}>
-              <Link href="/" onClick={() => setIsOpen(false)} className="hover:text-blue-500 transition">
-                Home
-              </Link>
-              <Link href="/projects" onClick={() => setIsOpen(false)} className="hover:text-blue-500 transition">
-                Projects
-              </Link>
-              <Link href="/certificates" onClick={() => setIsOpen(false)} className="hover:text-blue-500 transition">
-                Certificates
-              </Link>
-            </div>
-          </nav>
-        </div>
-      </header>
-
-      {/* Main Content */}
-      <main className="pt-28 min-h-screen bg-gray-50 px-4 md:px-6 py-20">
-
-        {/* Portrait + Text Section */}
-        <section className="max-w-5xl mx-auto flex flex-col md:flex-row items-center md:items-start gap-10" data-aos="fade-up">
-
-          {/* Portrait Image */}
-          <div className="w-64 sm:w-72 md:w-80 h-96 sm:h-[26rem] md:h-[28rem] relative rounded-lg overflow-hidden border-4 border-black flex-shrink-0 mt-24">
-            <img
-              src="/images/MeAgain.jpeg"
-              alt="Aaron Seth Portrait"
-              className="w-full h-full object-cover"
-            />
+      <main className="about-page">
+        <section className="about-hero">
+          <div className="about-heading" data-aos="fade-up">
+            <p className="eyebrow">ABOUT / AARON SETH NAGTALON</p>
+            <h1>
+              A developer in progress,
+              <span> building with intention.</span>
+            </h1>
           </div>
 
-          {/* Text */}
-          <div className="text-center md:text-left mt-12 md:mt-24 md:ml-10 flex-1">
-            <h1 className="text-4xl sm:text-5xl font-extrabold mb-6 text-gray-900 drop-shadow-sm tracking-wide">About Me</h1>
-            <p className="text-base sm:text-lg md:text-lg text-gray-600 leading-relaxed max-w-xl mx-auto md:mx-0 mb-12 font-sans">
-              Hi! I am Aaron, an aspiring web developer who enjoys creating clean, responsive, and user-friendly websites. I love learning new tools and frameworks, improving my skills, and building simple ideas into real and functional web designs. As I continue growing, I aim to develop better websites and become a more confident and reliable developer.
-            </p>
+          <div className="about-intro-grid">
+            <div className="about-portrait-slot" data-aos="fade-right" data-aos-delay="80">
+              <Image
+                src="/images/About.jpg"
+                alt="Aaron Seth Nagtalon"
+                fill
+                sizes="(max-width: 640px) 310px, (max-width: 900px) 32vw, 390px"
+                className="about-portrait-image"
+                priority
+              />
+            </div>
 
-            {/* Skill Cards */}
-            <div className="flex flex-col sm:flex-row flex-wrap gap-6 mt-6 justify-center md:justify-start">
-              {/* Card 1 */}
-              <div className="w-64 sm:w-72 md:w-72 h-40 border-2 border-black rounded-lg p-3 flex flex-col items-center justify-center"
-                   style={{ backgroundColor: "rgba(245, 245, 220, 0.6)" }}>
-                <div className="w-10 h-10 mb-2">
-                  <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={2} stroke="black" className="w-10 h-10">
-                    <path strokeLinecap="round" strokeLinejoin="round" d="M3 4h18v16H3V4zm3 3v10h12V7H6z" />
-                  </svg>
-                </div>
-                <h3 className="text-lg font-semibold text-gray-900 mb-1 text-center">Frontend Development</h3>
-                <p className="text-xs text-gray-700 text-center">
-                  Building responsive, clean, and user-friendly web interfaces with HTML, CSS, and JavaScript.
-                </p>
-              </div>
+            <div className="about-story" data-aos="fade-left" data-aos-delay="140">
+              <p className="about-lead">
+                I’m Aaron, an Information Technology student who enjoys turning simple ideas into <span>useful digital products.</span>
+              </p>
+              <p>
+                My work moves across web interfaces, mobile concepts, backend logic, and databases. I’m especially interested in how <span>thoughtful design and solid engineering</span> come together to make software easier to understand and use.
+              </p>
+              <p>
+                <span>I learn by building.</span> Every project gives me a new problem to solve, a better question to ask, and another chance to improve how I work—from planning the experience to shipping the final result.
+              </p>
 
-              {/* Card 2 */}
-              <div className="w-64 sm:w-72 md:w-72 h-40 border-2 border-black rounded-lg p-3 flex flex-col items-center justify-center"
-                   style={{ backgroundColor: "rgba(245, 245, 220, 0.6)" }}>
-                <div className="w-10 h-10 mb-2">
-                  <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={2} stroke="black" className="w-10 h-10">
-                    <path strokeLinecap="round" strokeLinejoin="round" d="M3 7h18M3 12h18M3 17h18" />
-                  </svg>
-                </div>
-                <h3 className="text-lg font-semibold text-gray-900 mb-1 text-center">UI/UX Design</h3>
-                <p className="text-xs text-gray-700 text-center">
-                  Creating clean and user-friendly interfaces with good layout, colors, and interactions for better user experiences.
-                </p>
-              </div>
-
-              {/* Card 3 */}
-              <div className="w-64 sm:w-72 md:w-72 h-40 border-2 border-black rounded-lg p-3 flex flex-col items-center justify-center"
-                   style={{ backgroundColor: "rgba(245, 245, 220, 0.6)" }}>
-                <div className="w-10 h-10 mb-2">
-                  <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={2} stroke="black" className="w-10 h-10">
-                    <path strokeLinecap="round" strokeLinejoin="round" d="M4 6h16M4 10h16M4 14h16M4 18h16" />
-                    <circle cx="12" cy="10" r="1" stroke="black" strokeWidth={2} />
-                    <circle cx="12" cy="14" r="1" stroke="black" strokeWidth={2} />
-                  </svg>
-                </div>
-                <h3 className="text-lg font-semibold text-gray-900 mb-1 text-center">Full Stack / Backend</h3>
-                <p className="text-xs text-gray-700 text-center">
-                  Learning to handle server-side logic, databases, and APIs to create complete, functional web applications.
-                </p>
+              <div className="about-links">
+                <Link href="/projects" className="button-primary">View selected work <ArrowUpRight size={18} /></Link>
+                <a href="mailto:aaronseth.nagtalon@hcdc.edu.ph" className="button-secondary">Start a conversation</a>
               </div>
             </div>
           </div>
         </section>
 
-        {/* Education Timeline Section */}
-        <section 
-          className="relative w-full bg-white py-20 mt-60" 
-          data-aos="fade-up"
-        >
-          <div className="w-full">
-            <div className="max-w-5xl mx-auto px-6">
-              
-              <span
-                className="block text-sm font-normal tracking-widest uppercase mb-3"
-                style={{ color: 'hsl(25, 29.37%, 53.62%)', fontFamily: 'sans-serif' }}
-              >
-                Training & Seminars
-              </span>
-
-              <h2 className="text-4xl md:text-5xl font-serif font-medium leading-tight mb-16 text-black">
-                Development
-              </h2>
-
-              <div className="relative before:absolute before:inset-0 before:ml-5 before:-translate-x-px md:before:mx-auto md:before:translate-x-0 before:h-full before:w-0.5 before:bg-gradient-to-b before:from-transparent before:via-gray-300 before:to-transparent space-y-12">
-
-                
-                {/* Google Developer Group Davao */}
-                <div className="relative flex items-center justify-between md:justify-normal md:odd:flex-row-reverse group">
-                  <div className="flex items-center justify-center w-10 h-10 rounded-full border border-gray-300 bg-white shadow-sm shrink-0 md:order-1 md:group-odd:-translate-x-1/2 md:group-even:translate-x-1/2 z-10 group-hover:border-yellow-500 transition-colors">
-                    <svg xmlns="http://www.w3.org/2000/svg" className="w-5 h-5 text-gray-500 group-hover:text-yellow-500 transition-colors" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
-                      <path strokeLinecap="round" strokeLinejoin="round" d="M21.42 10.922a1 1 0 0 0-.019-1.838L12.83 5.18a2 2 0 0 0-1.66 0L2.6 9.08a1 1 0 0 0 0 1.832l8.57 3.908a2 2 0 0 0 1.66 0z" />
-                      <path strokeLinecap="round" strokeLinejoin="round" d="M22 10v6" />
-                      <path strokeLinecap="round" strokeLinejoin="round" d="M6 12.5V16a6 3 0 0 0 12 0v-3.5" />
-                    </svg>
-                  </div>
-                  <div className="w-[calc(100%-4rem)] md:w-[calc(50%-2.5rem)] p-6 bg-white border border-gray-200 rounded-xl shadow-xs hover:shadow-md transition-all">
-                    <div className="flex flex-col mb-2">
-                      <span className="text-yellow-500 text-sm font-bold tracking-wider uppercase mb-1">May 16, 2026</span>
-                      <h3 className="text-xl font-serif font-medium text-black">Build With AI: Davao 2026</h3>
-                      <span className="text-gray-500 text-sm">Google Developer Groups (GDG) Davao</span>
-                    </div>
-                    <p className="text-gray-500 leading-relaxed mt-4">
-                      Attended a one-day AI and innovation event focused on building AI-powered solutions using Google’s AI ecosystem. Participated in talks and workshops covering the future of agentic AI, real-world applications, and developer tools.
-                    </p>
-                  </div>
-                </div>
-
-                {/* AWS Event */}
-                <div className="relative flex items-center justify-between md:justify-normal md:odd:flex-row-reverse group">
-                  <div className="flex items-center justify-center w-10 h-10 rounded-full border border-gray-300 bg-white shadow-sm shrink-0 md:order-1 md:group-odd:-translate-x-1/2 md:group-even:translate-x-1/2 z-10 group-hover:border-yellow-500 transition-colors">
-                    <svg xmlns="http://www.w3.org/2000/svg" className="w-5 h-5 text-gray-500 group-hover:text-yellow-500 transition-colors" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
-                      <path strokeLinecap="round" strokeLinejoin="round" d="M21.42 10.922a1 1 0 0 0-.019-1.838L12.83 5.18a2 2 0 0 0-1.66 0L2.6 9.08a1 1 0 0 0 0 1.832l8.57 3.908a2 2 0 0 0 1.66 0z" />
-                      <path strokeLinecap="round" strokeLinejoin="round" d="M22 10v6" />
-                      <path strokeLinecap="round" strokeLinejoin="round" d="M6 12.5V16a6 3 0 0 0 12 0v-3.5" />
-                    </svg>
-                  </div>
-                  <div className="w-[calc(100%-4rem)] md:w-[calc(50%-2.5rem)] p-6 bg-white border border-gray-200 rounded-xl shadow-xs hover:shadow-md transition-all">
-                    <div className="flex flex-col mb-2">
-                      <span className="text-yellow-500 text-sm font-bold tracking-wider uppercase mb-1">January 31, 2026</span>
-                      <h3 className="text-xl font-serif font-medium text-black">Cloud Catchup Session</h3>
-                      <span className="text-gray-500 text-sm">AWS User Group Davao</span>
-                    </div>
-                    <p className="text-gray-500 leading-relaxed mt-4">
-                       Attended a cloud computing community session focused on AWS re:Invent 2025 highlights, including service updates, real-world cloud insights, and discussions with local developers in the Davao tech community.
-                    </p>
-                  </div>
-                </div>
-
-                {/* Cyber Hygiene Traininggg */}
-                <div className="relative flex items-center justify-between md:justify-normal md:odd:flex-row-reverse group">
-                  <div className="flex items-center justify-center w-10 h-10 rounded-full border border-gray-300 bg-white shadow-sm shrink-0 md:order-1 md:group-odd:-translate-x-1/2 md:group-even:translate-x-1/2 z-10 group-hover:border-yellow-500 transition-colors">
-                    <svg xmlns="http://www.w3.org/2000/svg" className="w-5 h-5 text-gray-500 group-hover:text-yellow-500 transition-colors" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
-                      <path strokeLinecap="round" strokeLinejoin="round" d="M21.42 10.922a1 1 0 0 0-.019-1.838L12.83 5.18a2 2 0 0 0-1.66 0L2.6 9.08a1 1 0 0 0 0 1.832l8.57 3.908a2 2 0 0 0 1.66 0z" />
-                      <path strokeLinecap="round" strokeLinejoin="round" d="M22 10v6" />
-                      <path strokeLinecap="round" strokeLinejoin="round" d="M6 12.5V16a6 3 0 0 0 12 0v-3.5" />
-                    </svg>
-                  </div>
-                  <div className="w-[calc(100%-4rem)] md:w-[calc(50%-2.5rem)] p-6 bg-white border border-gray-200 rounded-xl shadow-xs hover:shadow-md transition-all">
-                    <div className="flex flex-col mb-2">
-                      <span className="text-yellow-500 text-sm font-bold tracking-wider uppercase mb-1">January 28, 2026</span>
-                      <h3 className="text-xl font-serif font-medium text-black">Cyber Hygiene Training</h3>
-                      <span className="text-gray-500 text-sm">Holy Cross of Davao College -  IAES</span>
-                    </div>
-                    <p className="text-gray-500 leading-relaxed mt-4">
-                      Participated in a 4-day cybersecurity training focused on cyber hygiene practices, including threat awareness, data protection, and incident response.
-                    </p>
-                  </div>
-                </div>
-
-              </div>
-            </div>
+        <section className="about-focus">
+          <div className="about-focus-heading" data-aos="fade-right">
+            <p className="eyebrow">RIGHT NOW</p>
+            <h2>What I’m <span>focused on.</span></h2>
+          </div>
+          <div className="focus-list">
+            <div data-aos="fade-up" data-aos-delay="60"><span>01</span><p>Building stronger full-stack projects with clearer structure and real-world use cases.</p></div>
+            <div data-aos="fade-up" data-aos-delay="140"><span>02</span><p>Improving how I turn product ideas into responsive, accessible interfaces.</p></div>
+            <div data-aos="fade-up" data-aos-delay="220"><span>03</span><p>Exploring AI-assisted development as a tool for learning, research, and iteration.</p></div>
           </div>
         </section>
 
-        {/* My Tech Stack Section */}
-        <section 
-          className="relative w-full bg-gray-50 py-20" 
-          data-aos="fade-up"
-        >
-          <div className="max-w-5xl mx-auto px-6 text-center">
-            
-            <span
-              className="block text-sm font-normal tracking-widest uppercase mb-3"
-              style={{ color: 'hsl(25, 29.37%, 53.62%)', fontFamily: 'sans-serif' }}
-            >
-              Skills & Tools
-            </span>
-
-            <h2 className="text-4xl md:text-5xl font-serif font-medium leading-tight mb-16 text-black">
-              My Tech Stack
-            </h2>
-            <p
-              className="text-gray-600 text-lg md:text-xl mb-16 max-w-3xl mx-auto"
-              style={{ fontFamily: 'Times New Roman, serif' }}
-            >
-              While studying Information Technology, I have gained hands-on experience with tools like HTML, CSS, JavaScript, React, Node.js, MySQL, Firebase, and PHP. I enjoy building responsive websites and dynamic applications, continuously learning new ways to solve problems and create projects that are both functional and visually appealing.
-            </p>
-
-            {/* Continuous marquee container */}
-            <div className="overflow-hidden relative w-full">
-              <div className="flex w-max space-x-4 sm:space-x-6 md:space-x-8 animate-marquee">
-                {[
-                  { name: "HTML5", src: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/html5/html5-original.svg" },
-                  { name: "CSS3", src: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/css3/css3-original.svg" },
-                  { name: "JavaScript", src: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/javascript/javascript-original.svg" },
-                  { name: "React", src: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/react/react-original.svg" },
-                  { name: "Node.js", src: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/nodejs/nodejs-original.svg" },
-                  { name: "Firebase", src: "https://www.vectorlogo.zone/logos/firebase/firebase-icon.svg" },
-                  { name: "PHP", src: "https://www.php.net/images/logos/php-logo.svg" },
-                  { name: "MySQL", src: "https://www.mysql.com/common/logos/logo-mysql-170x115.png" }
-                ].concat([
-                  { name: "HTML5", src: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/html5/html5-original.svg" },
-                  { name: "CSS3", src: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/css3/css3-original.svg" },
-                  { name: "JavaScript", src: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/javascript/javascript-original.svg" },
-                  { name: "React", src: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/react/react-original.svg" },
-                  { name: "Node.js", src: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/nodejs/nodejs-original.svg" },
-                  { name: "Firebase", src: "https://www.vectorlogo.zone/logos/firebase/firebase-icon.svg" },
-                  { name: "PHP", src: "https://www.php.net/images/logos/php-logo.svg" },
-                  { name: "MySQL", src: "https://www.mysql.com/common/logos/logo-mysql-170x115.png" }
-                ]).map((tech, idx) => (
-                  <div
-                    key={idx}
-                    className="flex flex-col items-center justify-center flex-shrink-0 hover:scale-110 transition-transform w-20 sm:w-24 md:w-auto"
-                  >
-                    <img
-                      src={tech.src}
-                      alt={tech.name}
-                      className="w-10 h-10 sm:w-12 sm:h-12 md:w-16 md:h-16 mb-1 sm:mb-2 rotate-12 hover:rotate-0 transition-transform"
-                    />
-                    <span className="text-gray-700 font-medium text-[10px] sm:text-xs md:text-sm text-center">
-                      {tech.name}
-                    </span>
-                  </div>
-                ))}
-              </div>
+        <section className="learning-section">
+          <div className="section-heading learning-heading" data-aos="fade-up">
+            <div>
+              <p className="eyebrow">COMMUNITY & CONTINUOUS LEARNING</p>
+              <h2>Showing up <span>to grow.</span></h2>
             </div>
+            <Link href="/certificates" className="text-link">View certificates <ArrowUpRight size={18} /></Link>
+          </div>
 
+          <div className="milestone-list">
+            {milestones.map((milestone, index) => (
+              <article className="milestone-row" key={milestone.title} data-aos="fade-up" data-aos-delay={String(index * 90)}>
+                <span className="milestone-index">0{index + 1}</span>
+                <div>
+                  <p className="milestone-date">{milestone.date}</p>
+                  <h3>{milestone.title}</h3>
+                  <p className="milestone-org">{milestone.organization}</p>
+                </div>
+                <p className="milestone-detail">{milestone.detail}</p>
+              </article>
+            ))}
           </div>
         </section>
 
-        {/* What I Can Do Section */}
-        <section 
-          className="relative w-full bg-white py-20" 
-          data-aos="fade-up"
-        >
-          <div className="max-w-5xl mx-auto px-6 text-center">
-            
-            <span
-              className="block text-sm font-normal tracking-widest uppercase mb-3"
-              style={{ color: 'hsl(25, 29.37%, 53.62%)', fontFamily: 'sans-serif' }}
-            >
-              Capabilities
-            </span>
-
-            <h2 className="text-4xl md:text-5xl font-serif font-medium leading-tight mb-16 text-black">
-              What I Can Do
-            </h2>
-
-            <p className="text-gray-600 text-lg md:text-xl mb-12 max-w-3xl mx-auto"
-               style={{ fontFamily: 'Times New Roman, serif' }}
-            >
-              I leverage my skills in frontend and backend development, UI/UX design, and problem-solving to create interactive, responsive, and visually appealing applications. I am comfortable collaborating on team projects and continuously learning new technologies to deliver efficient and reliable solutions.
-            </p>
-
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-              {/* Card 1: Web Development */}
-              <div className="border-2 border-black rounded-lg p-6 flex flex-col items-center justify-center hover:shadow-lg transition">
-                <svg xmlns="http://www.w3.org/2000/svg" className="w-10 h-10 mb-4 text-black" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
-                  <path strokeLinecap="round" strokeLinejoin="round" d="M16 18l6-6-6-6M8 6l-6 6 6 6" />
-                </svg>
-                <h3 className="text-xl font-semibold mb-2 text-center text-black">Web Development</h3>
-                <p className="text-sm text-center text-black">
-                  Building responsive and interactive websites using HTML, CSS, JavaScript, and React.
-                </p>
-              </div>
-
-              {/* Card 2: UI/UX Design */}
-              <div className="border-2 border-black rounded-lg p-6 flex flex-col items-center justify-center hover:shadow-lg transition">
-                <svg xmlns="http://www.w3.org/2000/svg" className="w-10 h-10 mb-4 text-black" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
-                  <path strokeLinecap="round" strokeLinejoin="round" d="M15.232 5.232l3.536 3.536M9 11l-4 4v4h4l4-4m0 0L20.485 7.757a2.828 2.828 0 10-4-4L9 11z" />
-                </svg>
-                <h3 className="text-xl font-semibold mb-2 text-center text-black">UI/UX Design</h3>
-                <p className="text-sm text-center text-black">
-                  Designing user-friendly interfaces with intuitive navigation, layouts, and visual appeal.
-                </p>
-              </div>
-
-              {/* Card 3: Full Stack & Backend */}
-              <div className="border-2 border-black rounded-lg p-6 flex flex-col items-center justify-center hover:shadow-lg transition">
-                <svg xmlns="http://www.w3.org/2000/svg" className="w-10 h-10 mb-4 text-black" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
-                  <path strokeLinecap="round" strokeLinejoin="round" d="M4 6h16M4 10h16M4 14h16M4 18h16" />
-                  <circle cx="12" cy="10" r="1" stroke="black" strokeWidth={2} />
-                  <circle cx="12" cy="14" r="1" stroke="black" strokeWidth={2} />
-                </svg>
-                <h3 className="text-xl font-semibold mb-2 text-center text-black">Full Stack & Backend</h3>
-                <p className="text-sm text-center text-black">
-                  Handling server-side logic, databases, and APIs to create complete and functional applications.
-                </p>
-              </div>
-            </div>
-
+        <section className="about-closing">
+          <div data-aos="fade-up">
+            <p className="eyebrow">THE SHORT VERSION</p>
+            <p>I’m still learning, always building, and serious about becoming the kind of developer people can rely on.</p>
           </div>
         </section>
       </main>
 
-      <Footer /> 
-    </>
+    </div>
   );
 }

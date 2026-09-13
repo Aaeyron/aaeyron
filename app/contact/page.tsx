@@ -1,114 +1,105 @@
-"use client";
+import type { Metadata } from "next";
+import Link from "next/link";
+import { ArrowUpRight, Code2, Mail, MapPin, Phone } from "lucide-react";
+import { FaFacebookF, FaGithub, FaInstagram, FaTiktok } from "react-icons/fa";
+import SiteNav from "../components/SiteNav";
+import ScrollAnimations from "../components/ScrollAnimations";
 
-import { useEffect, useState } from "react";
-import { 
-  FaEnvelope, 
-  FaPhone, 
-  FaMapMarkerAlt, 
-  FaFacebook, 
-  FaGithub, 
-  FaInstagram, 
-  FaTiktok 
-} from "react-icons/fa";
+export const metadata: Metadata = {
+  title: "Contact — Aaron Seth",
+  description: "Get in touch with Aaron Seth Nagtalon about projects, collaboration, and opportunities.",
+};
 
-interface ContactSlideProps {
-  onClose: () => void;
-}
+const socialLinks = [
+  { label: "GitHub", href: "https://github.com/Aaeyron", icon: FaGithub },
+  { label: "Facebook", href: "https://www.facebook.com/Aaeyronn", icon: FaFacebookF },
+  { label: "Instagram", href: "https://www.instagram.com/aaeyron/", icon: FaInstagram },
+  { label: "TikTok", href: "https://www.tiktok.com/@aaesthr0xnz", icon: FaTiktok },
+];
 
-export default function ContactSlide({ onClose }: ContactSlideProps) {
-  const [isClosing, setIsClosing] = useState(false);
-
-  // Prevent scroll when modal is open
-  useEffect(() => {
-    document.body.style.overflow = "hidden";
-    return () => {
-      document.body.style.overflow = "auto";
-    };
-  }, []);
-
-  const handleClose = () => {
-    setIsClosing(true);
-    setTimeout(() => {
-      onClose();
-    }, 300); // Match animation duration
-  };
-
+export default function Contact() {
   return (
-    <div
-      className={`fixed top-0 right-0 h-full w-full md:w-96 bg-white border-l-2 border-black shadow-lg z-50 flex flex-col p-6 font-sans ${
-        isClosing ? "animate-slideOut" : "animate-slideIn"
-      }`}
-      style={{ animationDuration: "0.3s" }}
-    >
-      {/* Close Button */}
-      <button
-        onClick={handleClose}
-        className="absolute top-4 right-4 text-black text-2xl font-bold hover:text-red-600 transition cursor-pointer"
-      >
-        X
-      </button>
+    <div className="site-shell">
+      <SiteNav />
+      <ScrollAnimations />
 
-      {/* Title */}
-      <h2 className="text-2xl font-semibold text-black mb-6 mt-20 text-center">
-        Get in Touch
-      </h2>
+      <main className="contact-page">
+        <section className="contact-hero">
+          <div className="contact-hero-inner" data-aos="fade-up">
+            <p className="eyebrow">CONTACT / LET’S TALK</p>
+            <h1>
+              Let’s build something
+              <span> useful together.</span>
+            </h1>
+          </div>
+        </section>
 
-      {/* Contact Info */}
-      <div className="flex flex-col gap-4 mt-16 mb-8">
-        <div className="flex items-center gap-3 text-black text-base">
-          <FaEnvelope size={20} />
-          <span>aaronseth041@gmail.com</span>
-        </div>
-        <div className="flex items-center gap-3 text-black text-base">
-          <FaPhone size={20} />
-          <span>+63 915 660 4726</span>
-        </div>
-        <div className="flex items-center gap-3 text-black text-base">
-          <FaMapMarkerAlt size={20} />
-          <span>Davao City, Philippines</span>
-        </div>
-      </div>
+        <section className="contact-content">
+          <div className="contact-intro" data-aos="fade-up">
+            <p className="contact-lead">
+              Have a project, opportunity, or idea you want to discuss? <span>Send me a message</span> and tell me what you’re working on.
+            </p>
+            <p>I’m always open to meeting people who care about thoughtful products and practical software.</p>
+          </div>
 
-      {/* Social Media Section */}
-      <div className="mt-12"> {/* Slight spacing below contact info */}
-        {/* Divider Line */}
-        <hr className="border-black mb-2" />
+          <div className="contact-details" data-aos="fade-up" data-aos-delay="120">
+            <a href="mailto:aaronseth041@gmail.com" className="contact-primary-link">
+              <span><Mail size={19} /> Email me</span>
+              <strong>aaronseth041@gmail.com</strong>
+              <ArrowUpRight size={26} />
+            </a>
 
-        {/* Social Media Text */}
-        <span className="text-black font-semibold text-base mb-1">Social Medias</span>
+            <a href="tel:+639156604726" className="contact-detail-row">
+              <span><Phone size={18} /> Phone</span>
+              <strong>+63 915 660 4726</strong>
+            </a>
 
-        {/* Social Icons */}
-        <div className="flex gap-6 mt-4"> {/* Added mt-4 to lower icons slightly */}
-          <a
-            href="https://www.facebook.com/Aaeyronn"
-            target="_blank"
-            className="text-black hover:text-blue-600 transition"
-          >
-            <FaFacebook size={28} />
-          </a>
-          <a
-            href="https://github.com/Aaeyron"
-            target="_blank"
-            className="text-black hover:text-gray-800 transition"
-          >
-            <FaGithub size={28} />
-          </a>
-          <a
-            href="https://www.instagram.com/aaeyron/"
-            target="_blank"
-            className="text-black hover:text-pink-500 transition"
-          >
-            <FaInstagram size={28} />
-          </a>
-          <a
-            href="https://www.tiktok.com/@aaesthr0xnz"
-            target="_blank"
-            className="text-black hover:text-black transition"
-          >
-            <FaTiktok size={28} />
-          </a>
-        </div>
-      </div>
+            <div className="contact-detail-row">
+              <span><MapPin size={18} /> Location</span>
+              <strong>Davao City, Philippines</strong>
+            </div>
+          </div>
+        </section>
+
+        <section className="contact-socials">
+          <div data-aos="fade-up">
+            <p className="eyebrow">ELSEWHERE</p>
+            <h2>Find me <span>online.</span></h2>
+          </div>
+          <div className="social-link-list" data-aos="fade-up" data-aos-delay="120">
+            {socialLinks.map((social, index) => (
+              <a
+                href={social.href}
+                target="_blank"
+                rel="noreferrer"
+                key={social.label}
+                aria-label={`Visit my ${social.label}`}
+                title={social.label}
+                data-aos="zoom-in"
+                data-aos-delay={String(100 + index * 75)}
+              >
+                <social.icon aria-hidden="true" />
+                <span className="sr-only">{social.label}</span>
+              </a>
+            ))}
+          </div>
+        </section>
+
+        <section className="contact-back-link">
+          <div data-aos="fade-up">
+            <p className="eyebrow">NEXT / SELECTED WORK</p>
+            <Link href="/projects">
+              <span className="contact-project-icon" aria-hidden="true"><Code2 size={28} /></span>
+              <span className="contact-back-copy">
+                <span>See what I’ve</span>
+                <strong>been building.</strong>
+              </span>
+              <ArrowUpRight size={34} />
+            </Link>
+          </div>
+        </section>
+      </main>
+
     </div>
   );
 }

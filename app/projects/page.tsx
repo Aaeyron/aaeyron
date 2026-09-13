@@ -1,23 +1,12 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import AOS from "aos";
 import Image from "next/image";
-import Link from "next/link";
-import Footer from "../components/Footer"; // Import Footer
-import { Github, ExternalLink } from "lucide-react";
+import SiteNav from "../components/SiteNav";
+import ScrollAnimations from "../components/ScrollAnimations";
+import { ArrowDownRight, ArrowUpRight, Github, ExternalLink } from "lucide-react";
 
 export default function Projects() {
-  const [isOpen, setIsOpen] = useState(false);
-
-  useEffect(() => {
-    AOS.init({
-      duration: 800,
-      easing: "ease-in-out",
-      once: true,
-    });
-  }, []);
-
   const projects = [
     {
       title: "Library Management System",
@@ -59,7 +48,7 @@ export default function Projects() {
   const [showModal, setShowModal] = useState(false);
   const [lightboxImage, setLightboxImage] = useState<string | null>(null);
   const [currentImgIndex, setCurrentImgIndex] = useState<number>(0);
-  const badgeColor = "hsl(25, 29.37%, 53.62%)";
+  const badgeColor = "#2457f5";
 
   useEffect(() => {
     document.body.style.overflow = (showModal || lightboxImage) ? "hidden" : "auto";
@@ -78,125 +67,78 @@ export default function Projects() {
 
   return (
     <>
-      {/* Fixed Navbar */}
-      <header className="fixed top-0 left-0 w-full bg-white border-b border-gray-300 z-50 py-4 shadow-md">
-        <div className="flex flex-col items-center justify-center px-4">
-          
-          {/* Mobile Menu Toggle Button (Shows only on small screens) */}
-          <button 
-            onClick={() => setIsOpen(!isOpen)}
-            className="md:hidden w-10 h-10 flex items-center justify-center transition focus:outline-none mb-1 cursor-pointer"
-          >
-            <svg
-              className={`w-5 h-5 text-black transform transition-transform duration-200 ${isOpen ? "rotate-180" : ""}`}
-              fill="none"
-              stroke="currentColor"
-              viewBox="0 0 24 24"
-            >
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2.5" d="M19 9l-7 7-7-7" />
-            </svg>
-          </button>
+      <SiteNav />
+      <ScrollAnimations />
 
-          {/* Nav Container - Desktop horizontal row / Mobile conditional slide down */}
-          <nav className={`grid transition-all duration-300 ease-in-out overflow-hidden w-full md:w-auto text-gray-700 font-sans font-semibold text-sm sm:text-base
-            ${isOpen ? "grid-rows-[1fr] opacity-100" : "grid-rows-[0fr] opacity-0 md:opacity-100 md:grid-rows-none"}
-          `}>
-            <div className={`overflow-hidden flex flex-col items-center space-y-3 pt-3 md:pt-0 md:space-y-0 md:flex-row md:justify-center md:space-x-2 sm:space-x-4 md:space-x-20`}>
-              <Link href="/about" onClick={() => setIsOpen(false)} className="hover:text-blue-500 transition cursor-pointer">
-                About
-              </Link>
-              <Link href="/projects" onClick={() => setIsOpen(false)} className="hover:text-blue-500 transition cursor-pointer">
-                Projects
-              </Link>
-              <Link href="/certificates" onClick={() => setIsOpen(false)} className="hover:text-blue-500 transition cursor-pointer">
-                Certificates
-              </Link>
-            </div>
-          </nav>
-        </div>
-      </header>
+      <main className="projects-page">
+        <section className="projects-hero">
+          <div className="projects-hero-copy" data-aos="fade-up" data-aos-duration="950">
+            <p className="eyebrow">SELECTED WORK / 2025—2026</p>
+            <h1>
+              Projects built to
+              <span> solve real problems.</span>
+            </h1>
+            <p className="projects-hero-summary">
+              A focused collection of full-stack systems and digital experiences shaped through learning, iteration, and practical use cases.
+            </p>
+            <a href="#project-01" className="projects-scroll-link">
+              Explore the work <ArrowDownRight size={20} />
+            </a>
+          </div>
 
-      <main className="pt-28 pb-50 min-h-screen bg-gray-50 px-4 md:px-6">
-        <section className="max-w-6xl mx-auto text-center" data-aos="fade-up">
-          <span
-            className="block text-sm font-normal tracking-widest uppercase mb-3"
-            style={{ color: badgeColor, fontFamily: "sans-serif" }}
-          >
-            Portfolio
-          </span>
-
-          <h2 className="text-3xl sm:text-4xl md:text-5xl font-serif font-medium leading-tight mb-6 text-black">
-            My Projects
-          </h2>
-
-          <p
-            className="text-gray-600 text-base sm:text-lg md:text-xl mb-12 md:mb-16 max-w-3xl mx-auto"
-            style={{ fontFamily: "Times New Roman, serif" }}
-          >
-            Here are some of the projects I’ve built while learning web development. Each project demonstrates my skills and approach to solving problems with modern tools and frameworks.
-          </p>
-
-          {/* Projects Grid */}
-          <div className="grid grid-cols-1 sm:grid-cols-2 gap-6 md:gap-12">
-            {projects.map((proj, idx) => (
-              <div key={idx} className="group cursor-pointer text-left">
-                <div
-                  className="relative overflow-hidden rounded-xl aspect-[4/3] mb-4 sm:mb-6 bg-gray-200 flex items-center justify-center border border-black cursor-pointer"
-                  onClick={() => openModal(idx)}
-                >
-                  {proj.cardImage ? (
-                    <Image
-                      src={proj.cardImage}
-                      alt={proj.title}
-                      fill
-                      className="object-cover transform group-hover:scale-105 transition-transform duration-700 ease-out"
-                    />
-                  ) : (
-                    <span className="text-gray-500">Image Placeholder</span>
-                  )}
-
-                  <div className="absolute inset-0 bg-black/20 opacity-0 group-hover:opacity-100 transition-opacity z-10 flex items-center justify-center">
-                    <span className="inline-flex items-center gap-2 px-4 py-2 sm:px-6 sm:py-3 bg-white text-black rounded-full font-medium transform translate-y-2 group-hover:translate-y-0 transition-transform duration-300">
-                      View Details
-                    </span>
-                  </div>
-                </div>
-
-                <div className="space-y-2 sm:space-y-3">
-                  {/* Tech Badges */}
-                  <div className="flex flex-wrap gap-2">
-                    {proj.tech.map((t, i) => (
-                      <span
-                        key={i}
-                        className="text-xs sm:text-sm font-medium px-2 py-1 rounded-md"
-                        style={{
-                          color: badgeColor,
-                          backgroundColor: "white",
-                          border: `1px solid ${badgeColor}`,
-                        }}
-                      >
-                        {t}
-                      </span>
-                    ))}
-                  </div>
-
-                  {/* Project Title */}
-                  <h3 className="text-xl sm:text-2xl font-serif font-medium group-hover:text-primary transition-colors text-black">
-                    {proj.title}
-                  </h3>
-
-                  {/* Project Short Description */}
-                  <p
-                    className="leading-relaxed text-gray-600 text-sm sm:text-base line-clamp-3"
-                    style={{ fontFamily: "Times New Roman, serif" }}
-                  >
-                    {proj.shortDescription}
-                  </p>
-                </div>
-              </div>
-            ))}
+          <div className="projects-hero-count" aria-label={`${projects.length} selected projects`} data-aos="fade-left" data-aos-delay="160">
+            <strong>0{projects.length}</strong>
+            <span>Selected builds<br />across web and product</span>
           </div>
         </section>
+
+        {projects.map((proj, idx) => (
+          <section
+            id={`project-0${idx + 1}`}
+            className={`project-showcase ${idx % 2 === 1 ? "project-showcase-alt" : ""}`}
+            key={proj.title}
+          >
+            <div className="project-showcase-inner">
+              <button
+                type="button"
+                className="project-showcase-image"
+                onClick={() => openModal(idx)}
+                aria-label={`View details for ${proj.title}`}
+                data-aos={idx % 2 === 1 ? "fade-left" : "fade-right"}
+                data-aos-duration="900"
+              >
+                <Image
+                  src={proj.cardImage}
+                  alt={`${proj.title} interface preview`}
+                  fill
+                  sizes="(max-width: 900px) 100vw, 58vw"
+                  className="project-showcase-picture"
+                />
+                <span className="project-image-action">View project <ArrowUpRight size={20} /></span>
+              </button>
+
+              <div
+                className="project-showcase-copy"
+                data-aos={idx % 2 === 1 ? "fade-right" : "fade-left"}
+                data-aos-delay="130"
+                data-aos-duration="900"
+              >
+                <div className="project-showcase-meta">
+                  <span>0{idx + 1}</span>
+                  <span>{proj.tech.join(" / ")}</span>
+                </div>
+                <h2>{proj.title}</h2>
+                <p>{proj.shortDescription}</p>
+                <div className="project-showcase-tags">
+                  {proj.tech.map((technology) => <span key={technology}>{technology}</span>)}
+                </div>
+                <button type="button" className="project-details-button" onClick={() => openModal(idx)}>
+                  View case study <ArrowUpRight size={21} />
+                </button>
+              </div>
+            </div>
+          </section>
+        ))}
 
         {/* Modal */}
         {selectedProject !== null && (
@@ -206,15 +148,15 @@ export default function Projects() {
             }`}
           >
             <div
-              className={`relative bg-white w-full max-w-5xl max-h-[90vh] overflow-y-auto border border-black transform transition-all duration-300 ${
+              className={`relative bg-white text-[#14213d] w-full max-w-5xl max-h-[90vh] overflow-y-auto border border-[#14213d]/20 transform transition-all duration-300 ${
                 showModal ? "scale-100" : "scale-95"
               }`}
             >
               {/* Close Button Container - Styled for clear tap accessibility on mobile screen widths */}
-              <div className="sticky top-0 bg-white/90 backdrop-blur-sm flex justify-end items-center z-30 pr-2 border-b border-gray-100">
+              <div className="sticky top-0 bg-white/90 backdrop-blur-sm flex justify-end items-center z-30 pr-2 border-b border-[#14213d]/10">
                 <button
                   onClick={closeModal}
-                  className="p-3 text-xl font-bold text-gray-600 hover:text-black transition-colors cursor-pointer"
+                  className="p-3 text-xl font-bold text-[#5f6b7a] hover:text-[#2457f5] transition-colors cursor-pointer"
                 >
                   ✕
                 </button>
@@ -225,7 +167,7 @@ export default function Projects() {
                 
                 {/* Image Gallery Section */}
                 <div className="w-full">
-                  <div className="relative w-full aspect-[4/3] sm:aspect-[16/10] md:aspect-square bg-gray-200 border border-black rounded-lg overflow-hidden group/img">
+                  <div className="relative w-full aspect-[4/3] sm:aspect-[16/10] md:aspect-square bg-[#dce7ff] border border-[#14213d]/20 rounded-lg overflow-hidden group/img">
                     
                     {/* View/Click full layout container */}
                     <div 
@@ -255,7 +197,7 @@ export default function Projects() {
                         e.stopPropagation();
                         setCurrentImgIndex(prev => (prev === 0 ? 1 : 0));
                       }}
-                      className="absolute left-2 top-1/2 -translate-y-1/2 bg-white/80 hover:bg-white text-black p-2 rounded-full shadow border border-gray-300 transition z-20 text-xs font-bold w-8 h-8 flex items-center justify-center cursor-pointer"
+                      className="absolute left-2 top-1/2 -translate-y-1/2 bg-white/80 hover:bg-white text-[#14213d] p-2 rounded-full shadow border border-[#14213d]/20 transition z-20 text-xs font-bold w-8 h-8 flex items-center justify-center cursor-pointer"
                       title="Previous Image"
                     >
                       ❮
@@ -267,7 +209,7 @@ export default function Projects() {
                         e.stopPropagation();
                         setCurrentImgIndex(prev => (prev === 0 ? 1 : 0));
                       }}
-                      className="absolute right-2 top-1/2 -translate-y-1/2 bg-white/80 hover:bg-white text-black p-2 rounded-full shadow border border-gray-300 transition z-20 text-xs font-bold w-8 h-8 flex items-center justify-center cursor-pointer"
+                      className="absolute right-2 top-1/2 -translate-y-1/2 bg-white/80 hover:bg-white text-[#14213d] p-2 rounded-full shadow border border-[#14213d]/20 transition z-20 text-xs font-bold w-8 h-8 flex items-center justify-center cursor-pointer"
                       title="Next Image"
                     >
                       ❯
@@ -290,7 +232,7 @@ export default function Projects() {
 
                 {/* Details Section */}
                 <div className="flex flex-col">
-                  <h2 className="text-2xl sm:text-3xl font-serif font-medium mb-4 text-black">
+                  <h2 className="text-2xl sm:text-3xl font-sans font-extrabold mb-4 text-[#14213d]">
                     {projects[selectedProject].title}
                   </h2>
 
@@ -299,7 +241,7 @@ export default function Projects() {
                     {projects[selectedProject].tech.map((t, i) => (
                       <span
                         key={i}
-                        className="text-xs sm:text-sm font-medium px-2 py-1 rounded-md"
+                        className="text-xs sm:text-sm font-bold px-2 py-1 rounded-md"
                         style={{
                           color: badgeColor,
                           backgroundColor: "white",
@@ -313,8 +255,7 @@ export default function Projects() {
 
                   {/* Description */}
                   <p
-                    className="text-gray-600 text-sm sm:text-base leading-relaxed mb-6"
-                    style={{ fontFamily: "Times New Roman, serif" }}
+                    className="text-[#14213d]/80 font-medium text-sm sm:text-base leading-relaxed mb-6"
                   >
                     {projects[selectedProject].longDescription}
                   </p>
@@ -326,9 +267,9 @@ export default function Projects() {
                       href={projects[selectedProject].githubLink}
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="inline-flex items-center justify-center w-11 h-11 sm:w-12 sm:h-12 border border-black rounded-full hover:bg-gray-100 transition cursor-pointer"
+                      className="inline-flex items-center justify-center w-11 h-11 sm:w-12 sm:h-12 border-2 border-[#2457f5] text-[#2457f5] rounded-full hover:bg-[#2457f5] hover:text-white transition cursor-pointer"
                     >
-                      <Github size={20} className="text-black" />
+                      <Github size={20} />
                     </a>
 
                     {/* Vercel Live Deployment Button */}
@@ -337,10 +278,10 @@ export default function Projects() {
                         href={projects[selectedProject].liveLink}
                         target="_blank"
                         rel="noopener noreferrer"
-                        className="inline-flex items-center justify-center w-11 h-11 sm:w-12 sm:h-12 border border-black rounded-full hover:bg-gray-100 transition cursor-pointer"
+                        className="inline-flex items-center justify-center w-11 h-11 sm:w-12 sm:h-12 border-2 border-[#2457f5] text-[#2457f5] rounded-full hover:bg-[#2457f5] hover:text-white transition cursor-pointer"
                         title="View Live Site"
                       >
-                        <ExternalLink size={20} className="text-black" />
+                        <ExternalLink size={20} />
                       </a>
                     )}
                   </div>
@@ -358,7 +299,7 @@ export default function Projects() {
           >
             <button 
               onClick={() => setLightboxImage(null)}
-              className="absolute top-4 right-4 text-white text-2xl hover:text-gray-300 transition focus:outline-none cursor-pointer"
+              className="absolute top-4 right-4 text-white text-2xl hover:text-[#8fb0ff] transition focus:outline-none cursor-pointer"
             >
               ✕
             </button>
@@ -373,8 +314,6 @@ export default function Projects() {
         )}
       </main>
 
-      {/* Footer */}
-      <Footer />
     </>
   );
 }

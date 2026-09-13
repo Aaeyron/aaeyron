@@ -1,10 +1,10 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import AOS from "aos";
 import Image from "next/image";
-import Link from "next/link";
-import Footer from "../components/Footer"; // Import Footer
+import SiteNav from "../components/SiteNav";
+import ScrollAnimations from "../components/ScrollAnimations";
+import { ArrowDownRight, ArrowUpRight, Award } from "lucide-react";
 
 type Certificate = {
   title: string;
@@ -15,16 +15,6 @@ type Certificate = {
 };
 
 export default function Certificates() {
-  const [isOpen, setIsOpen] = useState(false);
-
-  useEffect(() => {
-    AOS.init({
-      duration: 800,
-      easing: "ease-in-out",
-      once: true,
-    });
-  }, []);
-
   const certificates: Certificate[] = [
     {
       title: "CODECHUM Certificate",
@@ -32,13 +22,6 @@ export default function Certificates() {
       year: "May 18, 2025",
       image: "/images/Certificate1.png",
     },
-    {
-      title: "WATT Certificate",
-      issuer: "Educational Tour",
-      year: "November 22, 2025",
-      image: "/images/Certificate2.jpg",
-    },
-    
     {
       title: "Introduction to Cybersecurity",
       issuer: "Networking Academy",
@@ -71,109 +54,75 @@ export default function Certificates() {
   }, [selectedCert]);
 
   return (
-    <div className="bg-white min-h-screen flex flex-col">
-      {/* Fixed Navbar */}
-      <header className="fixed top-0 left-0 w-full bg-white border-b border-gray-300 z-50 py-4 shadow-md">
-        <div className="flex flex-col items-center justify-center px-4">
-          
-          {/* Mobile Menu Toggle Button (Shows only on small screens) */}
-          <button 
-            onClick={() => setIsOpen(!isOpen)}
-            className="md:hidden w-10 h-10 flex items-center justify-center transition focus:outline-none mb-1"
-          >
-            <svg
-              className={`w-5 h-5 text-black transform transition-transform duration-200 ${isOpen ? "rotate-180" : ""}`}
-              fill="none"
-              stroke="currentColor"
-              viewBox="0 0 24 24"
-            >
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2.5" d="M19 9l-7 7-7-7" />
-            </svg>
-          </button>
+    <div className="certificates-page">
+      <SiteNav />
+      <ScrollAnimations />
 
-          {/* Nav Container - Desktop horizontal row / Mobile conditional slide down */}
-          <nav className={`grid transition-all duration-300 ease-in-out overflow-hidden w-full md:w-auto text-gray-700 font-sans font-semibold text-sm sm:text-base
-            ${isOpen ? "grid-rows-[1fr] opacity-100" : "grid-rows-[0fr] opacity-0 md:opacity-100 md:grid-rows-none"}
-          `}>
-            <div className={`overflow-hidden flex flex-col items-center space-y-3 pt-3 md:pt-0 md:space-y-0 md:flex-row md:justify-center md:space-x-2 sm:space-x-4 md:space-x-20`}>
-              <Link href="/about" onClick={() => setIsOpen(false)} className="hover:text-blue-500 transition">
-                About
-              </Link>
-              <Link href="/projects" onClick={() => setIsOpen(false)} className="hover:text-blue-500 transition">
-                Projects
-              </Link>
-              <Link href="/certificates" onClick={() => setIsOpen(false)} className="hover:text-blue-500 transition">
-                Certificates
-              </Link>
-            </div>
-          </nav>
-        </div>
-      </header>
-
-      {/* Main Section */}
-      <main className="pt-28 px-4 sm:px-6 pb-50 flex-grow">
-        <section className="max-w-6xl mx-auto text-center" data-aos="fade-up">
-          <div className="mb-12 sm:mb-16">
-            <span
-              className="block text-sm font-medium tracking-widest uppercase mb-3"
-              style={{ color: "hsl(25, 29.37%, 53.62%)" }}
-            >
-              Achievements
-            </span>
-            <h2 className="text-3xl sm:text-4xl md:text-5xl font-serif font-medium leading-tight text-black">
-              Certificates & <br /> Awards
-            </h2>
+      <main>
+        <section className="certificates-hero">
+          <div className="certificates-hero-copy" data-aos="fade-up">
+            <p className="eyebrow">CERTIFICATES / CONTINUOUS LEARNING</p>
+            <h1>
+              Proof of progress.
+              <span> Built through learning.</span>
+            </h1>
+            <p className="certificates-hero-summary">
+              A growing record of technical training, community learning, and the skills I continue to develop beyond the classroom.
+            </p>
+            <a href="#certificate-archive" className="certificates-scroll-link">
+              Explore credentials <ArrowDownRight size={20} />
+            </a>
           </div>
 
-          {/* Certificates Grid */}
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8">
+          <div className="certificates-hero-count" aria-label={`${certificates.length} certificates`} data-aos="fade-left" data-aos-delay="140">
+            <Award size={34} />
+            <strong>0{certificates.length}</strong>
+            <span>Credentials<br />and achievements</span>
+          </div>
+        </section>
+
+        <section className="certificate-archive" id="certificate-archive">
+          <div className="certificate-archive-heading" data-aos="fade-up">
+            <div>
+              <p className="eyebrow">THE ARCHIVE / 2025—2026</p>
+              <h2>Learning, <span>documented.</span></h2>
+            </div>
+            <p>Open any credential to view the complete certificate.</p>
+          </div>
+
+          <div className="certificate-grid">
             {certificates.map((cert, idx) => (
-              <div
-                key={idx}
-                className={`group bg-white border border-gray-200 rounded-xl overflow-hidden shadow-xs hover:shadow-md transition-all flex flex-col ${
-                  cert.isPlaceholder ? "cursor-default opacity-80" : "cursor-pointer"
-                }`}
+              <button
+                type="button"
+                key={cert.title}
+                className="certificate-card"
+                data-aos="fade-up"
+                data-aos-delay={String(Math.min(idx * 90, 270))}
                 onClick={() => {
                   if (!cert.isPlaceholder) setSelectedCert(idx);
                 }}
+                disabled={cert.isPlaceholder}
               >
-                <div className="relative aspect-[4/3] w-full overflow-hidden bg-gray-100">
+                <div className="certificate-card-image">
                   <Image
                     src={cert.image}
                     alt={cert.title}
                     fill
-                    className="object-cover transform group-hover:scale-105 transition-transform duration-700 ease-out"
+                    sizes="(max-width: 700px) 100vw, (max-width: 1100px) 50vw, 33vw"
+                    className="certificate-card-picture"
                   />
-                  <div className="absolute top-3 right-3 sm:top-4 sm:right-4 z-20 w-10 h-10 bg-white/90 backdrop-blur-sm rounded-full flex items-center justify-center shadow-sm">
-                    <svg
-                      xmlns="http://www.w3.org/2000/svg"
-                      width="18"
-                      height="18"
-                      viewBox="0 0 24 24"
-                      fill="none"
-                      stroke="currentColor"
-                      strokeWidth="2"
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                      style={{ color: "hsl(25, 29.37%, 53.62%)" }}
-                    >
-                      <path d="m15.477 12.89 1.515 8.526a.5.5 0 0 1-.81.47l-3.58-2.687a1 1 0 0 0-1.197 0l-3.586 2.686a.5.5 0 0 1-.81-.469l1.514-8.526"></path>
-                      <circle cx="12" cy="8" r="6"></circle>
-                    </svg>
-                  </div>
+                  <span className="certificate-open-icon"><ArrowUpRight size={20} /></span>
                 </div>
 
-                <div className="p-4 sm:p-6 flex flex-col flex-grow">
-                  <h3 className="text-lg sm:text-xl font-serif font-medium mb-2 group-hover:text-blue-500 transition-colors text-black">
-                    {cert.title}
-                  </h3>
-
-                  <div className="mt-auto pt-3 sm:pt-4 border-t border-gray-200 flex justify-between items-center text-sm sm:text-base text-gray-500">
-                    <span className="font-medium">{cert.issuer}</span>
+                <div className="certificate-card-copy">
+                  <div className="certificate-card-meta">
+                    <span>0{idx + 1}</span>
                     <span>{cert.year}</span>
                   </div>
+                  <h3>{cert.title}</h3>
+                  <p>{cert.issuer}</p>
                 </div>
-              </div>
+              </button>
             ))}
           </div>
         </section>
@@ -181,42 +130,39 @@ export default function Certificates() {
         {/* Modal */}
         {selectedCert !== null && (
           <div
-            className="fixed inset-0 z-50 flex items-center justify-center bg-black/50 p-4 overflow-auto"
+            className="fixed inset-0 z-50 flex items-center justify-center bg-[#14213d]/70 backdrop-blur-sm p-4 overflow-auto"
             onClick={() => setSelectedCert(null)}
           >
             <div
-              className="bg-white rounded-lg w-full max-w-3xl sm:max-w-5xl overflow-hidden relative p-4 sm:p-6 md:p-8 shadow-lg animate-pop-in"
+              className="bg-white text-[#14213d] w-full max-w-3xl sm:max-w-5xl overflow-hidden relative p-4 sm:p-6 md:p-8 border border-[#14213d]/20 shadow-2xl animate-pop-in"
               onClick={(e) => e.stopPropagation()}
             >
               <button
-                className="absolute top-3 right-3 sm:top-4 sm:right-4 z-50 text-white bg-black/60 p-2 rounded-full hover:bg-black/80 text-lg sm:text-xl cursor-pointer"
+                className="absolute top-3 right-3 sm:top-4 sm:right-4 z-50 w-11 h-11 grid place-items-center text-white bg-[#2457f5] hover:bg-[#14213d] text-lg sm:text-xl font-bold cursor-pointer transition-colors"
                 onClick={() => setSelectedCert(null)}
               >
                 ✕
               </button>
 
-              <div className="relative w-full aspect-[16/10] mb-4 sm:mb-6">
+              <div className="relative w-full aspect-[16/10] mb-5 sm:mb-7 bg-[#f5f8ff] border border-[#14213d]/15">
                 <Image
                   src={certificates[selectedCert].image}
                   alt={certificates[selectedCert].title}
                   fill
-                  className="object-contain rounded-lg"
+                  className="object-contain"
                 />
               </div>
 
-              <h2 className="text-xl sm:text-2xl md:text-3xl font-serif font-medium mb-2 text-black">
+              <h2 className="text-2xl sm:text-3xl md:text-4xl font-sans font-extrabold tracking-[-0.04em] leading-tight mb-2 text-[#14213d]">
                 {certificates[selectedCert].title}
               </h2>
-              <p className="text-gray-600 text-sm sm:text-base">
+              <p className="text-[#2457f5] font-bold text-sm sm:text-base">
                 Issued by {certificates[selectedCert].issuer} — {certificates[selectedCert].year}
               </p>
             </div>
           </div>
         )}
       </main>
-
-      {/* Footer */}
-      <Footer />
 
       <style jsx>{`
         .animate-pop-in {
