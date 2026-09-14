@@ -115,7 +115,7 @@ button { font: inherit; }
 .home-about-links a { display: inline-flex; align-items: center; gap: .55rem; padding-bottom: .35rem; border-bottom: 2px solid currentColor; color: var(--ink); font-weight: 750; transition: color .2s ease; }
 .home-about-links a:hover { color: var(--accent); }
 
-.projects-page { min-height: 100vh; background: var(--canvas); color: var(--ink); }
+.projects-page { min-height: 100vh; overflow-x: clip; background: var(--canvas); color: var(--ink); }
 .projects-hero { min-height: 100vh; min-height: 100svh; min-height: 100dvh; padding: clamp(6.5rem, 10vw, 10rem) clamp(1.25rem, 4vw, 4rem) clamp(4rem, 7vw, 7rem); display: grid; grid-template-columns: minmax(0, 1.35fr) minmax(220px, .65fr); gap: clamp(3rem, 8vw, 9rem); align-items: end; background: linear-gradient(145deg, #ffffff 0%, #f7f9ff 56%, #eaf0ff 100%); border-bottom: 1px solid var(--line); }
 .projects-hero-copy { max-width: 1180px; }
 .projects-hero h1 { margin: 0; color: var(--ink); font-size: clamp(4rem, 9vw, 9.5rem); font-weight: 830; line-height: .86; letter-spacing: -.08em; }

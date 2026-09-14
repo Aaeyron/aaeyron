@@ -66,7 +66,7 @@ export default function Projects() {
   };
 
   return (
-    <>
+    <div className="site-shell">
       <SiteNav />
       <ScrollAnimations />
 
@@ -314,6 +314,6 @@ export default function Projects() {
         )}
       </main>
 
-    </>
+    </div>
   );
 }
