@@ -51,7 +51,8 @@ export default function Home() {
                 <span> useful software.</span>
               </h1>
               <p className="hero-summary">
-                I’m Aaron Seth—a developer shaping <span>thoughtful web, mobile, and backend experiences</span> while learning fast and building in public.
+                I’m Aaron Seth—an aspiring software developer and AI/ML engineer seeking{" "}
+                <span>internship opportunities and mentorship.</span>
               </p>
 
               <div className="hero-actions">
