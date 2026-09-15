@@ -45,13 +45,13 @@ export default function Home() {
 
           <div className="hero-grid">
             <div className="hero-copy" data-aos="fade-up">
-              <p className="eyebrow">SOFTWARE DEVELOPER / DIGITAL BUILDER</p>
+              <p className="eyebrow">FULL-STACK DEVELOPER / AI/ML LEARNER</p>
               <h1>
                 I build ideas into
                 <span> useful software.</span>
               </h1>
               <p className="hero-summary">
-                I’m Aaron Seth—an aspiring software developer and AI/ML engineer seeking{" "}
+                I’m Aaron Seth—an aspiring Full-Stack Developer and AI/ML Learner seeking{" "}
                 <span>internship opportunities and mentorship.</span>
               </p>
 
