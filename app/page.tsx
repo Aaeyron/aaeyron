@@ -132,7 +132,7 @@ export default function Home() {
           <div className="home-about-index" data-aos="fade-right">ABOUT / 004</div>
           <div className="home-about-copy" data-aos="fade-up" data-aos-delay="100">
             <p className="eyebrow">A SHORT INTRO</p>
-            <h2>Developer, student, and <span>thoughtful problem solver.</span></h2>
+            <h2>Full-Stack Developer, AI/ML Learner, and <span>thoughtful problem solver.</span></h2>
             <p>
               I’m Aaron Seth Nagtalon. I enjoy turning practical ideas into <span>clear digital experiences</span>, learning new tools along the way, and improving every project through careful iteration.
             </p>
