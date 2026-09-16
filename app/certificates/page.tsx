@@ -54,7 +54,7 @@ export default function Certificates() {
   }, [selectedCert]);
 
   return (
-    <div className="certificates-page">
+    <div className="site-shell certificates-page">
       <SiteNav />
       <ScrollAnimations />
 
