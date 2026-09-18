@@ -77,7 +77,7 @@ export default function Home() {
         <section className="work-section">
           <div className="section-heading" data-aos="fade-up">
             <div>
-              <p className="eyebrow">SELECTED WORK / 2025—2026</p>
+              <p className="eyebrow">SELECTED WORK</p>
               <h2>Projects with a <span>purpose.</span></h2>
             </div>
             <Link href="/projects" className="text-link">See all projects <ArrowUpRight size={18} /></Link>
