@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import { ArrowUpRight, Code2, Mail, MapPin, Phone } from "lucide-react";
-import { FaFacebookF, FaGithub, FaInstagram, FaTiktok } from "react-icons/fa";
+import { FaFacebookF, FaGithub, FaInstagram, FaLinkedinIn, FaTiktok } from "react-icons/fa";
 import SiteNav from "../components/SiteNav";
 import ScrollAnimations from "../components/ScrollAnimations";
 
@@ -12,6 +12,7 @@ export const metadata: Metadata = {
 
 const socialLinks = [
   { label: "GitHub", href: "https://github.com/Aaeyron", icon: FaGithub },
+  { label: "LinkedIn", href: "https://www.linkedin.com/in/aaron-seth-nagtalon-289769437/", icon: FaLinkedinIn },
   { label: "Facebook", href: "https://www.facebook.com/Aaeyronn", icon: FaFacebookF },
   { label: "Instagram", href: "https://www.instagram.com/aaeyron/", icon: FaInstagram },
   { label: "TikTok", href: "https://www.tiktok.com/@aaesthr0xnz", icon: FaTiktok },
