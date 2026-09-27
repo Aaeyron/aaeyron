@@ -8,6 +8,8 @@ export const profile = {
   shortName: "Aaron Seth",
   role: "Aspiring Software & AI/ML Engineer",
   location: "Davao City, Philippines",
+  /** For very tight spots (e.g. photo captions). */
+  locationShort: "Davao City, PH",
   email: "aaronseth041@gmail.com",
   phone: { display: "+63 915 660 4726", href: "tel:+639156604726" },
   status: "Open to internships & mentorship",

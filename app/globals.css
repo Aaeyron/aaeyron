@@ -333,6 +333,13 @@ html:has(dialog[open]) {
     animation: swap-in var(--dur-base) var(--ease-out);
   }
 
+  /* Staggered entrance for list items; each item sets --i (0, 1, 2…).
+     Restarts every time a closed <dialog> opens. */
+  .stagger > * {
+    animation: swap-in var(--dur-slow) var(--ease-out) both;
+    animation-delay: calc(var(--i, 0) * 50ms + 60ms);
+  }
+
   .tap {
     min-height: 44px;
     min-width: 44px;
@@ -417,5 +424,8 @@ html:has(dialog[open]) {
   }
   .status-dot::after {
     display: none;
+  }
+  .stagger > * {
+    animation: none;
   }
 }

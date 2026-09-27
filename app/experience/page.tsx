@@ -59,7 +59,7 @@ export default function Experience() {
               </div>
               <p aria-hidden className="mt-3 flex justify-between font-mono text-[0.7rem] text-muted">
                 <span>fig. 01</span>
-                <span>{profile.location}</span>
+                <span>{profile.locationShort}</span>
               </p>
             </div>
           </div>

@@ -51,6 +51,45 @@ function CopyEmail() {
   );
 }
 
+/**
+ * Compact GitHub · LinkedIn · Email buttons for the mobile menu: stacked,
+ * full width, 48px tall, with a staggered entrance (off with reduced motion).
+ */
+export function ContactButtonsCompact({ className = "", startIndex = 0 }: { className?: string; startIndex?: number }) {
+  return (
+    <ul className={`stagger grid gap-3 ${className}`}>
+      {contactLinks.map((link, i) => {
+        const Icon = icons[link.id];
+        return (
+          <li key={link.id} style={{ "--i": startIndex + i } as React.CSSProperties}>
+            <a
+              href={link.href}
+              aria-label={link.ariaLabel}
+              {...(link.external ? { target: "_blank", rel: "noopener noreferrer" } : {})}
+              className="group relative flex min-h-12 items-center gap-3 border border-line bg-bg px-2 transition-[border-color,transform] duration-200 hover:border-accent focus-visible:border-accent active:scale-[0.97]"
+            >
+              <CornerMarks hover inset="-4px" />
+              <span
+                aria-hidden
+                className="grid size-8 shrink-0 place-items-center border border-line transition-colors duration-200 group-hover:border-accent group-hover:bg-accent group-hover:text-on-accent group-focus-visible:border-accent group-focus-visible:bg-accent group-focus-visible:text-on-accent group-active:border-accent group-active:bg-accent group-active:text-on-accent"
+              >
+                <Icon size={15} aria-hidden />
+              </span>
+              <span className="flex-1 font-semibold">{link.label}</span>
+              <span className="hidden truncate font-mono text-xs text-muted min-[340px]:inline">{link.handle}</span>
+              <ArrowUpRight
+                size={16}
+                aria-hidden
+                className="mr-1 shrink-0 text-muted transition-[transform,color] duration-200 group-hover:-translate-y-0.5 group-hover:translate-x-0.5 group-hover:text-accent-text"
+              />
+            </a>
+          </li>
+        );
+      })}
+    </ul>
+  );
+}
+
 /** GitHub · LinkedIn · Email buttons. 3 across on desktop, stacked on mobile. */
 export default function ContactButtons({ className = "" }: { className?: string }) {
   return (

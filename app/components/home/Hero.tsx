@@ -49,7 +49,7 @@ export default function Hero() {
 
       <div className="grid-12 mt-10 gap-y-10">
         <p className="col-span-4 text-lg text-muted sm:col-span-6 lg:col-span-6">
-          I’m {profile.name}, an aspiring software and AI/ML engineer in Davao City, looking for internships and
+          I’m {profile.name}, an aspiring software and AI/ML engineer in {profile.location}, looking for internships and
           mentorship.
         </p>
 
