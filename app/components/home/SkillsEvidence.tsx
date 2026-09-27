@@ -29,7 +29,7 @@ export default function SkillsEvidence() {
                         return (
                           <Link
                             key={slug}
-                            href={`/projects/${slug}`}
+                            href={`#${slug}`}
                             className="group inline-flex min-h-11 items-center gap-1 text-ink transition-colors duration-200 hover:text-accent-text sm:min-h-8"
                           >
                             {p.title}

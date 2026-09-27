@@ -319,18 +319,14 @@ export default function Experience() {
                           </li>
                         ))}
                       </ul>
-                      <div className="mt-6 flex flex-wrap gap-x-6 border-t border-line pt-3">
-                        <Link href={`/projects/${p.slug}`} className={linkCls}>
-                          Read the case study <span className="sr-only">: {p.title}</span>
-                          <ArrowRight size={16} aria-hidden className={arrowRight} />
-                        </Link>
-                        {p.repo && (
+                      {p.repo && (
+                        <div className="mt-6 border-t border-line pt-3">
                           <a href={p.repo} target="_blank" rel="noopener noreferrer" className={linkCls}>
                             View on GitHub <span className="sr-only">: {p.title}</span>
                             <ArrowUpRight size={16} aria-hidden className={arrowUpRight} />
                           </a>
-                        )}
-                      </div>
+                        </div>
+                      )}
                     </div>
                   </article>
                 </Panel>

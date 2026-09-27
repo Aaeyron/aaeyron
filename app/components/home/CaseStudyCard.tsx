@@ -2,8 +2,7 @@
 
 import { useState } from "react";
 import Image from "next/image";
-import Link from "next/link";
-import { ArrowRight, ArrowUpRight } from "lucide-react";
+import { ArrowUpRight } from "lucide-react";
 import type { Project } from "@/lib/content";
 import { CornerMarks, Label, Tag, Txt } from "../ui/primitives";
 
@@ -22,7 +21,12 @@ export default function CaseStudyCard({ project, index }: { project: Project; in
   const titleId = `cs-${project.slug}`;
 
   return (
-    <article aria-labelledby={titleId} className="grid-12 gap-y-8 border-t border-line py-12 sm:py-16" data-reveal>
+    <article
+      id={project.slug}
+      aria-labelledby={titleId}
+      className="grid-12 gap-y-8 border-t border-line py-12 sm:py-16"
+      data-reveal
+    >
       <div className="col-span-4 sm:col-span-8 lg:col-span-6">
         <div className="relative lg:sticky lg:top-24">
           <CornerMarks />
@@ -140,23 +144,18 @@ export default function CaseStudyCard({ project, index }: { project: Project; in
           )}
         </div>
 
-        <div className="mt-8 flex flex-wrap gap-x-6">
-          <Link href={`/projects/${project.slug}`} className={`group ${linkCls}`}>
-            Read the case study
-            <span className="sr-only">: {project.title}</span>
-            <ArrowRight size={16} aria-hidden className="transition-transform duration-200 group-hover:translate-x-0.5" />
-          </Link>
-          {project.repo ? (
-            <a href={project.repo} target="_blank" rel="noopener noreferrer" className={linkCls}>
+        {project.repo && (
+          <div className="measure mt-8 border-t border-line pt-3">
+            <a href={project.repo} target="_blank" rel="noopener noreferrer" className={`group/link ${linkCls}`}>
               View on GitHub <span className="sr-only">: {project.title}</span>
-              <ArrowUpRight size={16} aria-hidden />
+              <ArrowUpRight
+                size={16}
+                aria-hidden
+                className="transition-transform duration-200 group-hover/link:-translate-y-0.5 group-hover/link:translate-x-0.5"
+              />
             </a>
-          ) : (
-            <span className="inline-flex min-h-11 items-center">
-              <Txt>[TODO: GitHub repo URL]</Txt>
-            </span>
-          )}
-        </div>
+          </div>
+        )}
       </div>
     </article>
   );
