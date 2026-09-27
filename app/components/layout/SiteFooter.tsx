@@ -1,5 +1,6 @@
 import Link from "next/link";
-import { contactLinks, navLinks, profile } from "@/lib/content";
+import { ArrowUpRight } from "lucide-react";
+import { contactLinks, navLinks, profile, resumeAriaLabel, resumeUrl } from "@/lib/content";
 import { Label } from "../ui/primitives";
 import SocialIcons from "./SocialIcons";
 
@@ -43,8 +44,19 @@ export default function SiteFooter() {
               </li>
             ))}
             <li>
-              <a href={profile.resume} className="inline-flex min-h-11 items-center text-muted transition-colors hover:text-ink sm:min-h-9">
-                Résumé
+              <a
+                href={resumeUrl}
+                target="_blank"
+                rel="noopener noreferrer"
+                aria-label={resumeAriaLabel}
+                className="group inline-flex min-h-11 items-center gap-1 text-muted transition-colors hover:text-ink sm:min-h-9"
+              >
+                View résumé
+                <ArrowUpRight
+                  size={13}
+                  aria-hidden
+                  className="transition-transform duration-200 group-hover:-translate-y-0.5 group-hover:translate-x-0.5"
+                />
               </a>
             </li>
           </ul>

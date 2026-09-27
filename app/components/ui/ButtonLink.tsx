@@ -22,7 +22,6 @@ type Props = {
   className?: string;
   /** Opens in a new tab with rel=noopener. */
   external?: boolean;
-  download?: boolean;
 } & Omit<ComponentProps<"a">, "href" | "children">;
 
 export default function ButtonLink({
@@ -31,18 +30,16 @@ export default function ButtonLink({
   children,
   className = "",
   external,
-  download,
   ...rest
 }: Props) {
   const cls = buttonClass(variant, className);
 
-  if (external || download || href.startsWith("mailto:") || href.startsWith("tel:")) {
+  if (external || href.startsWith("mailto:") || href.startsWith("tel:")) {
     return (
       <a
         href={href}
         className={cls}
         {...(external ? { target: "_blank", rel: "noopener noreferrer" } : {})}
-        {...(download ? { download: "" } : {})}
         {...rest}
       >
         {children}

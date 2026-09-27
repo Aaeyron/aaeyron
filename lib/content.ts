@@ -3,6 +3,10 @@
 
 export const siteUrl = process.env.NEXT_PUBLIC_SITE_URL ?? "http://localhost:3000"; // [TODO: production URL]
 
+/** Résumé on Google Drive — every "View résumé" link uses this. Opens in a new tab. */
+export const resumeUrl = "https://drive.google.com/file/d/1KY1VFjOZdBADFLHZlbeNZwm0yjq3mFfE/view";
+export const resumeAriaLabel = "View my résumé (opens in a new tab)";
+
 export const profile = {
   name: "Aaron Seth Nagtalon",
   shortName: "Aaron Seth",
@@ -14,7 +18,6 @@ export const profile = {
   phone: { display: "+63 915 660 4726", href: "tel:+639156604726" },
   status: "Open to internships & mentorship",
   availability: "[TODO: availability, e.g. “Available for internships from …”]",
-  resume: "/resume.pdf", // [TODO: add public/resume.pdf]
   heroImage: "/images/MeAgain.jpeg",
   aboutImage: "/images/About.jpg",
   intro:
