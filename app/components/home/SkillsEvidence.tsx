@@ -1,13 +1,13 @@
 import Link from "next/link";
 import { ArrowUpRight } from "lucide-react";
 import { getProject, skills } from "@/lib/content";
-import { Em, SectionHeader } from "../ui/primitives";
+import { Highlight, SectionHeader } from "../ui/primitives";
 
 export default function SkillsEvidence() {
   return (
     <section aria-labelledby="skills-title" className="section border-t border-line">
       <div className="container-x">
-        <SectionHeader id="skills-title" index="02" label="Skills as evidence" title={<>Skills, with <Em>receipts</Em>.</>}>
+        <SectionHeader id="skills-title" index="02" label="Skills as evidence" title={<>Skills, with <Highlight>receipts</Highlight>.</>}>
           <p>No percentage bars. Each skill links to the project where I actually used it.</p>
         </SectionHeader>
 

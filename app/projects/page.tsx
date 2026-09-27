@@ -3,7 +3,7 @@ import { SectionHeader } from "../components/ui/primitives";
 
 export const metadata: Metadata = {
   title: "Projects",
-  description: "Case studies of web apps built by Aaron Seth Nagtalon.",
+  description: "Case studies of three 3rd-year college projects by Aaron Seth Nagtalon, built to learn full-stack development and UI/UX.",
 };
 
 // Phase 3 builds this page out.

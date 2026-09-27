@@ -40,7 +40,7 @@ type SectionHeaderProps = {
   as?: "h1" | "h2";
 };
 
-/** Mono index + label, serif heading, optional intro text and action link. */
+/** Mono index + label, heading, optional intro text and action link. */
 export function SectionHeader({ index, label, title, children, action, id, as: H = "h2" }: SectionHeaderProps) {
   return (
     <div className="mb-10 flex flex-col gap-6 sm:mb-14 md:flex-row md:items-end md:justify-between" data-reveal>
@@ -59,7 +59,7 @@ export function SectionHeader({ index, label, title, children, action, id, as: H
   );
 }
 
-/** Serif italic word in the accent colour — use once per headline at most. */
-export function Em({ children }: { children: ReactNode }) {
-  return <em className="text-accent-text">{children}</em>;
+/** One highlighted word in the accent colour — use once per headline at most. */
+export function Highlight({ children }: { children: ReactNode }) {
+  return <span className="text-accent-text">{children}</span>;
 }

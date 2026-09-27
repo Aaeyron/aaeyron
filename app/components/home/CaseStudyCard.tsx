@@ -40,7 +40,7 @@ export default function CaseStudyCard({ project, index }: { project: Project; in
           <span className="text-accent-text">0{index + 1}</span>
           <span>{project.context}</span>
         </p>
-        <h3 id={titleId} className="mt-3 font-serif text-4xl leading-tight sm:text-5xl">
+        <h3 id={titleId} className="h-card mt-3">
           {project.title}
         </h3>
         <p className="mt-3 text-muted">{project.tagline}</p>
@@ -121,8 +121,19 @@ export default function CaseStudyCard({ project, index }: { project: Project; in
               </div>
               <div>
                 <dt className="label">Result</dt>
-                <dd className="mt-2">
-                  <Txt>{cs.result}</Txt>
+                <dd className="mt-2 space-y-3">
+                  <p>
+                    <span className="block font-medium">What I learned</span>
+                    <span className="text-muted">
+                      <Txt>{cs.result.learned}</Txt>
+                    </span>
+                  </p>
+                  <p>
+                    <span className="block font-medium">What I’d improve next</span>
+                    <span className="text-muted">
+                      <Txt>{cs.result.next}</Txt>
+                    </span>
+                  </p>
                 </dd>
               </div>
             </dl>
@@ -135,15 +146,15 @@ export default function CaseStudyCard({ project, index }: { project: Project; in
             <span className="sr-only">: {project.title}</span>
             <ArrowRight size={16} aria-hidden className="transition-transform duration-200 group-hover:translate-x-0.5" />
           </Link>
-          <a href={project.links.repo} target="_blank" rel="noopener noreferrer" className={linkCls}>
-            Code <span className="sr-only">for {project.title} on GitHub</span>
-            <ArrowUpRight size={16} aria-hidden />
-          </a>
-          {project.links.live && (
-            <a href={project.links.live} target="_blank" rel="noopener noreferrer" className={linkCls}>
-              Live site <span className="sr-only">for {project.title}</span>
+          {project.repo ? (
+            <a href={project.repo} target="_blank" rel="noopener noreferrer" className={linkCls}>
+              View on GitHub <span className="sr-only">: {project.title}</span>
               <ArrowUpRight size={16} aria-hidden />
             </a>
+          ) : (
+            <span className="inline-flex min-h-11 items-center">
+              <Txt>[TODO: GitHub repo URL]</Txt>
+            </span>
           )}
         </div>
       </div>

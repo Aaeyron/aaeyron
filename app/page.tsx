@@ -1,13 +1,13 @@
 import Link from "next/link";
 import { ArrowRight } from "lucide-react";
-import { projects } from "@/lib/content";
+import { projects, projectsSummary } from "@/lib/content";
 import Hero from "./components/home/Hero";
 import CaseStudyCard from "./components/home/CaseStudyCard";
 import SkillsEvidence from "./components/home/SkillsEvidence";
 import Changelog from "./components/home/Changelog";
 import AboutTeaser from "./components/home/AboutTeaser";
 import ContactBlock from "./components/home/ContactBlock";
-import { Em, SectionHeader } from "./components/ui/primitives";
+import { Highlight, SectionHeader } from "./components/ui/primitives";
 
 const moreLink =
   "group inline-flex min-h-11 items-center gap-1.5 font-medium transition-colors duration-200 hover:text-accent-text";
@@ -22,8 +22,8 @@ export default function Home() {
           <SectionHeader
             id="work-title"
             index="01"
-            label="Selected case studies"
-            title={<>Three projects, and <Em>how</Em> I built them.</>}
+            label={`Case studies · ${projectsSummary}`}
+            title={<>Three school projects, and <Highlight>how</Highlight> I built them.</>}
             action={
               <Link href="/projects" className={moreLink}>
                 All projects
@@ -31,7 +31,10 @@ export default function Home() {
               </Link>
             }
           >
-            <p>Each one is written as problem, constraints, decisions and result. Read the short version or the full story.</p>
+            <p>
+              All three are 3rd-year college projects I built to learn. Each is written as problem, constraints, decisions,
+              and what I learned. Read the short version or the full story.
+            </p>
           </SectionHeader>
 
           <div className="border-b border-line">
@@ -50,7 +53,7 @@ export default function Home() {
             id="changelog-title"
             index="03"
             label="Changelog"
-            title={<>Growth, <Em>versioned</Em>.</>}
+            title={<>Growth, <Highlight>versioned</Highlight>.</>}
             action={
               <Link href="/certificates" className={moreLink}>
                 Certificates

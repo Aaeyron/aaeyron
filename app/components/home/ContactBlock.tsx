@@ -3,7 +3,7 @@ import { FaGithub, FaLinkedinIn } from "react-icons/fa";
 import { profile, socials } from "@/lib/content";
 import ButtonLink from "../ui/ButtonLink";
 import CopyEmailButton from "../ui/CopyEmailButton";
-import { Em, Txt } from "../ui/primitives";
+import { Highlight, Txt } from "../ui/primitives";
 
 const icons: Record<string, typeof FaGithub> = { GitHub: FaGithub, LinkedIn: FaLinkedinIn };
 
@@ -16,7 +16,7 @@ export default function ContactBlock() {
           <span>Contact</span>
         </p>
         <h2 id="contact-title" className="display max-w-[16ch]">
-          Let’s build something <Em>useful</Em> together.
+          Let’s build something <Highlight>useful</Highlight> together.
         </h2>
         <p className="measure mt-6 text-lg text-muted">
           Have a project, opportunity, or idea you want to discuss? Send me a message and tell me what you’re working on.

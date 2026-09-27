@@ -6,7 +6,7 @@ export default function SiteFooter() {
     <footer className="border-t border-line">
       <div className="container-x grid-12 gap-y-10 py-12 sm:py-16">
         <div className="col-span-4 sm:col-span-8 lg:col-span-5">
-          <p className="font-serif text-3xl leading-tight">{profile.name}</p>
+          <p className="h3">{profile.name}</p>
           <p className="mt-2 text-muted">{profile.role}</p>
           <p className="label mt-6">{profile.location}</p>
         </div>

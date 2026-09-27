@@ -1,7 +1,7 @@
 import { ArrowDown, Download } from "lucide-react";
 import { now, profile } from "@/lib/content";
 import ButtonLink from "../ui/ButtonLink";
-import { Em, Txt } from "../ui/primitives";
+import { Highlight, Txt } from "../ui/primitives";
 
 export default function Hero() {
   return (
@@ -14,7 +14,7 @@ export default function Hero() {
       </p>
 
       <h1 id="hero-title" className="display mt-8 max-w-[18ch]">
-        I build web apps <Em>end to end</Em>, from the interface to the database behind it.
+        I build web apps <Highlight>end to end</Highlight>, from the interface to the database behind it.
       </h1>
 
       <div className="grid-12 mt-10 gap-y-10">

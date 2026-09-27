@@ -2,7 +2,7 @@ import Image from "next/image";
 import { ArrowRight } from "lucide-react";
 import { profile, story } from "@/lib/content";
 import ButtonLink from "../ui/ButtonLink";
-import { Em } from "../ui/primitives";
+import { Highlight } from "../ui/primitives";
 
 export default function AboutTeaser() {
   return (
@@ -26,7 +26,7 @@ export default function AboutTeaser() {
             <span>About</span>
           </p>
           <h2 id="about-title" className="h2">
-            A developer in progress, <Em>building with intention</Em>.
+            A developer in progress, <Highlight>building with intention</Highlight>.
           </h2>
           <div className="measure mt-6 space-y-4 text-muted">
             <p className="text-lg text-ink">{profile.intro}</p>
