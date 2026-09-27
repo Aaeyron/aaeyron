@@ -15,6 +15,7 @@ import {
 } from "@/lib/content";
 import { hasInternshipStarted, internshipCopy } from "@/lib/internship";
 import CertificationRows from "../components/certificates/CertificationRows";
+import ProjectLinks from "../components/projects/ProjectLinks";
 import InternshipText, { InternshipBadge } from "../components/ui/InternshipText";
 import {
   CornerMarks,
@@ -25,6 +26,7 @@ import {
   Panel,
   SectionHeader,
   Tag,
+  Txt,
 } from "../components/ui/primitives";
 
 // Re-render hourly so the internship "incoming" → "currently" switch also reaches the HTML and meta tags.
@@ -319,14 +321,7 @@ export default function Experience() {
                           </li>
                         ))}
                       </ul>
-                      {p.repo && (
-                        <div className="mt-6 border-t border-line pt-3">
-                          <a href={p.repo} target="_blank" rel="noopener noreferrer" className={linkCls}>
-                            View on GitHub <span className="sr-only">: {p.title}</span>
-                            <ArrowUpRight size={16} aria-hidden className={arrowUpRight} />
-                          </a>
-                        </div>
-                      )}
+                      <ProjectLinks project={p} className="mt-6" />
                     </div>
                   </article>
                 </Panel>
@@ -364,7 +359,9 @@ export default function Experience() {
                     <span aria-hidden className="mt-2.5 size-1.5 shrink-0 bg-accent" />
                     <span className="min-w-0">
                       <span className="block font-medium">{e.title}</span>
-                      <span className="font-mono text-xs text-muted">{e.org}</span>
+                      <span className="font-mono text-xs text-muted">
+                        <Txt>{e.org}</Txt>
+                      </span>
                     </span>
                   </li>
                 ))}

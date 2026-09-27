@@ -90,27 +90,21 @@ export const socials: Social[] = [
 
 export const githubUser = "Aaeyron";
 
-export type Decision = { title: string; detail: string };
-
-// All three are school projects from my 3rd year of college, built as a beginner to learn.
-// None are deployed or used by real clients — keep the wording honest (no "shipped", "live", "customers").
+// All three are school projects from my 3rd year of college, built solo as a beginner to learn.
+// Not real products. Only FlashMind (frontend-only) has a live demo; the other two were never put online.
 export type Project = {
   slug: string;
   title: string;
   tagline: string;
+  /** Short paragraph shown on the home page rows. */
+  summary: string;
   context: string;
   stack: string[];
   image: { src: string; alt: string };
-  gallery: { src: string; alt: string }[];
   /** GitHub repo, only if a real public repo exists. */
   repo?: string;
-  caseStudy: {
-    short: string;
-    problem: string;
-    constraints: string[];
-    decisions: Decision[];
-    result: { learned: string; next: string };
-  };
+  /** Hosted demo, only if one really exists. */
+  live?: string;
 };
 
 /** This year's highlights, shown first. Only the details Aaron provided — nothing is deployed. */
@@ -164,132 +158,36 @@ export const projects: Project[] = [
     slug: "library-management-system",
     title: "Library Management System",
     tagline: "A 3rd-year school project: a role-based library system with a React front end and a Django REST backend.",
+    summary:
+      "A school project I built in my 3rd year of college to learn full-stack development. A React front end talks to a Django REST API, with role-based features for Admins, Librarians and Users: book management, borrowing and return tracking, and sign-in.",
     context: "3rd-year school project",
     stack: ["React", "Django", "Python", "REST API"],
     image: { src: "/images/LMS1.png", alt: "Library Management System dashboard" },
-    gallery: [
-      { src: "/images/LMS1.png", alt: "Library Management System dashboard" },
-      { src: "/images/LMS2.png", alt: "Library Management System detail screen" },
-    ],
     repo: "https://github.com/Aaeyron/Library-Management-System",
-    caseStudy: {
-      short:
-        "A school project I built in my 3rd year of college to learn full-stack development. A React front end talks to a Django REST API, with role-based features for Admins, Librarians and Users: book management, borrowing and return tracking, and sign-in.",
-      problem:
-        "I wanted to understand how a full-stack app fits together, from the interface to the API and the database. A library system was a good exercise: it has to keep track of books, who borrowed them and when they come back, and different users need different levels of access. [TODO: anything specific the course asked for]",
-      constraints: [
-        "A 3rd-year college project, built as a beginner.",
-        "Three roles with different permissions: Admin, Librarian and User.",
-        "[TODO: team size, timeline, or other course requirements]",
-      ],
-      decisions: [
-        {
-          title: "Separate front end and API",
-          detail:
-            "React for the interface and Django for the backend, connected through a REST API. [TODO: why you chose this split over a single Django app]",
-        },
-        {
-          title: "Role-based access",
-          detail:
-            "Admin, Librarian and User roles behind sign-in, so each person only sees the actions they’re allowed to take.",
-        },
-        {
-          title: "[TODO: a third decision]",
-          detail: "[TODO: e.g. how you modelled borrowing and returns in the database]",
-        },
-      ],
-      result: {
-        learned:
-          "[TODO: what you learned, e.g. how a React front end and a Django REST API talk to each other, and how to structure role-based access]",
-        next: "[TODO: what you’d improve next, e.g. tests, validation, or error handling]",
-      },
-    },
   },
   {
     slug: "janas-boutique",
     title: "Jana’s Boutique",
     tagline: "A 3rd-year school project: an online boutique storefront and inventory concept.",
+    summary:
+      "A school project from my 3rd year of college: a concept storefront for an online boutique, with product browsing, ordering and inventory tracking. Built with a Next.js front end, a PHP backend and a MySQL database.",
     context: "3rd-year school project · concept",
     stack: ["Next.js", "PHP", "MySQL"],
     image: { src: "/images/Boutique1.png", alt: "Jana’s Boutique storefront concept" },
-    gallery: [
-      { src: "/images/Boutique1.png", alt: "Jana’s Boutique storefront concept" },
-      { src: "/images/Boutique2.png", alt: "Jana’s Boutique product and ordering screen" },
-    ],
     repo: "https://github.com/Aaeyron/Janasboutique",
-    caseStudy: {
-      short:
-        "A school project from my 3rd year of college: a concept storefront for an online boutique, with product browsing, ordering and inventory tracking. Built with a Next.js front end, a PHP backend and a MySQL database.",
-      problem:
-        "For a course project I explored how a small clothing boutique could take orders online and keep track of its stock. Jana’s Boutique is a concept, not a real business. [TODO: what the assignment asked for]",
-      constraints: [
-        "A 3rd-year college project, built as a beginner.",
-        "Backend in PHP with a MySQL database, run locally with XAMPP.",
-        "[TODO: team size, timeline, or other course requirements]",
-      ],
-      decisions: [
-        {
-          title: "Next.js front end, PHP backend",
-          detail: "Next.js for the storefront, with PHP handling backend processing. [TODO: why this combination]",
-        },
-        {
-          title: "Orders and inventory in one system",
-          detail:
-            "Browsing products, placing orders and tracking inventory are part of the same system. [TODO: how stock updates when an order is placed]",
-        },
-        {
-          title: "[TODO: a third decision]",
-          detail: "[TODO: e.g. how you designed the product catalogue]",
-        },
-      ],
-      result: {
-        learned: "[TODO: what you learned, e.g. connecting a Next.js front end to a PHP backend, or designing a MySQL schema]",
-        next: "[TODO: what you’d improve next]",
-      },
-    },
   },
   {
     slug: "flashmind",
     title: "FlashMind",
-    tagline: "A UI/UX design exploration for my HCI class: a flashcard concept based on active recall.",
+    tagline: "A UI/UX design exploration for my HCI class: a flashcard concept based on active recall, with a live demo.",
+    summary:
+      "A UI/UX design exploration for my HCI (Human-Computer Interaction) subject in my 3rd year of college. I used it to practise and test my UI/UX skills on a flashcard concept built around active recall. It’s a frontend-only project with a live demo you can try.",
     context: "3rd-year HCI design exploration",
     stack: ["UI/UX", "HCI", "React"],
     image: { src: "/images/FlashMind Display.png", alt: "FlashMind flashcard study screen" },
-    gallery: [
-      { src: "/images/FlashMind Display.png", alt: "FlashMind flashcard study screen" },
-      { src: "/images/FlashMind UIUX.png", alt: "FlashMind UI/UX design" },
-    ],
     repo: "https://github.com/Aaeyron/FlashMind",
-    caseStudy: {
-      short:
-        "A UI/UX design exploration for my HCI (Human-Computer Interaction) subject in my 3rd year of college. I used it to practise and test my UI/UX skills on a flashcard concept built around active recall.",
-      problem:
-        "Rereading notes feels productive, but active recall, testing yourself, is a better way to remember material. For my HCI class I explored how a flashcard interface could make that habit feel easy. [TODO: what the assignment asked for]",
-      constraints: [
-        "A design exploration for my HCI subject in my 3rd year of college.",
-        "The goal was to practise and test my UI/UX skills.",
-        "[TODO: timeline, tools used (e.g. Figma), and how you tested the design]",
-      ],
-      decisions: [
-        {
-          title: "Designed around active recall",
-          detail:
-            "Cards are built for answering, not rereading, so the design supports active recall. [TODO: describe the key interaction]",
-        },
-        {
-          title: "Design process",
-          detail: "[TODO: describe your process, e.g. the FlashMind UI/UX mockups]",
-        },
-        {
-          title: "Testing the design",
-          detail: "[TODO: how you tested it and what you changed as a result]",
-        },
-      ],
-      result: {
-        learned: "[TODO: what you learned about UI/UX and HCI from this project]",
-        next: "[TODO: what you’d improve next]",
-      },
-    },
+    // From the original projects page (git c54bef3: liveLink).
+    live: "https://flash-mind-alpha.vercel.app/",
   },
 ];
 
@@ -371,7 +269,7 @@ export const earlySolo = {
   intro:
     "My 3rd year of college was my first time building projects on my own as a solo developer. These three school projects are where I practised, made mistakes, and strengthened my skills across frontend, backend, and UI/UX.",
   introEmphasis: "my first time building projects on my own",
-  note: "I built them to learn. They were class projects, not real products, and none of them run on a public website.",
+  note: "I built them to learn. They were class projects, not real products. Two of them were never put online; FlashMind has a live demo.",
   labels: ["School project", "3rd year college", "Solo developer"],
   marker: "v1 · first solo build",
 };
@@ -390,6 +288,7 @@ export const techEvents = [
   { title: "Build With AI: Davao", org: "GDG Davao" },
   { title: "Cloud Catchup Session", org: "AWS User Group Davao" },
   { title: "Cyber Hygiene Training", org: "Holy Cross of Davao College · IAES" },
+  { title: "AWS Community", org: "[TODO: organizer]" },
 ];
 
 export const navLinks = [

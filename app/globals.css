@@ -210,9 +210,6 @@ dialog[open]::backdrop {
 @keyframes fade-in {
   from { opacity: 0; }
 }
-@keyframes swap-in {
-  from { opacity: 0; transform: translateY(6px); }
-}
 @keyframes ping {
   0% { transform: scale(1); opacity: 0.6; }
   70%, 100% { transform: scale(2.6); opacity: 0; }
@@ -327,10 +324,6 @@ html:has(dialog[open]) {
     border-radius: inherit;
     background: var(--accent);
     animation: ping 2.4s var(--ease-out) infinite;
-  }
-
-  .swap-in {
-    animation: swap-in var(--dur-base) var(--ease-out);
   }
 
   /* Staggered entrance for list items; each item sets --i (0, 1, 2…).

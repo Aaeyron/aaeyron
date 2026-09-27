@@ -2,7 +2,7 @@ import Link from "next/link";
 import { ArrowRight } from "lucide-react";
 import { certifications, projects, projectsSummary, selectedProjects } from "@/lib/content";
 import Hero from "./components/home/Hero";
-import CaseStudyCard from "./components/home/CaseStudyCard";
+import SchoolProjectRow from "./components/home/SchoolProjectRow";
 import SkillsEvidence from "./components/home/SkillsEvidence";
 import AboutTeaser from "./components/home/AboutTeaser";
 import ContactBlock from "./components/home/ContactBlock";
@@ -61,14 +61,14 @@ export default function Home() {
             title={<>Where I started, and <Highlight>how</Highlight> I built it.</>}
           >
             <p>
-              All three are 3rd-year college projects I built to learn. Each is written as problem, constraints, decisions,
-              and what I learned. Read the short version or the full story.
+              All three are 3rd-year college projects I built solo to learn. The code for each is on GitHub, and FlashMind
+              has a live demo.
             </p>
           </SectionHeader>
 
           <div className="border-b border-line">
             {projects.map((project, i) => (
-              <CaseStudyCard key={project.slug} project={project} index={i} />
+              <SchoolProjectRow key={project.slug} project={project} index={i} />
             ))}
           </div>
         </div>
