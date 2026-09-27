@@ -7,9 +7,9 @@ const base =
   "group inline-flex min-h-11 items-center justify-center gap-2 rounded-md px-5 text-[0.9375rem] font-medium whitespace-nowrap transition-[background-color,border-color,color,transform] duration-200 ease-out active:translate-y-px";
 
 const variants: Record<Variant, string> = {
-  primary: "bg-accent text-on-accent hover:bg-ink hover:text-bg",
-  secondary: "border border-line bg-transparent text-ink hover:border-ink",
-  ghost: "px-3 text-ink hover:text-accent-ink",
+  primary: "bg-accent text-on-accent hover:bg-[color-mix(in_srgb,var(--accent)_82%,black)]",
+  secondary: "border border-line-strong bg-transparent text-ink hover:border-accent hover:text-accent-text",
+  ghost: "px-3 text-ink hover:text-accent-text",
 };
 
 export const buttonClass = (variant: Variant = "primary", extra = "") =>

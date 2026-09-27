@@ -2,8 +2,6 @@ import type { Metadata, Viewport } from "next";
 import { Geist, Geist_Mono, Instrument_Serif } from "next/font/google";
 import { profile, siteUrl } from "@/lib/content";
 import { themeScript } from "@/lib/theme-script";
-import { CommandProvider } from "./components/command/CommandProvider";
-import CommandMenu from "./components/command/CommandMenu";
 import SiteHeader from "./components/layout/SiteHeader";
 import SiteFooter from "./components/layout/SiteFooter";
 import RevealRoot from "./components/ui/RevealRoot";
@@ -42,8 +40,8 @@ export const metadata: Metadata = {
 
 export const viewport: Viewport = {
   themeColor: [
-    { media: "(prefers-color-scheme: light)", color: "#faf7f2" },
-    { media: "(prefers-color-scheme: dark)", color: "#121110" },
+    { media: "(prefers-color-scheme: light)", color: "#ffffff" },
+    { media: "(prefers-color-scheme: dark)", color: "#000000" },
   ],
 };
 
@@ -60,14 +58,11 @@ export default function RootLayout({ children }: Readonly<{ children: React.Reac
         >
           Skip to content
         </a>
-        <CommandProvider>
-          <SiteHeader />
-          <main id="main" tabIndex={-1} className="flex-1 outline-none">
-            {children}
-          </main>
-          <SiteFooter />
-          <CommandMenu />
-        </CommandProvider>
+        <SiteHeader />
+        <main id="main" tabIndex={-1} className="flex-1 outline-none">
+          {children}
+        </main>
+        <SiteFooter />
         <RevealRoot />
       </body>
     </html>

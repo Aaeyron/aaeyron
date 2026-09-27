@@ -1,6 +1,5 @@
 import Link from "next/link";
 import { navLinks, profile, socials } from "@/lib/content";
-import { Kbd } from "../ui/primitives";
 
 export default function SiteFooter() {
   return (
@@ -58,8 +57,9 @@ export default function SiteFooter() {
 
       <div className="container-x flex flex-col gap-3 border-t border-line py-6 text-sm text-muted sm:flex-row sm:items-center sm:justify-between">
         <p>© {new Date().getFullYear()} {profile.name}</p>
-        <p className="hidden items-center gap-2 sm:flex">
-          Press <Kbd>Ctrl K</Kbd> or <Kbd>⌘K</Kbd> to jump anywhere
+        <p className="flex items-center gap-2">
+          <span aria-hidden className="status-dot" />
+          {profile.status}
         </p>
       </div>
     </footer>

@@ -19,6 +19,11 @@ export const profile = {
     "I’m Aaron, an Information Technology student who enjoys turning simple ideas into useful digital products.",
 };
 
+export const story = [
+  "My work moves across web interfaces, mobile concepts, backend logic, and databases. I’m especially interested in how thoughtful design and solid engineering come together to make software easier to understand and use.",
+  "I learn by building. Every project gives me a new problem to solve, a better question to ask, and another chance to improve how I work, from planning the experience to shipping the final result.",
+];
+
 export const now = {
   building: "[TODO: what you’re currently building]",
   learning: "[TODO: what you’re currently learning]",

@@ -1,7 +1,5 @@
 "use client";
 
-import { useSyncExternalStore } from "react";
-
 export type Theme = "light" | "dark";
 
 export function toggleTheme(): Theme {
@@ -35,15 +33,4 @@ export async function copyText(text: string): Promise<boolean> {
       return false;
     }
   }
-}
-
-const noopSubscribe = () => () => {};
-
-/** "⌘K" on Apple devices, "Ctrl K" elsewhere. Server render assumes Ctrl. */
-export function useShortcutLabel() {
-  return useSyncExternalStore(
-    noopSubscribe,
-    () => (/Mac|iPhone|iPad|iPod/.test(navigator.platform || navigator.userAgent) ? "⌘K" : "Ctrl K"),
-    () => "Ctrl K",
-  );
 }

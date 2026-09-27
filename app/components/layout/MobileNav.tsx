@@ -55,7 +55,7 @@ export default function MobileNav({ pathname }: { pathname: string }) {
                       className="flex min-h-16 items-baseline gap-4 py-3"
                     >
                       <span className="font-mono text-xs text-muted">0{i + 1}</span>
-                      <span className={`font-serif text-4xl leading-none ${active ? "text-accent-ink" : ""}`}>
+                      <span className={`font-serif text-4xl leading-none ${active ? "text-ink" : "text-muted"}`}>
                         {link.label}
                       </span>
                     </Link>
