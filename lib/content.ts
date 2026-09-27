@@ -368,6 +368,16 @@ export const currentWork = {
   also: ["mg-sakura-learning-platform", "jm-learning-hub"],
 };
 
+/** "Where I started" section on /experience: the 3 school projects, framed as early solo work. */
+export const earlySolo = {
+  intro:
+    "My 3rd year of college was my first time building projects on my own as a solo developer. These three school projects are where I practised, made mistakes, and strengthened my skills across frontend, backend, and UI/UX.",
+  introEmphasis: "my first time building projects on my own",
+  note: "I built them to learn. They were class projects, not real products, and none of them run on a public website.",
+  labels: ["School project", "3rd year college", "Solo developer"],
+  marker: "v1 · first solo build",
+};
+
 /** Experience entries. Only details Aaron provided. */
 export const experience = [
   {

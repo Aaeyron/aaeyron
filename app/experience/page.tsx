@@ -5,23 +5,49 @@ import { ArrowRight, ArrowUpRight } from "lucide-react";
 import {
   certifications,
   currentWork,
+  earlySolo,
   experience,
   profile,
+  projects,
   selectedProjects,
   story,
   techEvents,
 } from "@/lib/content";
 import CertificationRows from "../components/certificates/CertificationRows";
-import { CornerMarks, Highlight, Label, SectionHeader, Tag, Txt } from "../components/ui/primitives";
+import {
+  CornerMarks,
+  Emphasis,
+  Highlight,
+  Label,
+  LabelRule,
+  Panel,
+  SectionHeader,
+  Tag,
+  Txt,
+} from "../components/ui/primitives";
 
 export const metadata: Metadata = {
   title: "Experience",
   description:
-    "About Aaron Seth Nagtalon: current projects including the TactileLens capstone, an AI/ML Engineer internship at Apno AI, tech community events, and certifications.",
+    "About Aaron Seth Nagtalon: the TactileLens capstone and current projects, an AI/ML Engineer internship at Apno AI, early solo school projects, tech community events, and certifications.",
 };
 
+const pad = (n: number) => String(n).padStart(2, "0");
+
 const linkCls =
-  "group inline-flex min-h-11 items-center gap-1.5 font-medium transition-colors duration-200 hover:text-accent-text";
+  "group/link inline-flex min-h-11 items-center gap-1.5 font-medium transition-colors duration-200 hover:text-accent-text";
+const arrowRight = "transition-transform duration-200 group-hover/link:translate-x-0.5";
+const arrowUpRight = "transition-transform duration-200 group-hover/link:-translate-y-0.5 group-hover/link:translate-x-0.5";
+
+/** Small key/value metadata row in mono. */
+function Meta({ k, children }: { k: string; children: React.ReactNode }) {
+  return (
+    <div className="flex flex-wrap items-baseline gap-x-3 gap-y-1">
+      <dt className="w-20 shrink-0 font-mono text-[0.7rem] uppercase tracking-wider text-muted">{k}</dt>
+      <dd className="text-sm">{children}</dd>
+    </div>
+  );
+}
 
 export default function Experience() {
   const featured = selectedProjects.find((p) => p.slug === currentWork.featured.slug);
@@ -34,10 +60,14 @@ export default function Experience() {
       <div className="container-x pt-14 sm:pt-24">
         <SectionHeader
           as="h1"
+          rule
           label="Experience"
           title={<>What I’m working on, and <Highlight>where I learn</Highlight>.</>}
         >
-          <p>About me, my current projects, my internship, the tech community, and certifications, all in one place.</p>
+          <p>
+            About me, my current projects, my internship, where I started, the tech community, and certifications, all in
+            one place.
+          </p>
         </SectionHeader>
       </div>
 
@@ -65,22 +95,36 @@ export default function Experience() {
           </div>
 
           <div className="col-span-4 sm:col-span-8 lg:col-span-7 lg:col-start-6" data-reveal>
-            <Label index="01" className="mb-5">
+            <LabelRule index="01" className="mb-5">
               About me
-            </Label>
+            </LabelRule>
             <h2 id="about-title" className="h2">
               A developer in progress, <Highlight>building with intention</Highlight>.
             </h2>
             <div className="measure mt-6 space-y-4 text-muted">
-              <p className="text-lg text-ink">{profile.intro}</p>
-              {story.map((p) => (
-                <p key={p.slice(0, 24)}>{p}</p>
-              ))}
+              <p className="text-lg text-ink">
+                <Emphasis text={profile.intro} phrase="useful digital products" />
+              </p>
+              <p>
+                <Emphasis text={story[0]} phrase="thoughtful design and solid engineering" bold />
+              </p>
+              <p>
+                <Emphasis text={story[1]} phrase="I learn by building." bold />
+              </p>
             </div>
-            <div className="mt-6 flex flex-wrap gap-2">
-              <Label plain>{profile.role}</Label>
-              <Label plain>{profile.location}</Label>
-            </div>
+
+            <Panel className="mt-8 max-w-md p-5">
+              <dl className="space-y-2.5">
+                <Meta k="Role">{profile.role}</Meta>
+                <Meta k="Based in">{profile.location}</Meta>
+                <Meta k="Status">
+                  <span className="inline-flex items-center gap-2">
+                    <span aria-hidden className="status-dot" />
+                    {profile.status}
+                  </span>
+                </Meta>
+              </dl>
+            </Panel>
           </div>
         </div>
       </section>
@@ -88,73 +132,76 @@ export default function Experience() {
       {/* 02 · Currently working on */}
       <section id="current" aria-labelledby="current-title" className="section border-t border-line">
         <div className="container-x">
-          <SectionHeader id="current-title" index="02" label="Currently working on" title="What I’m building now." />
+          <SectionHeader rule id="current-title" index="02" label="Currently working on" title={<>What I’m <Highlight>building</Highlight> now.</>} />
 
           {featured && (
             <div data-reveal>
-            <article
-              aria-labelledby="featured-title"
-              className="group relative border border-line bg-bg p-6 transition-colors duration-200 hover:border-line-strong sm:p-8"
-            >
-              <CornerMarks hover />
-              <div className="flex flex-wrap items-center gap-1.5">
-                {featured.badges.map((b) => (
-                  <Tag key={b} accent>
-                    {b}
-                  </Tag>
-                ))}
-                <Label plain wrap>
-                  {featured.category}
-                </Label>
-              </div>
-              <h3 id="featured-title" className="mt-6 text-3xl font-semibold tracking-[-0.03em] sm:text-4xl">
-                {featured.title}
-              </h3>
-              <p className="measure mt-4 text-lg">
-                {currentWork.featured.lead}{" "}
-                <span className="text-muted">{currentWork.featured.description}</span>
-              </p>
-              <div className="mt-6 flex flex-wrap gap-x-6 border-t border-line pt-3">
-                {featured.repo && (
-                  <a href={featured.repo} target="_blank" rel="noopener noreferrer" className={linkCls}>
-                    View on GitHub <span className="sr-only">: {featured.title}</span>
-                    <ArrowUpRight size={16} aria-hidden />
-                  </a>
-                )}
-                <Link href={`/projects#${featured.slug}`} className={linkCls}>
-                  See it on Projects
-                  <ArrowRight size={16} aria-hidden className="transition-transform duration-200 group-hover:translate-x-0.5" />
-                </Link>
-              </div>
-            </article>
+              <Panel index="01" hover className="p-6 sm:p-8">
+                <div className="flex flex-wrap items-center gap-1.5">
+                  {featured.badges.map((b) => (
+                    <Tag key={b} accent>
+                      {b}
+                    </Tag>
+                  ))}
+                  <Label plain wrap>
+                    {featured.category}
+                  </Label>
+                </div>
+                <span aria-hidden className="draw-x mt-6 block h-px w-8 bg-accent" />
+                <h3 className="mt-5 text-3xl font-semibold tracking-[-0.03em] sm:text-4xl">{featured.title}</h3>
+                <p className="measure mt-4 text-lg">
+                  {currentWork.featured.lead}{" "}
+                  <span className="text-muted">
+                    <Emphasis
+                      text={currentWork.featured.description}
+                      phrase="digital text, UEB, and Nemeth Braille"
+                    />
+                  </span>
+                </p>
+                <div className="mt-6 flex flex-wrap gap-x-6 border-t border-line pt-3">
+                  {featured.repo && (
+                    <a href={featured.repo} target="_blank" rel="noopener noreferrer" className={linkCls}>
+                      View on GitHub <span className="sr-only">: {featured.title}</span>
+                      <ArrowUpRight size={16} aria-hidden className={arrowUpRight} />
+                    </a>
+                  )}
+                  <Link href={`/projects#${featured.slug}`} className={linkCls}>
+                    See it on Projects
+                    <ArrowRight size={16} aria-hidden className={arrowRight} />
+                  </Link>
+                </div>
+              </Panel>
             </div>
           )}
 
-          <ul className="mt-8 border-b border-line">
-            {also.map((p) => (
-              <li key={p.slug} className="border-t border-line" data-reveal>
-                <Link
-                  href={`/projects#${p.slug}`}
-                  className="group flex flex-col gap-3 py-5 sm:flex-row sm:items-center sm:justify-between sm:gap-8"
-                >
-                  <span className="min-w-0">
-                    <span className="flex flex-wrap items-center gap-2">
-                      <span className="text-lg font-semibold tracking-[-0.02em] transition-colors duration-200 group-hover:text-accent-text">
-                        {p.title}
-                      </span>
+          <ul className="mt-10 grid gap-8 sm:grid-cols-2">
+            {also.map((p, i) => (
+              <li key={p.slug} className="flex" data-reveal>
+                <Panel index={pad(i + 2)} hover className="flex w-full">
+                  <Link href={`/projects#${p.slug}`} className="flex w-full flex-col p-5 sm:p-6">
+                    <span className="flex flex-wrap gap-1.5">
                       {p.badges.map((b) => (
                         <Tag key={b} accent>
                           {b}
                         </Tag>
                       ))}
                     </span>
-                    <span className="mt-1 block text-sm text-muted">{p.category}</span>
-                  </span>
-                  <span className="inline-flex shrink-0 items-center gap-1.5 text-sm font-medium">
-                    View on Projects
-                    <ArrowRight size={15} aria-hidden className="transition-transform duration-200 group-hover:translate-x-0.5" />
-                  </span>
-                </Link>
+                    <span className="mt-4 text-xl font-semibold tracking-[-0.02em] transition-colors duration-200 group-hover:text-accent-text">
+                      {p.title}
+                    </span>
+                    <span className="mt-2 block text-sm text-muted">{p.category}</span>
+                    <span className="mt-auto block pt-5">
+                      <span className="flex items-center justify-between gap-4 border-t border-line pt-3 text-sm font-medium">
+                        View on Projects
+                        <ArrowRight
+                          size={15}
+                          aria-hidden
+                          className="transition-transform duration-200 group-hover:translate-x-1"
+                        />
+                      </span>
+                    </span>
+                  </Link>
+                </Panel>
               </li>
             ))}
           </ul>
@@ -164,68 +211,165 @@ export default function Experience() {
       {/* 03 · Internship */}
       <section id="internship" aria-labelledby="internship-title" className="section border-t border-line">
         <div className="container-x">
-          <SectionHeader id="internship-title" index="03" label="Internship" title="Where I’m working." />
+          <SectionHeader rule id="internship-title" index="03" label="Internship" title={<>Where I’m <Highlight>working</Highlight>.</>} />
 
-          <ol className="border-b border-line">
-            {experience.map((job) => (
-              <li key={job.company} className="grid-12 gap-y-4 border-t border-line py-8" data-reveal>
-                <div className="col-span-4 flex flex-wrap items-start gap-2 sm:col-span-2 lg:col-span-3 lg:flex-col">
-                  <Label accent>
-                    <span className="inline-flex items-center gap-2">
-                      <span aria-hidden className="status-dot" />
-                      {job.period}
-                    </span>
-                  </Label>
-                  <span className="text-xs">
-                    <Txt>{job.start}</Txt>
-                  </span>
-                </div>
-                <div className="col-span-4 sm:col-span-6 lg:col-span-9">
-                  <h3 className="text-2xl font-semibold tracking-[-0.025em]">{job.role}</h3>
-                  <p className="mt-1 text-lg">{job.company}</p>
-                  <p className="mt-2 text-muted">{job.companyNote}</p>
-                </div>
+          <ol className="grid gap-8">
+            {experience.map((job, i) => (
+              <li key={job.company} data-reveal>
+                <Panel index={pad(i + 1)} className="p-5 sm:p-8">
+                  <div className="flex gap-5 sm:gap-8">
+                    {/* Timeline: vertical line with an accent dot. */}
+                    <div aria-hidden className="relative w-3 shrink-0">
+                      <span className="absolute inset-y-0 left-1/2 w-px -translate-x-1/2 bg-line-strong" />
+                      <span className="absolute left-1/2 top-1.5 size-3 -translate-x-1/2 border-2 border-bg bg-accent outline outline-1 outline-accent" />
+                    </div>
+
+                    <div className="min-w-0 flex-1">
+                      <div className="flex flex-wrap items-center gap-2">
+                        <Label accent>
+                          <span className="inline-flex items-center gap-2">
+                            <span aria-hidden className="status-dot" />
+                            {job.period}
+                          </span>
+                        </Label>
+                        <span className="text-xs">
+                          <Txt>{job.start}</Txt>
+                        </span>
+                      </div>
+                      <h3 className="mt-5 text-2xl font-semibold tracking-[-0.025em] sm:text-3xl">{job.role}</h3>
+                      <p className="mt-1 text-lg">
+                        <span className="font-semibold text-accent-text">{job.company}</span>
+                      </p>
+                      <dl className="mt-5 space-y-2.5 border-t border-line pt-4">
+                        <Meta k="Type">Internship</Meta>
+                        <Meta k="Company">{job.company}</Meta>
+                        <Meta k="About">{job.companyNote}</Meta>
+                      </dl>
+                    </div>
+                  </div>
+                </Panel>
               </li>
             ))}
           </ol>
         </div>
       </section>
 
-      {/* 04 · Tech events */}
+      {/* 04 · Early solo projects */}
+      <section id="early-projects" aria-labelledby="early-title" className="section border-t border-line">
+        <div className="container-x">
+          <SectionHeader
+            rule
+            id="early-title"
+            index="04"
+            label="Early solo projects"
+            title={<>Where I <Highlight>started</Highlight>.</>}
+          >
+            <p>
+              <Emphasis text={earlySolo.intro} phrase={earlySolo.introEmphasis} bold />
+            </p>
+            <p className="mt-3">{earlySolo.note}</p>
+          </SectionHeader>
+
+          <ol className="grid gap-8">
+            {projects.map((p, i) => (
+              <li key={p.slug} data-reveal>
+                <Panel index={pad(i + 1)} hover className="p-5 sm:p-8">
+                  <article aria-labelledby={`early-${p.slug}`} className="grid-12 gap-y-5">
+                    <div className="col-span-4 flex flex-wrap items-start gap-2 sm:col-span-8 lg:col-span-3 lg:flex-col">
+                      <Label accent>{earlySolo.marker}</Label>
+                      <span className="font-mono text-xs text-muted">{p.context}</span>
+                    </div>
+
+                    <div className="col-span-4 sm:col-span-8 lg:col-span-9">
+                      <ul className="flex flex-wrap gap-1.5" aria-label="About this project">
+                        {earlySolo.labels.map((l) => (
+                          <li key={l}>
+                            <Label>{l}</Label>
+                          </li>
+                        ))}
+                      </ul>
+                      <h3
+                        id={`early-${p.slug}`}
+                        className="mt-4 text-2xl font-semibold tracking-[-0.025em] transition-colors duration-200 group-hover:text-accent-text sm:text-[1.75rem]"
+                      >
+                        {p.title}
+                      </h3>
+                      <p className="measure mt-3 text-muted">{p.tagline}</p>
+                      <ul className="mt-4 flex flex-wrap gap-1.5" aria-label="Tech stack">
+                        {p.stack.map((s) => (
+                          <li key={s}>
+                            <Tag>{s}</Tag>
+                          </li>
+                        ))}
+                      </ul>
+                      <div className="mt-6 flex flex-wrap gap-x-6 border-t border-line pt-3">
+                        <Link href={`/projects/${p.slug}`} className={linkCls}>
+                          Read the case study <span className="sr-only">: {p.title}</span>
+                          <ArrowRight size={16} aria-hidden className={arrowRight} />
+                        </Link>
+                        {p.repo && (
+                          <a href={p.repo} target="_blank" rel="noopener noreferrer" className={linkCls}>
+                            View on GitHub <span className="sr-only">: {p.title}</span>
+                            <ArrowUpRight size={16} aria-hidden className={arrowUpRight} />
+                          </a>
+                        )}
+                      </div>
+                    </div>
+                  </article>
+                </Panel>
+              </li>
+            ))}
+          </ol>
+        </div>
+      </section>
+
+      {/* 05 · Tech events */}
       <section id="events" aria-labelledby="events-title" className="section border-t border-line">
         <div className="container-x grid-12 gap-y-10">
           <div className="col-span-4 sm:col-span-8 lg:col-span-6" data-reveal>
-            <Label index="04" className="mb-5">
+            <LabelRule index="05" className="mb-5">
               Tech events
-            </Label>
+            </LabelRule>
             <h2 id="events-title" className="h2">
               Showing up to <Highlight>grow</Highlight>.
             </h2>
             <p className="measure mt-5 text-muted">
-              I’m active in the tech community and love attending tech events and community meetups. A few I’ve joined:
+              I’m active in the tech community and{" "}
+              <span className="font-medium text-accent-text">love attending tech events and community meetups</span>. A
+              few I’ve joined:
             </p>
           </div>
-          <ul className="col-span-4 self-end border-b border-line sm:col-span-8 lg:col-span-5 lg:col-start-8">
-            {techEvents.map((e) => (
-              <li key={e.title} className="flex gap-3 border-t border-line py-4" data-reveal>
-                <span aria-hidden className="font-mono text-accent-text">+</span>
-                <span>
-                  <span className="block font-medium">{e.title}</span>
-                  <span className="text-sm text-muted">{e.org}</span>
-                </span>
-              </li>
-            ))}
-          </ul>
+
+          <div className="col-span-4 self-end sm:col-span-8 lg:col-span-5 lg:col-start-8" data-reveal>
+            <Panel className="px-5 sm:px-6">
+              <ul>
+                {techEvents.map((e, i) => (
+                  <li key={e.title} className="flex items-start gap-4 border-t border-line py-4 first:border-t-0">
+                    <span aria-hidden className="pt-1 font-mono text-xs text-muted">
+                      {pad(i + 1)}
+                    </span>
+                    <span aria-hidden className="mt-2.5 size-1.5 shrink-0 bg-accent" />
+                    <span className="min-w-0">
+                      <span className="block font-medium">{e.title}</span>
+                      <span className="font-mono text-xs text-muted">{e.org}</span>
+                    </span>
+                  </li>
+                ))}
+              </ul>
+            </Panel>
+          </div>
         </div>
       </section>
 
-      {/* 05 · Certifications */}
+      {/* 06 · Certifications */}
       <section id="certifications" aria-labelledby="certs-title" className="section border-t border-line">
         <div className="container-x">
-          <SectionHeader id="certs-title" index="05" label="Certifications" title={<>Skills, <Highlight>certified</Highlight>.</>}>
-            <p>Courses I’ve completed. Select a certificate to view it larger.</p>
+          <SectionHeader rule id="certs-title" index="06" label="Certifications" title={<>Skills, <Highlight>certified</Highlight>.</>}>
+            <p>
+              Courses I’ve completed. <span className="font-medium text-ink">Select a certificate</span> to view it larger.
+            </p>
           </SectionHeader>
-          <CertificationRows certs={certifications} />
+          <CertificationRows certs={certifications} boxed />
         </div>
       </section>
     </>

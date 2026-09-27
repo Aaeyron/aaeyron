@@ -5,13 +5,21 @@ import type { Certificate } from "@/lib/content";
 import { CornerMarks, Label } from "../ui/primitives";
 import { CertificateDialog, CertificateThumb, useCertificateDialog } from "./CertificatePreview";
 
-function CertificationRow({ cert, index }: { cert: Certificate; index: number }) {
+function CertificationRow({ cert, index, boxed }: { cert: Certificate; index: number; boxed: boolean }) {
   const { dialogRef, returnFocus, open } = useCertificateDialog();
   const num = String(index + 1).padStart(2, "0");
   const titleId = `cert-${cert.id}`;
 
   return (
-    <li className="group relative border-t border-line py-10 sm:py-12" data-reveal>
+    <li
+      className={`group relative ${
+        boxed
+          ? "border border-line bg-bg p-5 transition-colors duration-200 hover:border-accent focus-within:border-accent sm:p-8"
+          : "border-t border-line py-10 sm:py-12"
+      }`}
+      data-reveal
+    >
+      {boxed && <CornerMarks hover />}
       {/* Thin accent line that draws across the top divider on hover. */}
       <span
         aria-hidden
@@ -71,12 +79,13 @@ function CertificationRow({ cert, index }: { cert: Certificate; index: number })
   );
 }
 
-/** Full-width stacked certificate rows (thumbnail + details), one per row on every screen size. */
-export default function CertificationRows({ certs }: { certs: Certificate[] }) {
+/** `boxed` = each row in a bordered container with corner marks (Experience page).
+ *  Full-width stacked certificate rows (thumbnail + details), one per row on every screen size. */
+export default function CertificationRows({ certs, boxed = false }: { certs: Certificate[]; boxed?: boolean }) {
   return (
-    <ol className="border-b border-line">
+    <ol className={boxed ? "grid gap-8" : "border-b border-line"}>
       {certs.map((cert, i) => (
-        <CertificationRow key={cert.id} cert={cert} index={i} />
+        <CertificationRow key={cert.id} cert={cert} index={i} boxed={boxed} />
       ))}
     </ol>
   );

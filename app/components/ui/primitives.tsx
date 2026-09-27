@@ -74,6 +74,82 @@ export function CornerMarks({ hover = false, inset = "-5px" }: { hover?: boolean
   );
 }
 
+/**
+ * Section label box followed by a thin rule that draws in (accent tip, grey line).
+ * Decorative rule is aria-hidden.
+ */
+export function LabelRule({ index, children, className = "" }: { index?: string; children: ReactNode; className?: string }) {
+  return (
+    <div className={`flex items-center gap-3 ${className}`}>
+      <Label index={index}>{children}</Label>
+      <span
+        aria-hidden
+        className="draw-x h-px min-w-8 flex-1 bg-[linear-gradient(to_right,var(--accent)_0,var(--accent)_28px,var(--line-strong)_28px)]"
+      />
+    </div>
+  );
+}
+
+/**
+ * Highlights one key phrase inside a paragraph (accent colour, or bold).
+ * If the phrase isn't found, the text renders unchanged.
+ */
+export function Emphasis({ text, phrase, bold = false }: { text: string; phrase: string; bold?: boolean }) {
+  const at = text.indexOf(phrase);
+  if (at === -1) return <>{text}</>;
+  return (
+    <>
+      {text.slice(0, at)}
+      {bold ? (
+        <strong className="font-semibold text-ink">{phrase}</strong>
+      ) : (
+        <span className="font-medium text-accent-text">{phrase}</span>
+      )}
+      {text.slice(at + phrase.length)}
+    </>
+  );
+}
+
+/**
+ * 1px bordered container with corner marks and an optional index tab on the
+ * top border. With `hover`, the border, corner marks and index turn accent
+ * on hover / keyboard focus (it also becomes a `.group` for child effects).
+ */
+export function Panel({
+  index,
+  hover = false,
+  className = "",
+  children,
+}: {
+  index?: string;
+  hover?: boolean;
+  className?: string;
+  children: ReactNode;
+}) {
+  return (
+    <div
+      className={`relative border border-line bg-bg transition-colors duration-200 ${
+        hover ? "group hover:border-accent focus-within:border-accent" : ""
+      } ${className}`}
+    >
+      <CornerMarks hover={hover} />
+      {index && (
+        <span
+          aria-hidden
+          className={`chip absolute -top-2.5 left-4 z-10 py-0 text-[0.65rem] ${
+            hover
+              ? "transition-colors duration-200 group-hover:border-accent group-hover:text-accent-text group-focus-within:border-accent group-focus-within:text-accent-text"
+              : ""
+          }`}
+        >
+          {index}
+        </span>
+      )}
+      {children}
+    </div>
+  );
+}
+
 /** Stagger position for the page-load entrance: use with className="enter". */
 export const enterStyle = (i: number) => ({ "--enter-i": i }) as CSSProperties;
 
@@ -85,6 +161,8 @@ type SectionHeaderProps = {
   action?: ReactNode;
   id?: string;
   as?: "h1" | "h2";
+  /** Adds a thin rule after the label that draws in. */
+  rule?: boolean;
 };
 
 /**
@@ -92,7 +170,7 @@ type SectionHeaderProps = {
  * Page headers (as="h1") play the page-load entrance: label → heading → text → action.
  * Section headers (h2) scroll-reveal: label + heading first, then the action.
  */
-export function SectionHeader({ index, label, title, children, action, id, as: H = "h2" }: SectionHeaderProps) {
+export function SectionHeader({ index, label, title, children, action, id, as: H = "h2", rule = false }: SectionHeaderProps) {
   const isPage = H === "h1";
   const enter = (i: number) => (isPage ? { className: "enter", style: enterStyle(i) } : {});
 
@@ -100,9 +178,15 @@ export function SectionHeader({ index, label, title, children, action, id, as: H
     <div className="mb-10 flex flex-col gap-6 sm:mb-14 md:flex-row md:items-end md:justify-between">
       <div className="measure" {...(isPage ? {} : { "data-reveal": true })}>
         <div {...enter(0)}>
-          <Label index={index} className="mb-5">
-            {label}
-          </Label>
+          {rule ? (
+            <LabelRule index={index} className="mb-5">
+              {label}
+            </LabelRule>
+          ) : (
+            <Label index={index} className="mb-5">
+              {label}
+            </Label>
+          )}
         </div>
         <H id={id} className={`${isPage ? "display enter" : "h2"}`} style={isPage ? enterStyle(1) : undefined}>
           {title}

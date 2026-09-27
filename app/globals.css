@@ -443,6 +443,10 @@ html:has(dialog[open]) {
   animation: draw-in var(--motion-dur) var(--ease-out) both;
   animation-delay: calc(var(--enter-i, 0) * var(--motion-stagger) + var(--motion-draw-delay));
 }
+.enter .draw-x {
+  animation: draw-x var(--motion-dur) var(--ease-out) both;
+  animation-delay: calc(var(--enter-i, 0) * var(--motion-stagger) + var(--motion-draw-delay));
+}
 
 /* 2 · Scroll reveal */
 html.reveal-ready [data-reveal] {
@@ -523,6 +527,7 @@ html.reveal-ready:not(.reveal-js) [data-reveal] .draw-x {
   }
   .enter,
   .enter .corner,
+  .enter .draw-x,
   .page-in,
   .nav-enter {
     animation: none !important;
