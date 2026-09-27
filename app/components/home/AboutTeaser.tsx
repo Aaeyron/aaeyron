@@ -22,7 +22,7 @@ export default function AboutTeaser() {
 
         <div className="col-span-4 sm:col-span-8 lg:col-span-7 lg:col-start-6" data-reveal>
           <p className="label mb-4 flex gap-3">
-            <span className="text-accent-text">04</span>
+            <span className="text-accent-text">05</span>
             <span>About</span>
           </p>
           <h2 id="about-title" className="h2">

@@ -82,6 +82,54 @@ export type Project = {
   };
 };
 
+/** This year's highlights, shown first. Only the details Aaron provided — nothing is deployed. */
+export type SelectedProject = {
+  slug: string;
+  title: string;
+  label?: string;
+  category: string;
+  description: string;
+  badges: string[];
+  /** Only set when a real public repo exists. */
+  repo?: string;
+  /** [TODO: add screenshot] — put images in /public/images and set { src, alt } here. */
+  image?: { src: string; alt: string };
+  initials: string;
+};
+
+export const selectedProjects: SelectedProject[] = [
+  {
+    slug: "mg-sakura-learning-platform",
+    title: "MG Sakura Learning Platform",
+    category: "Centralized learning & student management platform",
+    description:
+      "A centralized learning and student management platform for MG Sakura Technical Institute, built for Filipinos who want to learn the Japanese language.",
+    badges: ["In progress"],
+    repo: "https://github.com/Aaeyron/mg-sakura-learning-platform",
+    initials: "MG",
+  },
+  {
+    slug: "tactilelens",
+    title: "TactileLens",
+    label: "Capstone project",
+    category: "AI-assisted mobile app / Accessibility",
+    description:
+      "A capstone project developing an AI-assisted mobile app that recognizes printed English text and General Algebra expressions, then converts them into digital text, UEB, and Nemeth Braille, built for teachers who handle visually impaired students.",
+    badges: ["Capstone", "In progress"],
+    repo: "https://github.com/Aaeyron/TactileLens",
+    initials: "TL",
+  },
+  {
+    slug: "jm-learning-hub",
+    title: "JM Learning Hub",
+    category: "Full-Stack Educational Web Platform / Tutoring Booking & E-Commerce System",
+    description:
+      "A tutoring services and learning materials platform that combines service booking, e-commerce, an admin dashboard, and a learning platform.",
+    badges: ["In development"],
+    initials: "JM",
+  },
+];
+
 export const projectsSummary = "3 school projects";
 
 export const projects: Project[] = [
@@ -248,43 +296,71 @@ export const skills: { group: string; items: Skill[] }[] = [
   },
 ];
 
-export type Certificate = { title: string; issuer: string; date: string; image: string };
+// Image paths are matched from the original app/certificates/page.tsx data.
+// (public/images/Certificate2.jpg was never used there, so it isn't used here.)
+export type Certificate = {
+  id: string;
+  title: string;
+  issuer: string;
+  date: string;
+  image: string;
+  alt: string;
+};
 
 export const certificates: Certificate[] = [
   {
+    id: "google-cloud",
     title: "Developing Applications with Google Cloud",
     issuer: "Google Developer Group",
     date: "May 16, 2026",
     image: "/images/GDG Certificate.png",
+    alt: "Developing Applications with Google Cloud certificate",
   },
   {
+    id: "cyber-hygiene",
     title: "Cyber Hygiene and Security Best Practices",
     issuer: "Holy Cross of Davao College – IAES",
     date: "January 28, 2026",
     image: "/images/Cyber Hygiene Cert.png",
+    alt: "Cyber Hygiene and Security Best Practices certificate",
   },
   {
+    id: "intro-cybersecurity",
     title: "Introduction to Cybersecurity",
     issuer: "Networking Academy",
     date: "December 15, 2025",
     image: "/images/Certificate3.png",
+    alt: "Introduction to Cybersecurity certificate",
   },
   {
+    id: "codechum",
     title: "CodeChum Certificate",
     issuer: "CodeChum Academy",
     date: "May 18, 2025",
     image: "/images/Certificate1.png",
+    alt: "CodeChum Academy certificate",
   },
 ];
 
-export type ChangeKind = "event" | "cert";
-export type Release = {
-  version: string;
-  date: string;
-  changes: { kind: ChangeKind; title: string; org: string; detail: string }[];
-};
+export const getCertificate = (id: string) => certificates.find((c) => c.id === id);
 
-// Changelog: only dated items are included. [TODO: add dates for the three school projects]
+/** Certifications: skills earned (shown as cards, not in the changelog). */
+export const certifications = ["intro-cybersecurity", "codechum"]
+  .map(getCertificate)
+  .filter((c): c is Certificate => Boolean(c));
+
+export type ChangeKind = "event" | "event-cert" | "training";
+export type Change = {
+  kind: ChangeKind;
+  title: string;
+  org: string;
+  detail: string;
+  /** Links the entry to its certificate image, if it has one. */
+  certificateId?: string;
+};
+export type Release = { version: string; date: string; changes: Change[] };
+
+/** Changelog: events & training only, newest first. */
 export const changelog: Release[] = [
   {
     version: "v2026.05",
@@ -298,10 +374,11 @@ export const changelog: Release[] = [
           "Explored agentic AI, Google’s AI ecosystem, and practical ways developers can build AI-powered products.",
       },
       {
-        kind: "cert",
+        kind: "event-cert",
         title: "Developing Applications with Google Cloud",
         org: "Google Developer Group",
         detail: "Certificate issued May 16, 2026.",
+        certificateId: "google-cloud",
       },
     ],
   },
@@ -317,35 +394,12 @@ export const changelog: Release[] = [
           "Learned from local developers about AWS re:Invent updates, cloud services, and real-world deployment practices.",
       },
       {
-        kind: "event",
+        kind: "training",
         title: "Cyber Hygiene Training",
         org: "Holy Cross of Davao College · IAES",
         detail:
           "Completed four days of training in threat awareness, data protection, safer systems, and incident response.",
-      },
-    ],
-  },
-  {
-    version: "v2025.12",
-    date: "December 2025",
-    changes: [
-      {
-        kind: "cert",
-        title: "Introduction to Cybersecurity",
-        org: "Networking Academy",
-        detail: "Certificate issued December 15, 2025.",
-      },
-    ],
-  },
-  {
-    version: "v2025.05",
-    date: "May 2025",
-    changes: [
-      {
-        kind: "cert",
-        title: "CodeChum Certificate",
-        org: "CodeChum Academy",
-        detail: "Certificate issued May 18, 2025.",
+        certificateId: "cyber-hygiene",
       },
     ],
   },
