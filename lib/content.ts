@@ -24,7 +24,7 @@ export const story = [
   "I learn by building. Every project gives me a new problem to solve, a better question to ask, and another chance to improve how I work, from planning the experience to finishing the final version.",
 ];
 
-// `short` fits the hero's Now block; `detail` is the full description (tooltip, changelog, About).
+// `short` fits the hero's Now block; `detail` is the full description (tooltip, /experience).
 export const now = {
   building: {
     short: "TactileLens, my capstone project",
@@ -42,19 +42,50 @@ export const focus = [
   "Exploring AI-assisted development as a tool for learning, research, and iteration.",
 ];
 
-export type Social = { label: string; href: string; handle: string; primary: boolean };
+/** Main contact links: contact buttons, footer and mobile menu all read from here. */
+export type ContactLink = {
+  id: "github" | "linkedin" | "email";
+  label: string;
+  handle: string;
+  href: string;
+  external: boolean;
+  ariaLabel: string;
+};
+
+export const contactLinks: ContactLink[] = [
+  {
+    id: "github",
+    label: "GitHub",
+    handle: "@Aaeyron",
+    href: "https://github.com/Aaeyron",
+    external: true,
+    ariaLabel: "Open my GitHub profile (opens in a new tab)",
+  },
+  {
+    id: "linkedin",
+    label: "LinkedIn",
+    handle: "Aaron Seth Nagtalon",
+    href: "https://www.linkedin.com/in/aaron-seth-nagtalon-289769437/",
+    external: true,
+    ariaLabel: "Open my LinkedIn profile (opens in a new tab)",
+  },
+  {
+    id: "email",
+    label: "Email",
+    handle: profile.email,
+    href: `mailto:${profile.email}`,
+    external: false,
+    ariaLabel: `Send me an email at ${profile.email}`,
+  },
+];
+
+/** Secondary socials (kept for the /contact page). */
+export type Social = { label: string; href: string; handle: string };
 
 export const socials: Social[] = [
-  { label: "GitHub", href: "https://github.com/Aaeyron", handle: "@Aaeyron", primary: true },
-  {
-    label: "LinkedIn",
-    href: "https://www.linkedin.com/in/aaron-seth-nagtalon-289769437/",
-    handle: "aaron-seth-nagtalon",
-    primary: true,
-  },
-  { label: "Facebook", href: "https://www.facebook.com/Aaeyronn", handle: "Aaeyronn", primary: false },
-  { label: "Instagram", href: "https://www.instagram.com/aaeyron/", handle: "@aaeyron", primary: false },
-  { label: "TikTok", href: "https://www.tiktok.com/@aaesthr0xnz", handle: "@aaesthr0xnz", primary: false },
+  { label: "Facebook", href: "https://www.facebook.com/Aaeyronn", handle: "Aaeyronn" },
+  { label: "Instagram", href: "https://www.instagram.com/aaeyron/", handle: "@aaeyron" },
+  { label: "TikTok", href: "https://www.tiktok.com/@aaesthr0xnz", handle: "@aaesthr0xnz" },
 ];
 
 export const githubUser = "Aaeyron";
@@ -292,8 +323,10 @@ export const skills: { group: string; items: Skill[] }[] = [
   },
 ];
 
+// Certifications shown on the site (home + /experience), in display order.
 // Image paths are matched from the original app/certificates/page.tsx data.
-// (public/images/Certificate2.jpg was never used there, so it isn't used here.)
+// Event certificates (GDG Certificate.png, Cyber Hygiene Cert.png) and Certificate2.jpg
+// stay in /public/images but are intentionally not displayed.
 export type Certificate = {
   id: string;
   title: string;
@@ -303,22 +336,14 @@ export type Certificate = {
   alt: string;
 };
 
-export const certificates: Certificate[] = [
+export const certifications: Certificate[] = [
   {
-    id: "google-cloud",
-    title: "Developing Applications with Google Cloud",
-    issuer: "Google Developer Group",
-    date: "May 16, 2026",
-    image: "/images/GDG Certificate.png",
-    alt: "Developing Applications with Google Cloud certificate",
-  },
-  {
-    id: "cyber-hygiene",
-    title: "Cyber Hygiene and Security Best Practices",
-    issuer: "Holy Cross of Davao College – IAES",
-    date: "January 28, 2026",
-    image: "/images/Cyber Hygiene Cert.png",
-    alt: "Cyber Hygiene and Security Best Practices certificate",
+    id: "codechum",
+    title: "CodeChum Certificate",
+    issuer: "CodeChum Academy",
+    date: "May 18, 2025",
+    image: "/images/Certificate1.png",
+    alt: "CodeChum Academy certificate",
   },
   {
     id: "intro-cybersecurity",
@@ -328,89 +353,41 @@ export const certificates: Certificate[] = [
     image: "/images/Certificate3.png",
     alt: "Introduction to Cybersecurity certificate",
   },
+];
+
+/** "Currently working on" copy for /experience (Aaron's wording). */
+export const currentWork = {
+  featured: {
+    slug: "tactilelens",
+    lead: "TactileLens, my capstone project.",
+    description:
+      "An AI-assisted mobile app that recognizes printed English text and General Algebra expressions and converts them into digital text, UEB, and Nemeth Braille, for teachers who handle visually impaired students.",
+  },
+  also: ["mg-sakura-learning-platform", "jm-learning-hub"],
+};
+
+/** Experience entries. Only details Aaron provided. */
+export const experience = [
   {
-    id: "codechum",
-    title: "CodeChum Certificate",
-    issuer: "CodeChum Academy",
-    date: "May 18, 2025",
-    image: "/images/Certificate1.png",
-    alt: "CodeChum Academy certificate",
+    role: "AI/ML Engineer Intern",
+    company: "Apno AI",
+    companyNote: "A Government of India registered MSME enterprise.",
+    period: "Present",
+    start: "[TODO: start month and year]",
   },
 ];
 
-export const getCertificate = (id: string) => certificates.find((c) => c.id === id);
-
-/** Home page certifications, in display order. */
-export const homeCertifications = ["codechum", "intro-cybersecurity"]
-  .map((id) => certificates.find((c) => c.id === id))
-  .filter((c): c is Certificate => Boolean(c));
-
-/** Certifications: skills earned (shown as cards, not in the changelog). */
-export const certifications = ["intro-cybersecurity", "codechum"]
-  .map(getCertificate)
-  .filter((c): c is Certificate => Boolean(c));
-
-export type ChangeKind = "event" | "event-cert" | "training";
-export type Change = {
-  kind: ChangeKind;
-  title: string;
-  org: string;
-  detail: string;
-  /** Links the entry to its certificate image, if it has one. */
-  certificateId?: string;
-};
-export type Release = { version: string; date: string; changes: Change[] };
-
-/** Changelog: events & training only, newest first. */
-export const changelog: Release[] = [
-  {
-    version: "v2026.05",
-    date: "May 2026",
-    changes: [
-      {
-        kind: "event",
-        title: "Build With AI: Davao",
-        org: "Google Developer Groups Davao",
-        detail:
-          "Explored agentic AI, Google’s AI ecosystem, and practical ways developers can build AI-powered products.",
-      },
-      {
-        kind: "event-cert",
-        title: "Developing Applications with Google Cloud",
-        org: "Google Developer Group",
-        detail: "Certificate issued May 16, 2026.",
-        certificateId: "google-cloud",
-      },
-    ],
-  },
-  {
-    version: "v2026.01",
-    date: "January 2026",
-    changes: [
-      {
-        kind: "event",
-        title: "Cloud Catchup Session",
-        org: "AWS User Group Davao",
-        detail:
-          "Learned from local developers about AWS re:Invent updates, cloud services, and real-world deployment practices.",
-      },
-      {
-        kind: "training",
-        title: "Cyber Hygiene Training",
-        org: "Holy Cross of Davao College · IAES",
-        detail:
-          "Completed four days of training in threat awareness, data protection, safer systems, and incident response.",
-        certificateId: "cyber-hygiene",
-      },
-    ],
-  },
+/** Tech events and community meetups (plain text — no certificates shown). */
+export const techEvents = [
+  { title: "Build With AI: Davao", org: "GDG Davao" },
+  { title: "Cloud Catchup Session", org: "AWS User Group Davao" },
+  { title: "Cyber Hygiene Training", org: "Holy Cross of Davao College · IAES" },
 ];
 
 export const navLinks = [
   { href: "/", label: "Home" },
   { href: "/projects", label: "Projects" },
-  { href: "/about", label: "About" },
-  { href: "/certificates", label: "Certificates" },
+  { href: "/experience", label: "Experience" },
   { href: "/contact", label: "Contact" },
 ];
 

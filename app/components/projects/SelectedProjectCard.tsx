@@ -14,6 +14,7 @@ export default function SelectedProjectCard({ project, index, total }: Props) {
 
   return (
     <article
+      id={project.slug}
       aria-labelledby={`sp-${project.slug}`}
       className="group relative flex w-full flex-col border border-line bg-bg transition-colors duration-200 hover:border-line-strong"
       data-reveal

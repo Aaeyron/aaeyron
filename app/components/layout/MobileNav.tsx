@@ -3,7 +3,7 @@
 import { useRef } from "react";
 import Link from "next/link";
 import { Menu, X } from "lucide-react";
-import { isActivePath, navLinks, profile, socials } from "@/lib/content";
+import { contactLinks, isActivePath, navLinks, profile } from "@/lib/content";
 import { Label } from "../ui/primitives";
 
 export default function MobileNav({ pathname }: { pathname: string }) {
@@ -69,20 +69,18 @@ export default function MobileNav({ pathname }: { pathname: string }) {
           <div className="mt-auto space-y-3 pt-8">
             <p><Label>{profile.status}</Label></p>
             <ul className="flex flex-wrap gap-x-5">
-              {socials
-                .filter((s) => s.primary)
-                .map((s) => (
-                  <li key={s.label}>
-                    <a href={s.href} target="_blank" rel="noopener noreferrer" className="link inline-flex min-h-11 items-center">
-                      {s.label}
-                    </a>
-                  </li>
-                ))}
-              <li>
-                <a href={`mailto:${profile.email}`} className="link inline-flex min-h-11 items-center">
-                  Email
-                </a>
-              </li>
+              {contactLinks.map((l) => (
+                <li key={l.id}>
+                  <a
+                    href={l.href}
+                    aria-label={l.ariaLabel}
+                    {...(l.external ? { target: "_blank", rel: "noopener noreferrer" } : {})}
+                    className="link inline-flex min-h-11 items-center"
+                  >
+                    {l.label}
+                  </a>
+                </li>
+              ))}
             </ul>
           </div>
         </div>

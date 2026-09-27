@@ -1,6 +1,6 @@
 import Link from "next/link";
 import { ArrowRight } from "lucide-react";
-import { homeCertifications, projects, projectsSummary, selectedProjects } from "@/lib/content";
+import { certifications, projects, projectsSummary, selectedProjects } from "@/lib/content";
 import Hero from "./components/home/Hero";
 import CaseStudyCard from "./components/home/CaseStudyCard";
 import SkillsEvidence from "./components/home/SkillsEvidence";
@@ -80,11 +80,11 @@ export default function Home() {
             index="04"
             label="Certifications"
             title={<>Skills, <Highlight>certified</Highlight>.</>}
-            action={<MoreLink href="/certificates">View all certificates</MoreLink>}
+            action={<MoreLink href="/experience#certifications">View all certificates</MoreLink>}
           >
             <p>Courses I’ve completed. Select a certificate to view it larger.</p>
           </SectionHeader>
-          <CertificationRows certs={homeCertifications} />
+          <CertificationRows certs={certifications} />
         </div>
       </section>
 

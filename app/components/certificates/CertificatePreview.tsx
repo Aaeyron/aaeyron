@@ -101,25 +101,3 @@ export function CertificateThumb({ cert, onOpen, sizes, className = "" }: ThumbP
   );
 }
 
-type Props = {
-  cert: Certificate;
-  /** "thumb" = small inline thumbnail, "card" = full-width card image. */
-  variant?: "thumb" | "card";
-  className?: string;
-};
-
-/** Thumbnail + its dialog, for places with a single trigger. */
-export default function CertificatePreview({ cert, variant = "card", className = "" }: Props) {
-  const { dialogRef, returnFocus, open } = useCertificateDialog();
-  return (
-    <>
-      <CertificateThumb
-        cert={cert}
-        onOpen={open}
-        className={className}
-        sizes={variant === "thumb" ? "(min-width: 640px) 160px, 50vw" : "(min-width: 1024px) 40vw, (min-width: 640px) 50vw, 100vw"}
-      />
-      <CertificateDialog cert={cert} dialogRef={dialogRef} returnFocus={returnFocus} />
-    </>
-  );
-}

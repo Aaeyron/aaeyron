@@ -38,7 +38,7 @@ export default function AboutTeaser() {
             <p className="text-lg text-ink">{profile.intro}</p>
             <p>{story[1]}</p>
           </div>
-          <ButtonLink href="/about" variant="secondary" className="mt-8">
+          <ButtonLink href="/experience" variant="secondary" className="mt-8">
             More about me <ArrowRight size={16} aria-hidden />
           </ButtonLink>
         </div>

@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { navLinks, profile, socials } from "@/lib/content";
+import { contactLinks, navLinks, profile } from "@/lib/content";
 import { Label } from "../ui/primitives";
 
 export default function SiteFooter() {
@@ -28,25 +28,18 @@ export default function SiteFooter() {
         <div className="col-span-2 sm:col-span-3 lg:col-span-3">
           <p className="mb-3"><Label>Elsewhere</Label></p>
           <ul>
-            <li>
-              <a href={`mailto:${profile.email}`} className="inline-flex min-h-11 items-center text-muted transition-colors hover:text-ink sm:min-h-9">
-                Email
-              </a>
-            </li>
-            {socials
-              .filter((s) => s.primary)
-              .map((s) => (
-                <li key={s.label}>
-                  <a
-                    href={s.href}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="inline-flex min-h-11 items-center text-muted transition-colors hover:text-ink sm:min-h-9"
-                  >
-                    {s.label}
-                  </a>
-                </li>
-              ))}
+            {contactLinks.map((l) => (
+              <li key={l.id}>
+                <a
+                  href={l.href}
+                  aria-label={l.ariaLabel}
+                  {...(l.external ? { target: "_blank", rel: "noopener noreferrer" } : {})}
+                  className="inline-flex min-h-11 items-center text-muted transition-colors hover:text-ink sm:min-h-9"
+                >
+                  {l.label}
+                </a>
+              </li>
+            ))}
             <li>
               <a href={profile.resume} className="inline-flex min-h-11 items-center text-muted transition-colors hover:text-ink sm:min-h-9">
                 Résumé

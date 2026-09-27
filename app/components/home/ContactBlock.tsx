@@ -1,11 +1,8 @@
 import { FileText } from "lucide-react";
-import { FaGithub, FaLinkedinIn } from "react-icons/fa";
-import { profile, socials } from "@/lib/content";
+import { profile } from "@/lib/content";
 import ButtonLink from "../ui/ButtonLink";
-import CopyEmailButton from "../ui/CopyEmailButton";
+import ContactButtons from "../ui/ContactButtons";
 import { Highlight, Label, Txt } from "../ui/primitives";
-
-const icons: Record<string, typeof FaGithub> = { GitHub: FaGithub, LinkedIn: FaLinkedinIn };
 
 export default function ContactBlock() {
   return (
@@ -27,22 +24,11 @@ export default function ContactBlock() {
           </span>
         </p>
 
-        <div className="mt-10 flex flex-wrap gap-3">
-          <CopyEmailButton />
-          {socials
-            .filter((s) => s.primary)
-            .map((s) => {
-              const Icon = icons[s.label];
-              return (
-                <ButtonLink key={s.label} href={s.href} variant="secondary" external>
-                  {Icon && <Icon aria-hidden size={16} />} {s.label}
-                </ButtonLink>
-              );
-            })}
-          <ButtonLink href={profile.resume} variant="ghost" download>
-            <FileText size={17} aria-hidden /> Résumé
-          </ButtonLink>
-        </div>
+        <ContactButtons className="mt-12" />
+
+        <ButtonLink href={profile.resume} variant="ghost" download className="-ml-3 mt-6">
+          <FileText size={17} aria-hidden /> Download résumé
+        </ButtonLink>
       </div>
     </section>
   );
