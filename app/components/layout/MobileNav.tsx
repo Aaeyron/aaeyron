@@ -14,7 +14,7 @@ export default function MobileNav({ pathname }: { pathname: string }) {
       <button
         type="button"
         onClick={() => dialogRef.current?.showModal()}
-        className="tap inline-flex items-center justify-center rounded-md text-ink md:hidden"
+        className="tap inline-flex cursor-pointer items-center justify-center rounded-md text-ink md:hidden"
         aria-label="Open menu"
         aria-haspopup="dialog"
       >
@@ -35,7 +35,7 @@ export default function MobileNav({ pathname }: { pathname: string }) {
             <button
               type="button"
               onClick={close}
-              className="tap -mr-2 inline-flex items-center justify-center rounded-md"
+              className="tap -mr-2 inline-flex cursor-pointer items-center justify-center rounded-md"
               aria-label="Close menu"
             >
               <X size={20} aria-hidden />

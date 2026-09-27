@@ -1,5 +1,5 @@
 import { changelog, now, type ChangeKind } from "@/lib/content";
-import { Tag, Txt } from "../ui/primitives";
+import { Tag } from "../ui/primitives";
 
 const kindLabel: Record<ChangeKind, string> = { event: "event", cert: "certificate" };
 
@@ -17,14 +17,14 @@ export default function Changelog() {
             <span aria-hidden className="font-mono text-accent-text">~</span>
             <p>
               <span className="font-mono text-sm text-muted">building: </span>
-              <Txt>{now.building}</Txt>
+              {now.building.detail}
             </p>
           </li>
           <li className="flex gap-3">
             <span aria-hidden className="font-mono text-accent-text">~</span>
             <p>
               <span className="font-mono text-sm text-muted">learning: </span>
-              <Txt>{now.learning}</Txt>
+              {now.learning.detail}
             </p>
           </li>
         </ul>

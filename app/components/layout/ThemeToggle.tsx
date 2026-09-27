@@ -8,7 +8,7 @@ export default function ThemeToggle() {
     <button
       type="button"
       onClick={() => toggleTheme()}
-      className="tap inline-flex items-center justify-center rounded-md text-muted transition-colors duration-200 hover:text-ink"
+      className="tap inline-flex cursor-pointer items-center justify-center rounded-md text-muted transition-colors duration-200 hover:text-ink"
       aria-label="Toggle dark mode"
       title="Toggle dark mode"
     >

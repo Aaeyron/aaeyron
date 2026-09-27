@@ -6,7 +6,7 @@ export const siteUrl = process.env.NEXT_PUBLIC_SITE_URL ?? "http://localhost:300
 export const profile = {
   name: "Aaron Seth Nagtalon",
   shortName: "Aaron Seth",
-  role: "Aspiring Full-Stack Developer & AI/ML learner",
+  role: "Aspiring Software & AI/ML Engineer",
   location: "Davao City, Philippines",
   email: "aaronseth041@gmail.com",
   phone: { display: "+63 915 660 4726", href: "tel:+639156604726" },
@@ -24,9 +24,16 @@ export const story = [
   "I learn by building. Every project gives me a new problem to solve, a better question to ask, and another chance to improve how I work, from planning the experience to finishing the final version.",
 ];
 
+// `short` fits the hero's Now block; `detail` is the full description (tooltip, changelog, About).
 export const now = {
-  building: "[TODO: what you’re currently building]",
-  learning: "[TODO: what you’re currently learning]",
+  building: {
+    short: "TactileLens, my capstone project",
+    detail: "TactileLens, my capstone project. A text-to-braille mobile app for teachers who handle visually impaired students.",
+  },
+  learning: {
+    short: "AI/ML Engineer Intern @ Apno AI",
+    detail: "AI/ML engineering. I’m currently an AI/ML Engineer intern at Apno AI, a Government of India registered MSME enterprise.",
+  },
 };
 
 export const focus = [

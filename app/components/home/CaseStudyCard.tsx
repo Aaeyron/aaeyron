@@ -60,7 +60,7 @@ export default function CaseStudyCard({ project, index }: { project: Project; in
               aria-pressed={mode === m.id}
               aria-controls={`${titleId}-story`}
               onClick={() => setMode(m.id)}
-              className={`min-h-11 rounded-[8px] px-4 text-sm transition-colors duration-200 ${
+              className={`min-h-11 cursor-pointer rounded-[8px] px-4 text-sm transition-colors duration-200 ${
                 mode === m.id ? "bg-ink text-bg" : "text-muted hover:text-ink"
               }`}
             >

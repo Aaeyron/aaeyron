@@ -1,7 +1,32 @@
-import { ArrowDown, Download } from "lucide-react";
+import { ArrowDown } from "lucide-react";
 import { now, profile } from "@/lib/content";
 import ButtonLink from "../ui/ButtonLink";
-import { Highlight, Txt } from "../ui/primitives";
+import { Highlight } from "../ui/primitives";
+
+/** Short line with the full description in a tooltip (hover, keyboard focus or tap). */
+function NowItem({ id, term, short, detail }: { id: string; term: string; short: string; detail: string }) {
+  return (
+    <div className="flex flex-col gap-x-4 sm:flex-row">
+      <dt className="shrink-0 text-muted sm:w-20">{term}</dt>
+      <dd className="group relative">
+        <span
+          tabIndex={0}
+          aria-describedby={id}
+          className="cursor-help underline decoration-line-strong decoration-dotted underline-offset-4 outline-none focus-visible:rounded-sm focus-visible:outline-2 focus-visible:outline-accent"
+        >
+          {short}
+        </span>
+        <span
+          id={id}
+          role="tooltip"
+          className="pointer-events-none invisible absolute left-0 top-full z-10 mt-2 w-[min(20rem,80vw)] translate-y-1 rounded-md border border-line bg-bg p-3 font-sans text-sm leading-snug text-ink opacity-0 shadow-lg transition-[opacity,transform,visibility] duration-200 group-hover:visible group-hover:translate-y-0 group-hover:opacity-100 group-focus-within:visible group-focus-within:translate-y-0 group-focus-within:opacity-100"
+        >
+          {detail}
+        </span>
+      </dd>
+    </div>
+  );
+}
 
 export default function Hero() {
   return (
@@ -19,25 +44,15 @@ export default function Hero() {
 
       <div className="grid-12 mt-10 gap-y-10">
         <p className="col-span-4 text-lg text-muted sm:col-span-6 lg:col-span-6">
-          I’m {profile.name}, an aspiring full-stack developer and AI/ML learner in Davao City, looking for internships
-          and mentorship.
+          I’m {profile.name}, an aspiring software and AI/ML engineer in Davao City, looking for internships and
+          mentorship.
         </p>
 
         <div className="col-span-4 sm:col-span-8 lg:col-span-5 lg:col-start-8">
           <p className="label mb-3">Now</p>
           <dl className="space-y-2 border-l-2 border-accent pl-4 font-mono text-sm">
-            <div className="flex flex-col gap-x-4 sm:flex-row">
-              <dt className="shrink-0 text-muted sm:w-20">building</dt>
-              <dd>
-                <Txt>{now.building}</Txt>
-              </dd>
-            </div>
-            <div className="flex flex-col gap-x-4 sm:flex-row">
-              <dt className="shrink-0 text-muted sm:w-20">learning</dt>
-              <dd>
-                <Txt>{now.learning}</Txt>
-              </dd>
-            </div>
+            <NowItem id="now-building" term="building" short={now.building.short} detail={now.building.detail} />
+            <NowItem id="now-learning" term="learning" short={now.learning.short} detail={now.learning.detail} />
           </dl>
         </div>
       </div>
@@ -45,9 +60,6 @@ export default function Hero() {
       <div className="mt-10 flex flex-wrap gap-3">
         <ButtonLink href="#work">
           See my work <ArrowDown size={17} aria-hidden className="transition-transform duration-200 group-hover:translate-y-0.5" />
-        </ButtonLink>
-        <ButtonLink href={profile.resume} variant="secondary" download>
-          <Download size={17} aria-hidden /> Download résumé
         </ButtonLink>
       </div>
     </section>

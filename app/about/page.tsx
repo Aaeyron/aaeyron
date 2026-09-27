@@ -3,7 +3,7 @@ import { SectionHeader } from "../components/ui/primitives";
 
 export const metadata: Metadata = {
   title: "About",
-  description: "About Aaron Seth Nagtalon, an IT student and aspiring full-stack developer in Davao City.",
+  description: "About Aaron Seth Nagtalon, an IT student and aspiring software and AI/ML engineer in Davao City.",
 };
 
 // Phase 4 builds this page out.
