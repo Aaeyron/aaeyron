@@ -79,13 +79,14 @@ export const contactLinks: ContactLink[] = [
   },
 ];
 
-/** Secondary socials (kept for the /contact page). */
-export type Social = { label: string; href: string; handle: string };
+/** Social media (footer icons). Separate from the GitHub / LinkedIn / Email contact links. */
+export type SocialLink = { id: "facebook" | "instagram" | "tiktok" | "x"; label: string; href: string };
 
-export const socials: Social[] = [
-  { label: "Facebook", href: "https://www.facebook.com/Aaeyronn", handle: "Aaeyronn" },
-  { label: "Instagram", href: "https://www.instagram.com/aaeyron/", handle: "@aaeyron" },
-  { label: "TikTok", href: "https://www.tiktok.com/@aaesthr0xnz", handle: "@aaesthr0xnz" },
+export const socialLinks: SocialLink[] = [
+  { id: "facebook", label: "Facebook", href: "https://www.facebook.com/Aaeyronn" },
+  { id: "instagram", label: "Instagram", href: "https://www.instagram.com/aaeyron/" },
+  { id: "tiktok", label: "TikTok", href: "https://www.tiktok.com/@aaeyron_" },
+  { id: "x", label: "X (Twitter)", href: "https://x.com/aaron_seth14842" },
 ];
 
 export const githubUser = "Aaeyron";
@@ -286,10 +287,8 @@ export const experience = [
 /** Tech events and community meetups (plain text — no certificates shown). */
 export const techEvents = [
   { title: "Build With AI: Davao", org: "GDG Davao" },
-  { title: "Cloud Catchup Session", org: "AWS User Group Davao" },
-  { title: "Cyber Hygiene Training", org: "Holy Cross of Davao College · IAES" },
-  { title: "AWS Community", org: "[TODO: organizer]" },
-];
+  { title: "AWS Community Day", org: "AWS User Group Davao" },
+  { title: "Cyber Hygiene Training", org: "Holy Cross of Davao College · IAES" },];
 
 export const navLinks = [
   { href: "/", label: "Home" },

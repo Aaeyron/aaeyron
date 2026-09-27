@@ -1,6 +1,7 @@
 import Link from "next/link";
 import { contactLinks, navLinks, profile } from "@/lib/content";
 import { Label } from "../ui/primitives";
+import SocialIcons from "./SocialIcons";
 
 export default function SiteFooter() {
   return (
@@ -10,6 +11,7 @@ export default function SiteFooter() {
           <p className="h3">{profile.name}</p>
           <p className="mt-2 text-muted">{profile.role}</p>
           <div className="mt-6"><Label>{profile.location}</Label></div>
+          <SocialIcons className="mt-8" />
         </div>
 
         <nav aria-label="Footer" className="col-span-2 sm:col-span-3 lg:col-span-2 lg:col-start-7">
