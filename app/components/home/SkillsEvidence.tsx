@@ -1,7 +1,7 @@
 import Link from "next/link";
 import { ArrowUpRight } from "lucide-react";
 import { getProject, skills } from "@/lib/content";
-import { Highlight, SectionHeader } from "../ui/primitives";
+import { Highlight, Label, SectionHeader } from "../ui/primitives";
 
 export default function SkillsEvidence() {
   return (
@@ -14,7 +14,9 @@ export default function SkillsEvidence() {
         <div className="grid gap-x-10 gap-y-12 md:grid-cols-3">
           {skills.map((group) => (
             <div key={group.group} data-reveal>
-              <h3 className="label mb-2">{group.group}</h3>
+              <h3 className="mb-3">
+                <Label>{group.group}</Label>
+              </h3>
               <ul>
                 {group.items.map((skill) => (
                   <li key={skill.name} className="border-t border-line py-3">

@@ -92,9 +92,8 @@ export type SelectedProject = {
   badges: string[];
   /** Only set when a real public repo exists. */
   repo?: string;
-  /** [TODO: add screenshot] — put images in /public/images and set { src, alt } here. */
+  /** Optional screenshot. Put it in /public/images and set { src, alt }; leave unset for the text-only card. */
   image?: { src: string; alt: string };
-  initials: string;
 };
 
 export const selectedProjects: SelectedProject[] = [
@@ -106,7 +105,6 @@ export const selectedProjects: SelectedProject[] = [
       "A centralized learning and student management platform for MG Sakura Technical Institute, built for Filipinos who want to learn the Japanese language.",
     badges: ["In progress"],
     repo: "https://github.com/Aaeyron/mg-sakura-learning-platform",
-    initials: "MG",
   },
   {
     slug: "tactilelens",
@@ -117,7 +115,6 @@ export const selectedProjects: SelectedProject[] = [
       "A capstone project developing an AI-assisted mobile app that recognizes printed English text and General Algebra expressions, then converts them into digital text, UEB, and Nemeth Braille, built for teachers who handle visually impaired students.",
     badges: ["Capstone", "In progress"],
     repo: "https://github.com/Aaeyron/TactileLens",
-    initials: "TL",
   },
   {
     slug: "jm-learning-hub",
@@ -126,7 +123,6 @@ export const selectedProjects: SelectedProject[] = [
     description:
       "A tutoring services and learning materials platform that combines service booking, e-commerce, an admin dashboard, and a learning platform.",
     badges: ["In development"],
-    initials: "JM",
   },
 ];
 
@@ -343,6 +339,11 @@ export const certificates: Certificate[] = [
 ];
 
 export const getCertificate = (id: string) => certificates.find((c) => c.id === id);
+
+/** Home page certifications, in display order. */
+export const homeCertifications = ["codechum", "intro-cybersecurity"]
+  .map((id) => certificates.find((c) => c.id === id))
+  .filter((c): c is Certificate => Boolean(c));
 
 /** Certifications: skills earned (shown as cards, not in the changelog). */
 export const certifications = ["intro-cybersecurity", "codechum"]

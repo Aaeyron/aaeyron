@@ -1,7 +1,7 @@
 import { ArrowDown } from "lucide-react";
 import { now, profile } from "@/lib/content";
 import ButtonLink from "../ui/ButtonLink";
-import { Highlight } from "../ui/primitives";
+import { CornerMarks, Highlight, Label } from "../ui/primitives";
 
 /** Short line with the full description in a tooltip (hover, keyboard focus or tap). */
 function NowItem({ id, term, short, detail }: { id: string; term: string; short: string; detail: string }) {
@@ -31,12 +31,17 @@ function NowItem({ id, term, short, detail }: { id: string; term: string; short:
 export default function Hero() {
   return (
     <section aria-labelledby="hero-title" className="container-x pb-20 pt-14 sm:pb-28 sm:pt-24 lg:pt-32">
-      <p className="label flex flex-wrap items-center gap-x-3 gap-y-1">
-        <span aria-hidden className="status-dot" />
-        <span className="text-ink">{profile.status}</span>
-        <span aria-hidden>/</span>
-        <span>{profile.location}</span>
-      </p>
+      <div className="flex flex-wrap items-center gap-2">
+        <span className="chip text-ink">
+          <span aria-hidden className="status-dot" />
+          {profile.status}
+        </span>
+        <Label>{profile.location}</Label>
+        {/* Davao City's coordinates — a small technical detail. */}
+        <span className="hidden font-mono text-xs text-muted sm:inline">
+          <span className="sr-only">Coordinates: </span>7.07°N 125.61°E
+        </span>
+      </div>
 
       <h1 id="hero-title" className="display mt-8 max-w-[18ch]">
         I build web apps <Highlight>end to end</Highlight>, from the interface to the database behind it.
@@ -48,8 +53,14 @@ export default function Hero() {
           mentorship.
         </p>
 
-        <div className="col-span-4 sm:col-span-8 lg:col-span-5 lg:col-start-8">
-          <p className="label mb-3">Now</p>
+        <div className="relative col-span-4 border border-line bg-bg p-5 sm:col-span-8 lg:col-span-5 lg:col-start-8">
+          <CornerMarks />
+          <div className="mb-4 flex items-center justify-between gap-4">
+            <Label accent>Now</Label>
+            <span aria-hidden className="font-mono text-[0.7rem] text-muted">
+              status.log
+            </span>
+          </div>
           <dl className="space-y-2 border-l-2 border-accent pl-4 font-mono text-sm">
             <NowItem id="now-building" term="building" short={now.building.short} detail={now.building.detail} />
             <NowItem id="now-learning" term="learning" short={now.learning.short} detail={now.learning.detail} />

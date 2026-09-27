@@ -3,7 +3,7 @@ import { FaGithub, FaLinkedinIn } from "react-icons/fa";
 import { profile, socials } from "@/lib/content";
 import ButtonLink from "../ui/ButtonLink";
 import CopyEmailButton from "../ui/CopyEmailButton";
-import { Highlight, Txt } from "../ui/primitives";
+import { Highlight, Label, Txt } from "../ui/primitives";
 
 const icons: Record<string, typeof FaGithub> = { GitHub: FaGithub, LinkedIn: FaLinkedinIn };
 
@@ -11,10 +11,9 @@ export default function ContactBlock() {
   return (
     <section aria-labelledby="contact-title" className="section border-t border-line">
       <div className="container-x" data-reveal>
-        <p className="label mb-4 flex gap-3">
-          <span className="text-accent-text">06</span>
-          <span>Contact</span>
-        </p>
+        <Label index="06" className="mb-5">
+          Contact
+        </Label>
         <h2 id="contact-title" className="display max-w-[16ch]">
           Let’s build something <Highlight>useful</Highlight> together.
         </h2>

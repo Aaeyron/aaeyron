@@ -4,6 +4,7 @@ import { useRef } from "react";
 import Link from "next/link";
 import { Menu, X } from "lucide-react";
 import { isActivePath, navLinks, profile, socials } from "@/lib/content";
+import { Label } from "../ui/primitives";
 
 export default function MobileNav({ pathname }: { pathname: string }) {
   const dialogRef = useRef<HTMLDialogElement>(null);
@@ -31,7 +32,7 @@ export default function MobileNav({ pathname }: { pathname: string }) {
       >
         <div className="flex h-full flex-col px-[var(--gutter)] pb-8">
           <div className="flex h-16 items-center justify-between">
-            <span className="label">Menu</span>
+            <Label>Menu</Label>
             <button
               type="button"
               onClick={close}
@@ -66,7 +67,7 @@ export default function MobileNav({ pathname }: { pathname: string }) {
           </nav>
 
           <div className="mt-auto space-y-3 pt-8">
-            <p className="label">{profile.status}</p>
+            <p><Label>{profile.status}</Label></p>
             <ul className="flex flex-wrap gap-x-5">
               {socials
                 .filter((s) => s.primary)

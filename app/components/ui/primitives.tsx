@@ -18,14 +18,57 @@ export function Txt({ children }: { children: string }) {
   );
 }
 
-export function Tag({ children, accent = false }: { children: ReactNode; accent?: boolean }) {
+type LabelProps = {
+  children: ReactNode;
+  /** Section index shown in the accent colour, e.g. "01". */
+  index?: string;
+  accent?: boolean;
+  /** Keep original casing (tech names, categories). */
+  plain?: boolean;
+  /** Allow long text to wrap (e.g. long categories on mobile). */
+  wrap?: boolean;
+  className?: string;
+};
+
+/** Sharp-cornered label box for small text: section labels, dates, categories, metadata. */
+export function Label({ children, index, accent, plain, wrap, className = "" }: LabelProps) {
   return (
     <span
-      className={`inline-flex items-center rounded-sm border px-2 py-0.5 font-mono text-[0.75rem] leading-5 ${
-        accent ? "border-transparent bg-accent-soft text-accent-text" : "border-line text-muted"
-      }`}
+      className={`chip ${accent ? "chip-accent" : ""} ${plain ? "chip-plain" : ""} ${wrap ? "chip-wrap" : ""} ${className}`}
     >
+      {index && (
+        <>
+          <span className="text-accent-text">{index}</span>
+          <span aria-hidden className="h-3 w-px bg-line-strong" />
+        </>
+      )}
+      <span>{children}</span>
+    </span>
+  );
+}
+
+/** Tech tags and status badges. */
+export function Tag({ children, accent = false }: { children: ReactNode; accent?: boolean }) {
+  return (
+    <Label accent={accent} plain={!accent}>
       {children}
+    </Label>
+  );
+}
+
+/**
+ * Crop marks at the four corners of the nearest `relative` parent.
+ * Decorative: aria-hidden, no pointer events. `hover` turns them accent
+ * when a parent `.group` is hovered or focused.
+ */
+export function CornerMarks({ hover = false, inset = "-5px" }: { hover?: boolean; inset?: string }) {
+  const cls = `corner ${hover ? "corner-hover" : ""}`;
+  return (
+    <span aria-hidden className="pointer-events-none absolute inset-0">
+      <span className={cls} style={{ top: inset, left: inset, borderTopWidth: 1, borderLeftWidth: 1 }} />
+      <span className={cls} style={{ top: inset, right: inset, borderTopWidth: 1, borderRightWidth: 1 }} />
+      <span className={cls} style={{ bottom: inset, left: inset, borderBottomWidth: 1, borderLeftWidth: 1 }} />
+      <span className={cls} style={{ bottom: inset, right: inset, borderBottomWidth: 1, borderRightWidth: 1 }} />
     </span>
   );
 }
@@ -40,15 +83,14 @@ type SectionHeaderProps = {
   as?: "h1" | "h2";
 };
 
-/** Mono index + label, heading, optional intro text and action link. */
+/** Index + label box, heading, optional intro text and action link. */
 export function SectionHeader({ index, label, title, children, action, id, as: H = "h2" }: SectionHeaderProps) {
   return (
     <div className="mb-10 flex flex-col gap-6 sm:mb-14 md:flex-row md:items-end md:justify-between" data-reveal>
       <div className="measure">
-        <p className="label mb-4 flex gap-3">
-          {index && <span className="text-accent-text">{index}</span>}
-          <span>{label}</span>
-        </p>
+        <Label index={index} className="mb-5">
+          {label}
+        </Label>
         <H id={id} className={H === "h1" ? "display" : "h2"}>
           {title}
         </H>

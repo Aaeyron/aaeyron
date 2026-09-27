@@ -51,6 +51,12 @@ export default function RootLayout({ children }: Readonly<{ children: React.Reac
         >
           Skip to content
         </a>
+        {/* Decorative guide lines on the content edges (large screens only). */}
+        <div aria-hidden className="pointer-events-none fixed inset-0 -z-10 hidden lg:block">
+          <div className="container-x h-full">
+            <div className="h-full border-x border-[var(--guide)]" />
+          </div>
+        </div>
         <SiteHeader />
         <main id="main" tabIndex={-1} className="flex-1 outline-none">
           {children}

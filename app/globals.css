@@ -31,6 +31,9 @@
   --accent-text: #2e5ce6;
   --accent-soft: color-mix(in srgb, var(--accent) 10%, var(--bg));
   --on-accent: #ffffff;
+  /* Decorative only (background grid, guides) — never used for text. */
+  --grid: rgb(10 10 10 / 0.055);
+  --guide: rgb(10 10 10 / 0.08);
 
   --space-section: clamp(4rem, 10vw, 8rem);
   --gutter: 1rem;
@@ -53,6 +56,8 @@
   --line: #262626;
   --line-strong: #474747;
   --accent-text: #6b92ff;
+  --grid: rgb(255 255 255 / 0.06);
+  --guide: rgb(255 255 255 / 0.09);
   color-scheme: dark;
 }
 
@@ -66,6 +71,8 @@
     --line: #262626;
     --line-strong: #474747;
     --accent-text: #6b92ff;
+    --grid: rgb(255 255 255 / 0.06);
+    --guide: rgb(255 255 255 / 0.09);
     color-scheme: dark;
   }
 }
@@ -105,6 +112,25 @@ html {
   background: var(--bg);
   -webkit-text-size-adjust: 100%;
   scroll-behavior: smooth;
+  transition: background-color var(--dur-base) var(--ease-out);
+}
+
+/* Background texture: a fine grid fixed to the viewport, fading out
+   toward the edges. Body is transparent so it shows through; cards and
+   panels use bg-bg to sit cleanly on top. Decorative only. */
+body::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  z-index: -1;
+  pointer-events: none;
+  background-image:
+    linear-gradient(to right, var(--grid) 1px, transparent 1px),
+    linear-gradient(to bottom, var(--grid) 1px, transparent 1px);
+  background-size: 40px 40px;
+  background-position: center top;
+  -webkit-mask-image: radial-gradient(ellipse 75% 65% at 50% 40%, #000 20%, transparent 100%);
+  mask-image: radial-gradient(ellipse 75% 65% at 50% 40%, #000 20%, transparent 100%);
 }
 
 [id] {
@@ -112,7 +138,8 @@ html {
 }
 
 body {
-  background: var(--bg);
+  position: relative;
+  background: transparent;
   color: var(--ink);
   font-family: var(--font-sans);
   font-size: 1.0625rem;
@@ -120,7 +147,7 @@ body {
   -webkit-font-smoothing: antialiased;
   text-rendering: optimizeLegibility;
   overflow-x: clip;
-  transition: background-color var(--dur-base) var(--ease-out), color var(--dur-base) var(--ease-out);
+  transition: color var(--dur-base) var(--ease-out);
 }
 
 /* Pointer on everything clickable; not-allowed when disabled.
@@ -309,6 +336,54 @@ html:has(dialog[open]) {
   .tap {
     min-height: 44px;
     min-width: 44px;
+  }
+
+  /* Sharp-cornered box for small text: section labels, tags, badges,
+     dates, categories, metadata. Used through <Label> and <Tag>. */
+  .chip {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5em;
+    border: 1px solid var(--line-strong);
+    border-radius: 0;
+    background: var(--bg);
+    padding: 0.2em 0.55em;
+    font-family: var(--font-mono);
+    font-size: 0.72rem;
+    font-weight: 500;
+    line-height: 1.35;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: var(--muted);
+    white-space: nowrap;
+  }
+  .chip-plain {
+    text-transform: none;
+    letter-spacing: 0;
+  }
+  .chip-wrap {
+    white-space: normal;
+  }
+  .chip-accent {
+    border-color: color-mix(in srgb, var(--accent) 45%, transparent);
+    background: var(--accent-soft);
+    color: var(--accent-text);
+  }
+
+  /* Crop marks: 4 L-shaped corners just outside a container (see <CornerMarks>). */
+  .corner {
+    position: absolute;
+    width: 9px;
+    height: 9px;
+    border-color: var(--line-strong);
+    border-style: solid;
+    border-width: 0;
+    pointer-events: none;
+    transition: border-color var(--dur-fast) var(--ease-out);
+  }
+  .group:hover .corner-hover,
+  .group:focus-within .corner-hover {
+    border-color: var(--accent);
   }
 
   /* Reveal: content is visible by default; JS opts in to the fade. */

@@ -5,7 +5,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { ArrowRight, ArrowUpRight } from "lucide-react";
 import type { Project } from "@/lib/content";
-import { Tag, Txt } from "../ui/primitives";
+import { CornerMarks, Label, Tag, Txt } from "../ui/primitives";
 
 type Mode = "short" | "full";
 const modes: { id: Mode; label: string }[] = [
@@ -24,23 +24,23 @@ export default function CaseStudyCard({ project, index }: { project: Project; in
   return (
     <article aria-labelledby={titleId} className="grid-12 gap-y-8 border-t border-line py-12 sm:py-16" data-reveal>
       <div className="col-span-4 sm:col-span-8 lg:col-span-6">
-        <div className="relative aspect-[16/10] overflow-hidden rounded-lg border border-line bg-surface lg:sticky lg:top-24">
-          <Image
-            src={project.image.src}
-            alt={project.image.alt}
-            fill
-            sizes="(min-width: 1024px) 50vw, 100vw"
-            className="object-cover object-top"
-          />
+        <div className="relative lg:sticky lg:top-24">
+          <CornerMarks />
+          <div className="relative aspect-[16/10] overflow-hidden border border-line bg-surface">
+            <Image
+              src={project.image.src}
+              alt={project.image.alt}
+              fill
+              sizes="(min-width: 1024px) 50vw, 100vw"
+              className="object-cover object-top"
+            />
+          </div>
         </div>
       </div>
 
       <div className="col-span-4 sm:col-span-8 lg:col-span-6 lg:pl-8">
-        <p className="label flex gap-3">
-          <span className="text-accent-text">0{index + 1}</span>
-          <span>{project.context}</span>
-        </p>
-        <h3 id={titleId} className="h-card mt-3">
+        <Label index={`0${index + 1}`}>{project.context}</Label>
+        <h3 id={titleId} className="h-card mt-4">
           {project.title}
         </h3>
         <p className="mt-3 text-muted">{project.tagline}</p>
