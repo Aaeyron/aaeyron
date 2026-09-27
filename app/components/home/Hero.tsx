@@ -1,10 +1,13 @@
 import { ArrowDown } from "lucide-react";
+import type { ReactNode } from "react";
 import { now, profile } from "@/lib/content";
+import { hasInternshipStarted } from "@/lib/internship";
+import InternshipText from "../ui/InternshipText";
 import ButtonLink from "../ui/ButtonLink";
 import { CornerMarks, enterStyle, Highlight, Label } from "../ui/primitives";
 
 /** Short line with the full description in a tooltip (hover, keyboard focus or tap). */
-function NowItem({ id, term, short, detail }: { id: string; term: string; short: string; detail: string }) {
+function NowItem({ id, term, short, detail }: { id: string; term: string; short: ReactNode; detail: ReactNode }) {
   return (
     <div className="flex flex-col gap-x-4 sm:flex-row">
       <dt className="shrink-0 text-muted sm:w-20">{term}</dt>
@@ -29,6 +32,7 @@ function NowItem({ id, term, short, detail }: { id: string; term: string; short:
 }
 
 export default function Hero() {
+  const started = hasInternshipStarted();
   return (
     <section aria-labelledby="hero-title" className="container-x pb-20 pt-14 sm:pb-28 sm:pt-24 lg:pt-32">
       <div className="enter flex flex-wrap items-center gap-2" style={enterStyle(0)}>
@@ -63,7 +67,12 @@ export default function Hero() {
           </div>
           <dl className="space-y-2 border-l-2 border-accent pl-4 font-mono text-sm">
             <NowItem id="now-building" term="building" short={now.building.short} detail={now.building.detail} />
-            <NowItem id="now-learning" term="learning" short={now.learning.short} detail={now.learning.detail} />
+            <NowItem
+              id="now-learning"
+              term="learning"
+              short={<InternshipText field="nowShort" serverStarted={started} />}
+              detail={<InternshipText field="nowDetail" serverStarted={started} />}
+            />
           </dl>
         </div>
       </div>

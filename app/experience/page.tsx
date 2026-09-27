@@ -13,7 +13,9 @@ import {
   story,
   techEvents,
 } from "@/lib/content";
+import { hasInternshipStarted, internshipCopy } from "@/lib/internship";
 import CertificationRows from "../components/certificates/CertificationRows";
+import InternshipText, { InternshipBadge } from "../components/ui/InternshipText";
 import {
   CornerMarks,
   Emphasis,
@@ -23,14 +25,18 @@ import {
   Panel,
   SectionHeader,
   Tag,
-  Txt,
 } from "../components/ui/primitives";
 
-export const metadata: Metadata = {
-  title: "Experience",
-  description:
-    "About Aaron Seth Nagtalon: the TactileLens capstone and current projects, an AI/ML Engineer internship at Apno AI, early solo school projects, tech community events, and certifications.",
-};
+// Re-render hourly so the internship "incoming" → "currently" switch also reaches the HTML and meta tags.
+export const revalidate = 3600;
+
+export function generateMetadata(): Metadata {
+  const internship = internshipCopy(hasInternshipStarted()).meta;
+  return {
+    title: "Experience",
+    description: `About Aaron Seth Nagtalon: the TactileLens capstone and current projects, ${internship}, early solo school projects, tech community events, and certifications.`,
+  };
+}
 
 const pad = (n: number) => String(n).padStart(2, "0");
 
@@ -50,6 +56,7 @@ function Meta({ k, children }: { k: string; children: React.ReactNode }) {
 }
 
 export default function Experience() {
+  const started = hasInternshipStarted();
   const featured = selectedProjects.find((p) => p.slug === currentWork.featured.slug);
   const also = currentWork.also
     .map((slug) => selectedProjects.find((p) => p.slug === slug))
@@ -211,7 +218,7 @@ export default function Experience() {
       {/* 03 · Internship */}
       <section id="internship" aria-labelledby="internship-title" className="section border-t border-line">
         <div className="container-x">
-          <SectionHeader rule id="internship-title" index="03" label="Internship" title={<>Where I’m <Highlight>working</Highlight>.</>} />
+          <SectionHeader rule id="internship-title" index="03" label="Internship" title={<><InternshipText field="headingLead" serverStarted={started} /> <Highlight>working</Highlight>.</>} />
 
           <ol className="grid gap-8">
             {experience.map((job, i) => (
@@ -226,15 +233,7 @@ export default function Experience() {
 
                     <div className="min-w-0 flex-1">
                       <div className="flex flex-wrap items-center gap-2">
-                        <Label accent>
-                          <span className="inline-flex items-center gap-2">
-                            <span aria-hidden className="status-dot" />
-                            {job.period}
-                          </span>
-                        </Label>
-                        <span className="text-xs">
-                          <Txt>{job.start}</Txt>
-                        </span>
+                        <InternshipBadge serverStarted={started} />
                       </div>
                       <h3 className="mt-5 text-2xl font-semibold tracking-[-0.025em] sm:text-3xl">{job.role}</h3>
                       <p className="mt-1 text-lg">
@@ -242,6 +241,9 @@ export default function Experience() {
                       </p>
                       <dl className="mt-5 space-y-2.5 border-t border-line pt-4">
                         <Meta k="Type">Internship</Meta>
+                        <Meta k="Start">
+                          <time dateTime="2026-10-01">October 1, 2026</time>
+                        </Meta>
                         <Meta k="Company">{job.company}</Meta>
                         <Meta k="About">{job.companyNote}</Meta>
                       </dl>
@@ -274,13 +276,28 @@ export default function Experience() {
             {projects.map((p, i) => (
               <li key={p.slug} data-reveal>
                 <Panel index={pad(i + 1)} hover className="p-5 sm:p-8">
-                  <article aria-labelledby={`early-${p.slug}`} className="grid-12 gap-y-5">
-                    <div className="col-span-4 flex flex-wrap items-start gap-2 sm:col-span-8 lg:col-span-3 lg:flex-col">
-                      <Label accent>{earlySolo.marker}</Label>
-                      <span className="font-mono text-xs text-muted">{p.context}</span>
+                  <article aria-labelledby={`early-${p.slug}`} className="grid-12 gap-y-6">
+                    {/* Same screenshot as the home page's "Earlier school projects" (p.image). */}
+                    <div className="col-span-4 sm:col-span-8 lg:col-span-5">
+                      <div className="relative">
+                        <CornerMarks />
+                        <div className="relative aspect-[16/10] overflow-hidden border border-line bg-surface">
+                          <Image
+                            src={p.image.src}
+                            alt={`${p.title} screenshot`}
+                            fill
+                            sizes="(min-width: 1280px) 460px, (min-width: 1024px) 38vw, calc(100vw - 4.5rem)"
+                            className="object-cover object-top transition-transform duration-300 group-hover:scale-[1.03]"
+                          />
+                        </div>
+                      </div>
+                      <div className="mt-4 flex flex-wrap items-center gap-2">
+                        <Label accent>{earlySolo.marker}</Label>
+                        <span className="font-mono text-xs text-muted">{p.context}</span>
+                      </div>
                     </div>
 
-                    <div className="col-span-4 sm:col-span-8 lg:col-span-9">
+                    <div className="col-span-4 sm:col-span-8 lg:col-span-7 lg:pl-4">
                       <ul className="flex flex-wrap gap-1.5" aria-label="About this project">
                         {earlySolo.labels.map((l) => (
                           <li key={l}>

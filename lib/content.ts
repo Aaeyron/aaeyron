@@ -26,15 +26,13 @@ export const story = [
   "I learn by building. Every project gives me a new problem to solve, a better question to ask, and another chance to improve how I work, from planning the experience to finishing the final version.",
 ];
 
-// `short` fits the hero's Now block; `detail` is the full description (tooltip, /experience).
+// `short` fits the hero's Now block; `detail` is the full description (tooltip).
+// The "learning" line (Apno AI internship) lives in lib/internship.ts because it
+// switches from "incoming" to "currently" automatically on October 1, 2026.
 export const now = {
   building: {
     short: "TactileLens, my capstone project",
     detail: "TactileLens, my capstone project. A text-to-braille mobile app for teachers who handle visually impaired students.",
-  },
-  learning: {
-    short: "AI/ML Engineer Intern @ Apno AI",
-    detail: "AI/ML engineering. I’m currently an AI/ML Engineer intern at Apno AI, a Government of India registered MSME enterprise.",
   },
 };
 
@@ -384,8 +382,6 @@ export const experience = [
     role: "AI/ML Engineer Intern",
     company: "Apno AI",
     companyNote: "A Government of India registered MSME enterprise.",
-    period: "Present",
-    start: "[TODO: start month and year]",
   },
 ];
 

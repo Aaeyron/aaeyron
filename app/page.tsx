@@ -10,6 +10,9 @@ import SelectedProjectCard from "./components/projects/SelectedProjectCard";
 import CertificationRows from "./components/certificates/CertificationRows";
 import { Highlight, SectionHeader } from "./components/ui/primitives";
 
+// Re-render hourly so the internship "incoming" → "currently" switch also reaches the HTML.
+export const revalidate = 3600;
+
 function MoreLink({ href, children }: { href: string; children: React.ReactNode }) {
   return (
     <Link
