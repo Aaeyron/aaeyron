@@ -1,7 +1,7 @@
 import { ArrowDown } from "lucide-react";
 import { now, profile } from "@/lib/content";
 import ButtonLink from "../ui/ButtonLink";
-import { CornerMarks, Highlight, Label } from "../ui/primitives";
+import { CornerMarks, enterStyle, Highlight, Label } from "../ui/primitives";
 
 /** Short line with the full description in a tooltip (hover, keyboard focus or tap). */
 function NowItem({ id, term, short, detail }: { id: string; term: string; short: string; detail: string }) {
@@ -31,7 +31,7 @@ function NowItem({ id, term, short, detail }: { id: string; term: string; short:
 export default function Hero() {
   return (
     <section aria-labelledby="hero-title" className="container-x pb-20 pt-14 sm:pb-28 sm:pt-24 lg:pt-32">
-      <div className="flex flex-wrap items-center gap-2">
+      <div className="enter flex flex-wrap items-center gap-2" style={enterStyle(0)}>
         <span className="chip text-ink">
           <span aria-hidden className="status-dot" />
           {profile.status}
@@ -43,17 +43,17 @@ export default function Hero() {
         </span>
       </div>
 
-      <h1 id="hero-title" className="display mt-8 max-w-[18ch]">
+      <h1 id="hero-title" className="display enter mt-8 max-w-[18ch]" style={enterStyle(1)}>
         I build web apps <Highlight>end to end</Highlight>, from the interface to the database behind it.
       </h1>
 
       <div className="grid-12 mt-10 gap-y-10">
-        <p className="col-span-4 text-lg text-muted sm:col-span-6 lg:col-span-6">
+        <p className="enter col-span-4 text-lg text-muted sm:col-span-6 lg:col-span-6" style={enterStyle(2)}>
           I’m {profile.name}, an aspiring software and AI/ML engineer in {profile.location}, looking for internships and
           mentorship.
         </p>
 
-        <div className="relative col-span-4 border border-line bg-bg p-5 sm:col-span-8 lg:col-span-5 lg:col-start-8">
+        <div className="enter relative col-span-4 border border-line bg-bg p-5 sm:col-span-8 lg:col-span-5 lg:col-start-8" style={enterStyle(3)}>
           <CornerMarks />
           <div className="mb-4 flex items-center justify-between gap-4">
             <Label accent>Now</Label>
@@ -68,7 +68,7 @@ export default function Hero() {
         </div>
       </div>
 
-      <div className="mt-10 flex flex-wrap gap-3">
+      <div className="enter mt-10 flex flex-wrap gap-3" style={enterStyle(4)}>
         <ButtonLink href="#work">
           See my work <ArrowDown size={17} aria-hidden className="transition-transform duration-200 group-hover:translate-y-0.5" />
         </ButtonLink>

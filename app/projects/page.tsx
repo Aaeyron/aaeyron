@@ -23,7 +23,7 @@ export default function Projects() {
 
       <ul className="grid gap-8 md:grid-cols-2 lg:grid-cols-3">
         {selectedProjects.map((p, i) => (
-          <li key={p.slug} className="flex">
+          <li key={p.slug} className="flex" data-reveal>
             <SelectedProjectCard project={p} index={i} total={selectedProjects.length} />
           </li>
         ))}

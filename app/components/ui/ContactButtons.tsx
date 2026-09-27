@@ -97,7 +97,7 @@ export default function ContactButtons({ className = "" }: { className?: string 
       {contactLinks.map((link, i) => {
         const Icon = icons[link.id];
         return (
-          <li key={link.id} className="group relative">
+          <li key={link.id} className="group relative" data-reveal>
             <CornerMarks hover />
 
             {/* Index label, sitting on the top border. */}

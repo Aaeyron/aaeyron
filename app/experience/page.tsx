@@ -91,10 +91,10 @@ export default function Experience() {
           <SectionHeader id="current-title" index="02" label="Currently working on" title="What I’m building now." />
 
           {featured && (
+            <div data-reveal>
             <article
               aria-labelledby="featured-title"
               className="group relative border border-line bg-bg p-6 transition-colors duration-200 hover:border-line-strong sm:p-8"
-              data-reveal
             >
               <CornerMarks hover />
               <div className="flex flex-wrap items-center gap-1.5">
@@ -127,6 +127,7 @@ export default function Experience() {
                 </Link>
               </div>
             </article>
+            </div>
           )}
 
           <ul className="mt-8 border-b border-line">
@@ -204,9 +205,9 @@ export default function Experience() {
               I’m active in the tech community and love attending tech events and community meetups. A few I’ve joined:
             </p>
           </div>
-          <ul className="col-span-4 self-end border-b border-line sm:col-span-8 lg:col-span-5 lg:col-start-8" data-reveal>
+          <ul className="col-span-4 self-end border-b border-line sm:col-span-8 lg:col-span-5 lg:col-start-8">
             {techEvents.map((e) => (
-              <li key={e.title} className="flex gap-3 border-t border-line py-4">
+              <li key={e.title} className="flex gap-3 border-t border-line py-4" data-reveal>
                 <span aria-hidden className="font-mono text-accent-text">+</span>
                 <span>
                   <span className="block font-medium">{e.title}</span>

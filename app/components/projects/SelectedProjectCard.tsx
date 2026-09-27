@@ -17,7 +17,6 @@ export default function SelectedProjectCard({ project, index, total }: Props) {
       id={project.slug}
       aria-labelledby={`sp-${project.slug}`}
       className="group relative flex w-full flex-col border border-line bg-bg transition-colors duration-200 hover:border-line-strong"
-      data-reveal
     >
       <CornerMarks hover />
 
@@ -49,7 +48,7 @@ export default function SelectedProjectCard({ project, index, total }: Props) {
 
         <span
           aria-hidden
-          className="mt-6 block h-px w-8 bg-accent transition-[width] duration-300 group-hover:w-16"
+          className="draw-x mt-6 block h-px w-8 bg-accent transition-[width] duration-300 group-hover:w-16"
         />
 
         <h3 id={`sp-${project.slug}`} className="mt-5 text-2xl font-semibold tracking-[-0.025em] sm:text-[1.75rem]">

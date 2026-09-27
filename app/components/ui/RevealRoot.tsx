@@ -3,38 +3,44 @@
 import { useEffect } from "react";
 import { usePathname } from "next/navigation";
 
+const MAX_STAGGER = 6;
+
 /**
- * One observer for the whole site: fades in any element marked [data-reveal].
- * Content stays visible without JS or with reduced motion.
+ * One observer for the whole site. Reveals each [data-reveal] element once
+ * as it enters the viewport. Elements that enter together (one observer
+ * batch) are staggered top-to-bottom, left-to-right via --reveal-i, so a
+ * section's label/heading lead and its cards/rows follow.
+ * Timing lives in the motion tokens in globals.css.
  */
 export default function RevealRoot() {
   const pathname = usePathname();
 
   useEffect(() => {
-    if (matchMedia("(prefers-reduced-motion: reduce)").matches) return;
-
     const root = document.documentElement;
+    // Not set when reduced motion is on (or the head script didn't run): nothing is hidden.
+    if (!root.classList.contains("reveal-ready")) return;
+    root.classList.add("reveal-js"); // disables the CSS no-JS safety net
+
     const observer = new IntersectionObserver(
       (entries) => {
-        for (const entry of entries) {
-          if (entry.isIntersecting) {
-            entry.target.classList.add("is-visible");
-            observer.unobserve(entry.target);
-          }
-        }
+        const entering = entries
+          .filter((e) => e.isIntersecting)
+          .sort(
+            (a, b) =>
+              a.boundingClientRect.top - b.boundingClientRect.top ||
+              a.boundingClientRect.left - b.boundingClientRect.left,
+          );
+        entering.forEach((entry, i) => {
+          const el = entry.target as HTMLElement;
+          el.style.setProperty("--reveal-i", String(Math.min(i, MAX_STAGGER)));
+          el.classList.add("is-visible");
+          observer.unobserve(el);
+        });
       },
       { rootMargin: "0px 0px -8% 0px", threshold: 0.05 },
     );
 
-    const els = document.querySelectorAll<HTMLElement>("[data-reveal]:not(.is-visible)");
-    // Anything already in view is shown immediately so there's no flash on load.
-    els.forEach((el) => {
-      const r = el.getBoundingClientRect();
-      if (r.top < innerHeight && r.bottom > 0) el.classList.add("is-visible");
-      else observer.observe(el);
-    });
-    root.classList.add("reveal-ready");
-
+    document.querySelectorAll("[data-reveal]:not(.is-visible)").forEach((el) => observer.observe(el));
     return () => observer.disconnect();
   }, [pathname]);
 

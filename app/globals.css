@@ -336,8 +336,8 @@ html:has(dialog[open]) {
   /* Staggered entrance for list items; each item sets --i (0, 1, 2…).
      Restarts every time a closed <dialog> opens. */
   .stagger > * {
-    animation: swap-in var(--dur-slow) var(--ease-out) both;
-    animation-delay: calc(var(--i, 0) * 50ms + 60ms);
+    animation: reveal-in var(--motion-dur) var(--ease-out) both;
+    animation-delay: calc(var(--i, 0) * var(--motion-stagger) * 0.6 + 60ms);
   }
 
   .tap {
@@ -392,17 +392,108 @@ html:has(dialog[open]) {
   .group:focus-within .corner-hover {
     border-color: var(--accent);
   }
+}
 
-  /* Reveal: content is visible by default; JS opts in to the fade. */
-  .reveal-ready [data-reveal] {
-    opacity: 0;
-    transform: translateY(12px);
-    transition: opacity var(--dur-slow) var(--ease-out), transform var(--dur-slow) var(--ease-out);
-  }
-  .reveal-ready [data-reveal].is-visible {
-    opacity: 1;
-    transform: none;
-  }
+/* ============================ Motion ============================
+   One system for the whole site. Every value lives in these tokens.
+   Only opacity and transform are animated (no layout shift).
+
+   1. Page-load entrance  .enter + style="--enter-i: n"
+      Pure CSS, so it runs on first paint even before JS, and replays
+      whenever a page mounts (client navigation).
+   2. Scroll reveal       [data-reveal]
+      Hidden only when html.reveal-ready is set (inline head script, and
+      only if motion is allowed). RevealRoot adds .is-visible once, with
+      a stagger index (--reveal-i) per batch of elements entering view.
+      Safety net: if JS never boots, everything shows after 2.5s.
+   3. Draw-in details     .corner / .draw-x inside 1 or 2
+   4. Page transition     .page-in (app/template.tsx)
+   5. Header              .nav-enter (first load only; layout persists)
+   ================================================================ */
+:root {
+  --motion-distance: 14px;
+  --motion-dur: 500ms;
+  --motion-stagger: 80ms;
+  --motion-draw-delay: 150ms;
+  --motion-page: 240ms;
+}
+
+@keyframes reveal-in {
+  from { opacity: 0; transform: translateY(var(--motion-distance)); }
+}
+@keyframes draw-in {
+  from { transform: scale(0); }
+}
+@keyframes draw-x {
+  from { transform: scaleX(0); }
+}
+@keyframes page-in {
+  from { opacity: 0; transform: translateY(6px); }
+}
+@keyframes reveal-fallback {
+  to { opacity: 1; transform: none; }
+}
+
+/* 1 · Page-load entrance */
+.enter {
+  animation: reveal-in var(--motion-dur) var(--ease-out) both;
+  animation-delay: calc(var(--enter-i, 0) * var(--motion-stagger));
+}
+.enter .corner {
+  animation: draw-in var(--motion-dur) var(--ease-out) both;
+  animation-delay: calc(var(--enter-i, 0) * var(--motion-stagger) + var(--motion-draw-delay));
+}
+
+/* 2 · Scroll reveal */
+html.reveal-ready [data-reveal] {
+  opacity: 0;
+  transform: translateY(var(--motion-distance));
+  transition:
+    opacity var(--motion-dur) var(--ease-out),
+    transform var(--motion-dur) var(--ease-out);
+  transition-delay: calc(var(--reveal-i, 0) * var(--motion-stagger));
+}
+html.reveal-ready [data-reveal].is-visible {
+  opacity: 1;
+  transform: none;
+}
+
+/* 3 · Draw-in details (corner marks scale in from their corner; accent lines draw left→right) */
+.draw-x {
+  transform-origin: left center;
+}
+html.reveal-ready [data-reveal] .corner {
+  transform: scale(0);
+  transition:
+    transform var(--motion-dur) var(--ease-out) calc(var(--reveal-i, 0) * var(--motion-stagger) + var(--motion-draw-delay)),
+    border-color var(--dur-fast) var(--ease-out);
+}
+html.reveal-ready [data-reveal] .draw-x {
+  transform: scaleX(0);
+  transition:
+    transform var(--motion-dur) var(--ease-out) calc(var(--reveal-i, 0) * var(--motion-stagger) + var(--motion-draw-delay)),
+    width 300ms var(--ease-out);
+}
+html.reveal-ready [data-reveal].is-visible .corner,
+html.reveal-ready [data-reveal].is-visible .draw-x {
+  transform: none;
+}
+
+/* Safety net: if JS fails to boot, reveal everything after 2.5s. */
+html.reveal-ready:not(.reveal-js) [data-reveal],
+html.reveal-ready:not(.reveal-js) [data-reveal] .corner,
+html.reveal-ready:not(.reveal-js) [data-reveal] .draw-x {
+  animation: reveal-fallback 0s linear 2.5s forwards;
+}
+
+/* 4 · Page transition (client navigations only) */
+.page-in {
+  animation: page-in var(--motion-page) var(--ease-out);
+}
+
+/* 5 · Header fades in on first load only */
+.nav-enter {
+  animation: fade-in var(--motion-dur) var(--ease-out) both;
 }
 
 /* ------------------------ Reduced motion ---------------------- */
@@ -412,15 +503,29 @@ html:has(dialog[open]) {
     --dur-base: 0ms;
     --dur-slow: 0ms;
   }
+  :root {
+    --motion-distance: 0px;
+  }
   *, *::before, *::after {
     animation-duration: 0.01ms !important;
+    animation-delay: 0s !important;
     animation-iteration-count: 1 !important;
     transition-duration: 0.01ms !important;
+    transition-delay: 0s !important;
     scroll-behavior: auto !important;
   }
-  .reveal-ready [data-reveal] {
-    opacity: 1;
-    transform: none;
+  /* No movement, content shows immediately. */
+  [data-reveal],
+  [data-reveal] .corner,
+  [data-reveal] .draw-x {
+    opacity: 1 !important;
+    transform: none !important;
+  }
+  .enter,
+  .enter .corner,
+  .page-in,
+  .nav-enter {
+    animation: none !important;
   }
   .status-dot::after {
     display: none;
