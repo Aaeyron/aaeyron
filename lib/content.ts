@@ -24,6 +24,16 @@ export const profile = {
     "I’m Aaron, an Information Technology student who enjoys turning simple ideas into useful digital products.",
 };
 
+/** /experience "About me" section (Aaron's own wording). */
+export const aboutMe = {
+  heading: "Hi, I’m Aaron.",
+  paragraphs: [
+    "I’m an Information Technology student from Davao City, Philippines. I like building websites and apps that solve real problems.",
+    "I work on web apps, mobile apps, backends, and databases. I care about making software that is simple and easy to use.",
+    "I learn best by building. Every project teaches me something new, and I try to do better on the next one.",
+  ],
+};
+
 export const story = [
   "My work moves across web interfaces, mobile concepts, backend logic, and databases. I’m especially interested in how thoughtful design and solid engineering come together to make software easier to understand and use.",
   "I learn by building. Every project gives me a new problem to solve, a better question to ask, and another chance to improve how I work, from planning the experience to finishing the final version.",
@@ -195,33 +205,65 @@ export const projects: Project[] = [
   },
 ];
 
-export type Skill = { name: string; projects: string[] };
+/**
+ * Home page "Tech Stack". Add items or groups here.
+ * `icon` is a react-icons/si name (mapped in app/components/home/TechStack.tsx);
+ * leave it out for items without a logo and only the name is shown.
+ */
+export type TechItem = { name: string; icon?: string };
+export type TechGroup = { group: string; items: TechItem[] };
 
-export const skills: { group: string; items: Skill[] }[] = [
+export const techStack: TechGroup[] = [
   {
-    group: "Front end",
+    group: "Languages",
     items: [
-      { name: "React", projects: ["library-management-system", "flashmind"] },
-      { name: "Next.js", projects: ["janas-boutique"] },
+      { name: "Python", icon: "SiPython" },
+      { name: "TypeScript", icon: "SiTypescript" },
+      { name: "JavaScript", icon: "SiJavascript" },
+      { name: "Dart", icon: "SiDart" },
+      { name: "Kotlin", icon: "SiKotlin" },
+      { name: "C++", icon: "SiCplusplus" },
+      { name: "PHP", icon: "SiPhp" },
+      { name: "HTML", icon: "SiHtml5" },
+      { name: "CSS", icon: "SiCss3" },
     ],
   },
   {
-    group: "Back end",
+    group: "Frontend & Mobile",
     items: [
-      { name: "Django", projects: ["library-management-system"] },
-      { name: "Python", projects: ["library-management-system"] },
-      { name: "PHP", projects: ["janas-boutique"] },
-      { name: "REST APIs", projects: ["library-management-system"] },
+      { name: "React", icon: "SiReact" },
+      { name: "Next.js", icon: "SiNextdotjs" },
+      { name: "Flutter", icon: "SiFlutter" },
     ],
   },
   {
-    group: "Data & design",
+    group: "Backend",
     items: [
-      { name: "MySQL", projects: ["janas-boutique"] },
-      { name: "Authentication & roles", projects: ["library-management-system"] },
-      { name: "UI/UX design", projects: ["flashmind"] },
-      { name: "Human-Computer Interaction", projects: ["flashmind"] },
+      { name: "Django", icon: "SiDjango" },
+      { name: "Node.js", icon: "SiNodedotjs" },
+      { name: "REST APIs" },
     ],
+  },
+  {
+    group: "Databases",
+    items: [
+      { name: "PostgreSQL", icon: "SiPostgresql" },
+      { name: "MySQL", icon: "SiMysql" },
+      { name: "Supabase", icon: "SiSupabase" },
+      { name: "PL/pgSQL" },
+    ],
+  },
+  {
+    group: "Tools & Deployment",
+    items: [
+      { name: "Postman", icon: "SiPostman" },
+      { name: "Vercel", icon: "SiVercel" },
+      { name: "CMake", icon: "SiCmake" },
+    ],
+  },
+  {
+    group: "Design",
+    items: [{ name: "UI/UX Design" }],
   },
 ];
 
@@ -300,7 +342,6 @@ export const navLinks = [
   { href: "/contact", label: "Contact" },
 ];
 
-export const getProject = (slug: string) => projects.find((p) => p.slug === slug);
 
 export const isActivePath = (pathname: string, href: string) =>
   href === "/" ? pathname === "/" : pathname === href || pathname.startsWith(`${href}/`);

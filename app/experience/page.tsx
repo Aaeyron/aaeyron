@@ -3,6 +3,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { ArrowRight, ArrowUpRight } from "lucide-react";
 import {
+  aboutMe,
   certifications,
   currentWork,
   earlySolo,
@@ -10,7 +11,6 @@ import {
   profile,
   projects,
   selectedProjects,
-  story,
   techEvents,
 } from "@/lib/content";
 import { hasInternshipStarted, internshipCopy } from "@/lib/internship";
@@ -108,18 +108,14 @@ export default function Experience() {
               About me
             </LabelRule>
             <h2 id="about-title" className="h2">
-              A developer in progress, <Highlight>building with intention</Highlight>.
+              {aboutMe.heading}
             </h2>
             <div className="measure mt-6 space-y-4 text-muted">
-              <p className="text-lg text-ink">
-                <Emphasis text={profile.intro} phrase="useful digital products" />
-              </p>
-              <p>
-                <Emphasis text={story[0]} phrase="thoughtful design and solid engineering" bold />
-              </p>
-              <p>
-                <Emphasis text={story[1]} phrase="I learn by building." bold />
-              </p>
+              {aboutMe.paragraphs.map((p, i) => (
+                <p key={i} className={i === 0 ? "text-lg text-ink" : undefined}>
+                  {p}
+                </p>
+              ))}
             </div>
 
             <Panel className="mt-8 max-w-md p-5">

@@ -3,7 +3,7 @@ import { ArrowRight } from "lucide-react";
 import { certifications, projects, projectsSummary, selectedProjects } from "@/lib/content";
 import Hero from "./components/home/Hero";
 import SchoolProjectRow from "./components/home/SchoolProjectRow";
-import SkillsEvidence from "./components/home/SkillsEvidence";
+import TechStack from "./components/home/TechStack";
 import AboutTeaser from "./components/home/AboutTeaser";
 import ContactBlock from "./components/home/ContactBlock";
 import SelectedProjectCard from "./components/projects/SelectedProjectCard";
@@ -74,7 +74,7 @@ export default function Home() {
         </div>
       </section>
 
-      <SkillsEvidence />
+      <TechStack />
 
       <section id="certifications" aria-labelledby="certs-title" className="section border-t border-line">
         <div className="container-x">

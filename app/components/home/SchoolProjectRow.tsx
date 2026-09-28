@@ -9,7 +9,6 @@ export default function SchoolProjectRow({ project, index }: { project: Project;
 
   return (
     <article
-      id={project.slug}
       aria-labelledby={titleId}
       className="group grid-12 gap-y-8 border-t border-line py-12 sm:py-16"
       data-reveal
