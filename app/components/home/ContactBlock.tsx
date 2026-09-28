@@ -2,7 +2,7 @@ import { FileText } from "lucide-react";
 import { profile, resumeAriaLabel, resumeUrl } from "@/lib/content";
 import ButtonLink from "../ui/ButtonLink";
 import ContactButtons from "../ui/ContactButtons";
-import { Highlight, Label, Txt } from "../ui/primitives";
+import { Highlight, Label } from "../ui/primitives";
 
 export default function ContactBlock() {
   return (
@@ -23,7 +23,7 @@ export default function ContactBlock() {
           <p className="mt-4 flex items-center gap-3 text-sm">
             <span aria-hidden className="status-dot" />
             <span>
-              {profile.status}. <Txt>{profile.availability}</Txt>
+              {profile.availability}
             </span>
           </p>
         </div>

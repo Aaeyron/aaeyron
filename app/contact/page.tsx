@@ -5,7 +5,7 @@ import { Highlight, SectionHeader } from "../components/ui/primitives";
 export const metadata: Metadata = {
   title: "Contact",
   alternates: { canonical: "/contact" },
-  description: "Get in touch with Aaron Seth Nagtalon about internships, mentorship and projects.",
+  description: "Get in touch with Aaron Seth Nagtalon about opportunities, collaborations and projects.",
 };
 
 // The rest of this page (location, phone, secondary socials) is built in Phase 4.

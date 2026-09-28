@@ -53,8 +53,8 @@ export default function Hero() {
 
       <div className="grid-12 mt-10 gap-y-10">
         <p className="enter col-span-4 text-lg text-muted sm:col-span-6 lg:col-span-6" style={enterStyle(2)}>
-          I’m {profile.name}, an aspiring software and AI/ML engineer in {profile.location}, looking for internships and
-          mentorship.
+          I’m {profile.name}, an aspiring software and AI/ML engineer in {profile.location}, open to opportunities and
+          collaborations.
         </p>
 
         <div className="enter relative col-span-4 border border-line bg-bg p-5 sm:col-span-8 lg:col-span-5 lg:col-start-8" style={enterStyle(3)}>

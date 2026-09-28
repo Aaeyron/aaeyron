@@ -32,7 +32,7 @@ export default function AboutTeaser() {
             About
           </Label>
           <h2 id="about-title" className="h2">
-            A developer in progress, building with intention.
+            {aboutMe.heading}
           </h2>
           <p className="measure mt-6 text-lg text-ink">{aboutMe.teaser}</p>
           <ButtonLink href="/experience" variant="secondary" className="mt-8">

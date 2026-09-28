@@ -1,5 +1,4 @@
 // Single source of truth for all site content.
-// Anything wrapped in [TODO: …] is a placeholder waiting for real details.
 
 /** Production URL, used for metadataBase, Open Graph and canonical URLs. */
 export const siteUrl = process.env.NEXT_PUBLIC_SITE_URL ?? "https://aaeyron.vercel.app";
@@ -17,8 +16,8 @@ export const profile = {
   locationShort: "Davao City, PH",
   email: "aaronseth041@gmail.com",
   phone: { display: "+63 915 660 4726", href: "tel:+639156604726" },
-  status: "Open to internships & mentorship",
-  availability: "[TODO: availability, e.g. “Available for internships from …”]",
+  status: "Open to opportunities & collaborations",
+  availability: "Open to opportunities & collaborations. Feel free to reach out.",
   heroImage: "/images/MeAgain.jpeg",
   aboutImage: "/images/About.jpg",
 };

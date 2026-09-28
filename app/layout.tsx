@@ -12,7 +12,7 @@ const sans = Geist({ subsets: ["latin"], variable: "--font-geist", display: "swa
 const mono = Geist_Mono({ subsets: ["latin"], variable: "--font-geist-mono", display: "swap" });
 
 const description =
-  "Aaron Seth Nagtalon is an aspiring software and AI/ML engineer in Davao City, Philippines, building web apps end to end. Open to internships and mentorship.";
+  "Aaron Seth Nagtalon is an aspiring software and AI/ML engineer in Davao City, Philippines, building web apps end to end. Open to opportunities and collaborations.";
 
 export const metadata: Metadata = {
   metadataBase: new URL(siteUrl),

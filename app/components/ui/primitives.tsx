@@ -1,23 +1,5 @@
 import type { CSSProperties, ReactNode } from "react";
 
-/** Renders content text, highlighting any [TODO: …] placeholders so they're easy to spot. */
-export function Txt({ children }: { children: string }) {
-  const parts = children.split(/(\[TODO:[^\]]*\])/g);
-  return (
-    <>
-      {parts.map((part, i) =>
-        part.startsWith("[TODO:") ? (
-          <mark key={i} className="todo">
-            {part}
-          </mark>
-        ) : (
-          part
-        ),
-      )}
-    </>
-  );
-}
-
 type LabelProps = {
   children: ReactNode;
   /** Section index shown in the accent colour, e.g. "01". */

@@ -26,7 +26,6 @@ import {
   Panel,
   SectionHeader,
   Tag,
-  Txt,
 } from "../components/ui/primitives";
 
 // Re-render hourly so the internship "incoming" → "currently" switch also reaches the HTML and meta tags.
@@ -356,9 +355,7 @@ export default function Experience() {
                     <span aria-hidden className="mt-2.5 size-1.5 shrink-0 bg-accent" />
                     <span className="min-w-0">
                       <span className="block font-medium">{e.title}</span>
-                      <span className="font-mono text-xs text-muted">
-                        <Txt>{e.org}</Txt>
-                      </span>
+                      <span className="font-mono text-xs text-muted">{e.org}</span>
                     </span>
                   </li>
                 ))}
