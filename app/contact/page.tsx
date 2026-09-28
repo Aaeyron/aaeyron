@@ -4,6 +4,7 @@ import { Highlight, SectionHeader } from "../components/ui/primitives";
 
 export const metadata: Metadata = {
   title: "Contact",
+  alternates: { canonical: "/contact" },
   description: "Get in touch with Aaron Seth Nagtalon about internships, mentorship and projects.",
 };
 

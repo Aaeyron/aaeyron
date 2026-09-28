@@ -52,7 +52,7 @@ export default function TechStack() {
   return (
     <section aria-labelledby="stack-title" className="section border-t border-line">
       <div className="container-x">
-        <SectionHeader id="stack-title" index="03" label="Tech Stack" title="Tech Stack">
+        <SectionHeader id="stack-title" index="03" label="Tech Stack" title="What I work with.">
           <p>Languages, frameworks, and tools I’ve used in my projects.</p>
         </SectionHeader>
 

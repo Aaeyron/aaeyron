@@ -1,3 +1,4 @@
+import type { Metadata } from "next";
 import Link from "next/link";
 import { ArrowRight } from "lucide-react";
 import { certifications, projects, projectsSummary, selectedProjects } from "@/lib/content";
@@ -12,6 +13,10 @@ import { Highlight, SectionHeader } from "./components/ui/primitives";
 
 // Re-render hourly so the internship "incoming" → "currently" switch also reaches the HTML.
 export const revalidate = 3600;
+
+export const metadata: Metadata = {
+  alternates: { canonical: "/" },
+};
 
 function MoreLink({ href, children }: { href: string; children: React.ReactNode }) {
   return (

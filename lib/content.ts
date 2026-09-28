@@ -1,7 +1,8 @@
 // Single source of truth for all site content.
 // Anything wrapped in [TODO: …] is a placeholder waiting for real details.
 
-export const siteUrl = process.env.NEXT_PUBLIC_SITE_URL ?? "http://localhost:3000"; // [TODO: production URL]
+/** Production URL, used for metadataBase, Open Graph and canonical URLs. */
+export const siteUrl = process.env.NEXT_PUBLIC_SITE_URL ?? "https://aaeyron.vercel.app";
 
 /** Résumé on Google Drive — every "View résumé" link uses this. Opens in a new tab. */
 export const resumeUrl = "https://drive.google.com/file/d/1KY1VFjOZdBADFLHZlbeNZwm0yjq3mFfE/view";
@@ -20,11 +21,9 @@ export const profile = {
   availability: "[TODO: availability, e.g. “Available for internships from …”]",
   heroImage: "/images/MeAgain.jpeg",
   aboutImage: "/images/About.jpg",
-  intro:
-    "I’m Aaron, an Information Technology student who enjoys turning simple ideas into useful digital products.",
 };
 
-/** /experience "About me" section (Aaron's own wording). */
+/** About text in Aaron's own wording: /experience "About me" section + home About teaser. */
 export const aboutMe = {
   heading: "Hi, I’m Aaron.",
   paragraphs: [
@@ -32,12 +31,9 @@ export const aboutMe = {
     "I work on web apps, mobile apps, backends, and databases. I care about making software that is simple and easy to use.",
     "I learn best by building. Every project teaches me something new, and I try to do better on the next one.",
   ],
+  teaser:
+    "I’m Aaron, an Information Technology student from Davao City, Philippines. I like building websites and apps that solve real problems, and I learn best by building.",
 };
-
-export const story = [
-  "My work moves across web interfaces, mobile concepts, backend logic, and databases. I’m especially interested in how thoughtful design and solid engineering come together to make software easier to understand and use.",
-  "I learn by building. Every project gives me a new problem to solve, a better question to ask, and another chance to improve how I work, from planning the experience to finishing the final version.",
-];
 
 // `short` fits the hero's Now block; `detail` is the full description (tooltip).
 // The "learning" line (Apno AI internship) lives in lib/internship.ts because it

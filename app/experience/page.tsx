@@ -36,6 +36,7 @@ export function generateMetadata(): Metadata {
   const internship = internshipCopy(hasInternshipStarted()).meta;
   return {
     title: "Experience",
+    alternates: { canonical: "/experience" },
     description: `About Aaron Seth Nagtalon: the TactileLens capstone and current projects, ${internship}, early solo school projects, tech community events, and certifications.`,
   };
 }

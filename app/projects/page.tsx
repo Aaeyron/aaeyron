@@ -5,6 +5,7 @@ import { Highlight, SectionHeader } from "../components/ui/primitives";
 
 export const metadata: Metadata = {
   title: "Projects",
+  alternates: { canonical: "/projects" },
   description:
     "Projects Aaron Seth Nagtalon is building in 2026: MG Sakura Learning Platform, TactileLens (capstone) and JM Learning Hub. All are in progress.",
 };

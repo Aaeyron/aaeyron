@@ -1,8 +1,8 @@
 import Image from "next/image";
 import { ArrowRight } from "lucide-react";
-import { profile, story } from "@/lib/content";
+import { aboutMe, profile } from "@/lib/content";
 import ButtonLink from "../ui/ButtonLink";
-import { CornerMarks, Highlight, Label } from "../ui/primitives";
+import { CornerMarks, Label } from "../ui/primitives";
 
 export default function AboutTeaser() {
   return (
@@ -32,12 +32,9 @@ export default function AboutTeaser() {
             About
           </Label>
           <h2 id="about-title" className="h2">
-            A developer in progress, <Highlight>building with intention</Highlight>.
+            A developer in progress, building with intention.
           </h2>
-          <div className="measure mt-6 space-y-4 text-muted">
-            <p className="text-lg text-ink">{profile.intro}</p>
-            <p>{story[1]}</p>
-          </div>
+          <p className="measure mt-6 text-lg text-ink">{aboutMe.teaser}</p>
           <ButtonLink href="/experience" variant="secondary" className="mt-8">
             More about me <ArrowRight size={16} aria-hidden />
           </ButtonLink>
