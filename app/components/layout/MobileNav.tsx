@@ -26,6 +26,7 @@ export default function MobileNav({ pathname }: { pathname: string }) {
       <dialog
         ref={dialogRef}
         aria-label="Menu"
+        data-lenis-prevent
         onClick={(e) => {
           if (e.target === dialogRef.current) close();
         }}

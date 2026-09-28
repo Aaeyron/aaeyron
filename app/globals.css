@@ -111,8 +111,13 @@
 html {
   background: var(--bg);
   -webkit-text-size-adjust: 100%;
-  scroll-behavior: smooth;
+  scroll-behavior: smooth; /* anchor jumps on touch devices / when Lenis is off */
   transition: background-color var(--dur-base) var(--ease-out);
+}
+/* When Lenis runs it drives every scroll frame itself; native smooth scrolling
+   would animate each of those frames again and make the page feel stiff/laggy. */
+html.lenis {
+  scroll-behavior: auto;
 }
 
 /* Background texture: a fine grid fixed to the viewport, fading out
@@ -131,6 +136,9 @@ body::before {
   background-position: center top;
   -webkit-mask-image: radial-gradient(ellipse 75% 65% at 50% 40%, #000 20%, transparent 100%);
   mask-image: radial-gradient(ellipse 75% 65% at 50% 40%, #000 20%, transparent 100%);
+  /* Own compositor layer: painted once, not re-rasterised on every scroll frame. */
+  transform: translateZ(0);
+  will-change: transform;
 }
 
 [id] {

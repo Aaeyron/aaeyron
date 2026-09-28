@@ -31,6 +31,7 @@ export function CertificateDialog({ cert, dialogRef, returnFocus }: DialogProps)
     <dialog
       ref={dialogRef}
       aria-labelledby={titleId}
+      data-lenis-prevent
       onClick={(e) => {
         if (e.target === dialogRef.current) close();
       }}

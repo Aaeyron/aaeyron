@@ -10,7 +10,7 @@ export default function SiteHeader() {
   const pathname = usePathname();
 
   return (
-    <header className="nav-enter sticky top-0 z-40 border-b border-line bg-bg/85 backdrop-blur-md supports-[backdrop-filter]:bg-bg/70">
+    <header className="nav-enter sticky top-0 z-40 border-b border-line bg-bg/95 [transform:translateZ(0)]">
       <div className="container-x flex h-16 items-center justify-between gap-4">
         <Link href="/" className="group -ml-1 flex min-h-11 items-center gap-1.5 rounded-md px-1" aria-label="Aaeyron, home">
           <span className="text-lg font-semibold leading-none tracking-[-0.03em]">Aaeyron</span>

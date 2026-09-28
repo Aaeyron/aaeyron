@@ -5,6 +5,7 @@ import { themeScript } from "@/lib/theme-script";
 import SiteHeader from "./components/layout/SiteHeader";
 import SiteFooter from "./components/layout/SiteFooter";
 import RevealRoot from "./components/ui/RevealRoot";
+import SmoothScroll from "./components/layout/SmoothScroll";
 import "./globals.css";
 
 const sans = Geist({ subsets: ["latin"], variable: "--font-geist", display: "swap" });
@@ -52,7 +53,7 @@ export default function RootLayout({ children }: Readonly<{ children: React.Reac
           Skip to content
         </a>
         {/* Decorative guide lines on the content edges (large screens only). */}
-        <div aria-hidden className="pointer-events-none fixed inset-0 -z-10 hidden lg:block">
+        <div aria-hidden className="pointer-events-none fixed inset-0 -z-10 hidden [transform:translateZ(0)] lg:block">
           <div className="container-x h-full">
             <div className="h-full border-x border-[var(--guide)]" />
           </div>
@@ -63,6 +64,7 @@ export default function RootLayout({ children }: Readonly<{ children: React.Reac
         </main>
         <SiteFooter />
         <RevealRoot />
+        <SmoothScroll />
       </body>
     </html>
   );
