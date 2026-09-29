@@ -120,9 +120,7 @@ export default function Experience() {
 
             <Panel className="mt-8 max-w-md p-5">
               <dl className="space-y-2.5">
-                <Meta k="Role">{profile.role}</Meta>
-                <Meta k="School">{profile.school}</Meta>
-                <Meta k="Based in">{profile.location}</Meta>
+                <Meta k="Role">{profile.role}</Meta>                <Meta k="Based in">{profile.location}</Meta>
                 <Meta k="Status">
                   <span className="inline-flex items-center gap-2">
                     <span aria-hidden className="status-dot" />

@@ -11,9 +11,7 @@ export const profile = {
   name: "Aaron Seth Nagtalon",
   shortName: "Aaron Seth",
   role: "Aspiring Software & AI/ML Engineer",
-  location: "Davao City, Philippines",
-  school: "Holy Cross of Davao College · 4th year, BS Information Technology",
-  /** For very tight spots (e.g. photo captions). */
+  location: "Davao City, Philippines",  /** For very tight spots (e.g. photo captions). */
   locationShort: "Davao City, PH",
   email: "aaronseth041@gmail.com",
   phone: { display: "+63 915 660 4726", href: "tel:+639156604726" },
