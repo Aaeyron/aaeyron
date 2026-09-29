@@ -40,7 +40,6 @@ export default function Hero() {
           <span aria-hidden className="status-dot" />
           {profile.status}
         </span>
-        <Label>{profile.location}</Label>
         {/* Davao City's coordinates — a small technical detail. */}
         <span className="hidden font-mono text-xs text-muted sm:inline">
           <span className="sr-only">Coordinates: </span>7.07°N 125.61°E
@@ -53,8 +52,8 @@ export default function Hero() {
 
       <div className="grid-12 mt-10 gap-y-10">
         <p className="enter col-span-4 text-lg text-muted sm:col-span-6 lg:col-span-6" style={enterStyle(2)}>
-          I’m {profile.name}, an aspiring software and AI/ML engineer in {profile.location}, open to opportunities and
-          collaborations.
+          Aspiring Software &amp; AI/ML Engineer based in Davao City, Philippines, building web, mobile, and AI-powered
+          projects. Open to opportunities and collaborations.
         </p>
 
         <div className="enter relative col-span-4 border border-line bg-bg p-5 sm:col-span-8 lg:col-span-5 lg:col-start-8" style={enterStyle(3)}>
