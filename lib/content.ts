@@ -21,7 +21,7 @@ export const profile = {
   photo: "/images/MeAgain.jpeg",
 };
 
-/** About text in Aaron's own wording: /experience "About me" section + home About teaser. */
+/** About text in Aaron's own wording: /experience "About me" section. */
 export const aboutMe = {
   heading: "Hi, I’m Aaron.",
   paragraphs: [
@@ -29,8 +29,12 @@ export const aboutMe = {
     "I work on web apps, mobile apps, backends, and databases. I care about making software that is simple and easy to use.",
     "I learn best by building. Every project teaches me something new, and I try to do better on the next one.",
   ],
-  teaser:
-    "I’m Aaron, an Information Technology student from Davao City, Philippines. I like building websites and apps that solve real problems, and I learn best by building.",
+};
+
+/** Home "Focus" section: work and direction only (personal details stay on /experience). */
+export const homeFocus = {
+  heading: "What I’m working toward.",
+  text: "I’m building my skills as a software and AI/ML engineer through real projects, from full-stack web apps to an AI-assisted accessibility app for my capstone. I focus on making software that is simple, useful, and easy to use.",
 };
 
 // `short` fits the hero's Now block; `detail` is the full description (tooltip).

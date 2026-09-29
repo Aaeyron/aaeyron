@@ -1,12 +1,12 @@
 import Image from "next/image";
 import { ArrowRight } from "lucide-react";
-import { aboutMe, profile } from "@/lib/content";
+import { homeFocus, profile } from "@/lib/content";
 import ButtonLink from "../ui/ButtonLink";
 import { CornerMarks, Label } from "../ui/primitives";
 
 export default function AboutTeaser() {
   return (
-    <section aria-labelledby="about-title" className="section border-t border-line">
+    <section aria-labelledby="focus-title" className="section border-t border-line">
       <div className="container-x grid-12 items-center gap-y-10">
         <div className="col-span-4 sm:col-span-4 lg:col-span-4" data-reveal>
           <div className="relative">
@@ -29,12 +29,12 @@ export default function AboutTeaser() {
 
         <div className="col-span-4 sm:col-span-8 lg:col-span-7 lg:col-start-6" data-reveal>
           <Label index="05" className="mb-5">
-            About
+            Focus
           </Label>
-          <h2 id="about-title" className="h2">
-            {aboutMe.heading}
+          <h2 id="focus-title" className="h2">
+            {homeFocus.heading}
           </h2>
-          <p className="measure mt-6 text-lg text-ink">{aboutMe.teaser}</p>
+          <p className="measure mt-6 text-lg text-ink">{homeFocus.text}</p>
           <ButtonLink href="/experience" variant="secondary" className="mt-8">
             More about me <ArrowRight size={16} aria-hidden />
           </ButtonLink>
