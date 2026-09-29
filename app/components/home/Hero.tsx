@@ -1,6 +1,6 @@
-import { ArrowDown } from "lucide-react";
+import { ArrowDown, FileText } from "lucide-react";
 import type { ReactNode } from "react";
-import { now, profile } from "@/lib/content";
+import { now, profile, resumeAriaLabel, resumeUrl } from "@/lib/content";
 import { hasInternshipStarted } from "@/lib/internship";
 import InternshipText from "../ui/InternshipText";
 import ButtonLink from "../ui/ButtonLink";
@@ -76,9 +76,19 @@ export default function Hero() {
         </div>
       </div>
 
-      <div className="enter mt-10 flex flex-wrap gap-3" style={enterStyle(4)}>
-        <ButtonLink href="#work">
+      {/* Side by side, stacked full-width on small phones. */}
+      <div className="enter mt-10 flex flex-col gap-3 min-[400px]:flex-row" style={enterStyle(4)}>
+        <ButtonLink href="#work" className="w-full min-[400px]:w-auto">
           See my work <ArrowDown size={17} aria-hidden className="transition-transform duration-200 group-hover:translate-y-0.5" />
+        </ButtonLink>
+        <ButtonLink
+          href={resumeUrl}
+          variant="secondary"
+          external
+          aria-label={resumeAriaLabel}
+          className="w-full min-[400px]:w-auto"
+        >
+          <FileText size={17} aria-hidden /> View résumé
         </ButtonLink>
       </div>
     </section>

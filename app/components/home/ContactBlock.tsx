@@ -1,6 +1,4 @@
-import { FileText } from "lucide-react";
-import { profile, resumeAriaLabel, resumeUrl } from "@/lib/content";
-import ButtonLink from "../ui/ButtonLink";
+import { profile } from "@/lib/content";
 import ContactButtons from "../ui/ContactButtons";
 import { Highlight, Label } from "../ui/primitives";
 
@@ -30,12 +28,6 @@ export default function ContactBlock() {
 
         {/* Each button reveals on its own (data-reveal is on every button). */}
         <ContactButtons className="mt-12" />
-
-        <div data-reveal className="mt-6">
-          <ButtonLink href={resumeUrl} variant="ghost" external aria-label={resumeAriaLabel} className="-ml-3">
-            <FileText size={17} aria-hidden /> View résumé
-          </ButtonLink>
-        </div>
       </div>
     </section>
   );
