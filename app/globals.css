@@ -31,9 +31,8 @@
   --accent-text: #2e5ce6;
   --accent-soft: color-mix(in srgb, var(--accent) 10%, var(--bg));
   --on-accent: #ffffff;
-  /* Decorative only (background grid, guides) — never used for text. */
-  --grid: rgb(10 10 10 / 0.055);
-  --guide: rgb(10 10 10 / 0.08);
+  /* Decorative only (background lines) — never used for text. */
+  --lines: rgb(10 10 10 / 0.08);
 
   --space-section: clamp(4rem, 10vw, 8rem);
   --gutter: 1rem;
@@ -56,8 +55,7 @@
   --line: #262626;
   --line-strong: #474747;
   --accent-text: #6b92ff;
-  --grid: rgb(255 255 255 / 0.06);
-  --guide: rgb(255 255 255 / 0.09);
+  --lines: rgb(255 255 255 / 0.08);
   color-scheme: dark;
 }
 
@@ -71,8 +69,7 @@
     --line: #262626;
     --line-strong: #474747;
     --accent-text: #6b92ff;
-    --grid: rgb(255 255 255 / 0.06);
-    --guide: rgb(255 255 255 / 0.09);
+    --lines: rgb(255 255 255 / 0.08);
     color-scheme: dark;
   }
 }
@@ -120,22 +117,29 @@ html.lenis {
   scroll-behavior: auto;
 }
 
-/* Background texture: a fine grid fixed to the viewport, fading out
-   toward the edges. Body is transparent so it shows through; cards and
-   panels use bg-bg to sit cleanly on top. Decorative only. */
+/* Background: 14 thin straight lines at random angles (fixed seed, so it's the
+   same on every page and visit), fixed to the viewport and fading out toward
+   the edges. The line art is /public/lines.svg (1600×1000, scaled with `cover`,
+   1px non-scaling stroke) used as a MASK over the --lines colour, so it follows
+   the theme. Body is transparent so it shows through; cards and panels use
+   bg-bg to sit cleanly on top. A pseudo-element: decorative, never announced. */
 body::before {
   content: "";
   position: fixed;
   inset: 0;
   z-index: -1;
   pointer-events: none;
-  background-image:
-    linear-gradient(to right, var(--grid) 1px, transparent 1px),
-    linear-gradient(to bottom, var(--grid) 1px, transparent 1px);
-  background-size: 40px 40px;
-  background-position: center top;
-  -webkit-mask-image: radial-gradient(ellipse 75% 65% at 50% 40%, #000 20%, transparent 100%);
-  mask-image: radial-gradient(ellipse 75% 65% at 50% 40%, #000 20%, transparent 100%);
+  background: var(--lines);
+  -webkit-mask-image: url("/lines.svg"), radial-gradient(ellipse 75% 65% at 50% 40%, #000 20%, transparent 100%);
+  mask-image: url("/lines.svg"), radial-gradient(ellipse 75% 65% at 50% 40%, #000 20%, transparent 100%);
+  -webkit-mask-size: cover, 100% 100%;
+  mask-size: cover, 100% 100%;
+  -webkit-mask-position: center, center;
+  mask-position: center, center;
+  -webkit-mask-repeat: no-repeat;
+  mask-repeat: no-repeat;
+  -webkit-mask-composite: source-in;
+  mask-composite: intersect;
   /* Own compositor layer: painted once, not re-rasterised on every scroll frame. */
   transform: translateZ(0);
   will-change: transform;
