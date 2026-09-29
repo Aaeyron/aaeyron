@@ -12,6 +12,7 @@ export const profile = {
   shortName: "Aaron Seth",
   role: "Aspiring Software & AI/ML Engineer",
   location: "Davao City, Philippines",
+  school: "Holy Cross of Davao College · 4th year, BS Information Technology",
   /** For very tight spots (e.g. photo captions). */
   locationShort: "Davao City, PH",
   email: "aaronseth041@gmail.com",
@@ -26,7 +27,7 @@ export const profile = {
 export const aboutMe = {
   heading: "Hi, I’m Aaron.",
   paragraphs: [
-    "I’m an Information Technology student from Davao City, Philippines. I like building websites and apps that solve real problems.",
+    "I’m a 4th-year Information Technology student at Holy Cross of Davao College in Davao City, Philippines. I like building websites and apps that solve real problems.",
     "I work on web apps, mobile apps, backends, and databases. I care about making software that is simple and easy to use.",
     "I learn best by building. Every project teaches me something new, and I try to do better on the next one.",
   ],
