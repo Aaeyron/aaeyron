@@ -14,7 +14,7 @@ export default function SiteHeader() {
       <div className="container-x flex h-16 items-center justify-between gap-4">
         <Link href="/" className="group -ml-1 flex min-h-11 items-center gap-1.5 rounded-md px-1" aria-label="Aaeyron, home">
           <span className="text-lg font-semibold leading-none tracking-[-0.03em]">Aaeyron</span>
-          <span aria-hidden className="size-1.5 translate-y-1 rounded-full bg-accent transition-transform duration-300 group-hover:scale-150" />
+          <span aria-hidden className="size-1.5 shrink-0 rounded-full bg-accent transition-transform duration-300 group-hover:scale-150" />
         </Link>
 
         <nav aria-label="Main" className="hidden md:block">
