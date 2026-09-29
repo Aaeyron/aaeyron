@@ -88,12 +88,12 @@ export default function Experience() {
               <CornerMarks />
               <div className="relative aspect-[4/5] overflow-hidden border border-line bg-surface">
                 <Image
-                  src={profile.aboutImage}
-                  alt={`Portrait of ${profile.name}`}
+                  src={profile.photo}
+                  alt={profile.name}
                   fill
                   priority
                   sizes="(min-width: 1024px) 33vw, (min-width: 640px) 50vw, 100vw"
-                  className="object-cover"
+                  className="object-cover object-[50%_35%]"
                 />
               </div>
               <p aria-hidden className="mt-3 flex justify-between font-mono text-[0.7rem] text-muted">

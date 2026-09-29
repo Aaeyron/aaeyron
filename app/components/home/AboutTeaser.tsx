@@ -13,7 +13,7 @@ export default function AboutTeaser() {
             <CornerMarks />
             <div className="relative aspect-[4/5] overflow-hidden border border-line bg-surface">
               <Image
-                src={profile.homeImage}
+                src={profile.photo}
                 alt={profile.name}
                 fill
                 sizes="(min-width: 1024px) 33vw, (min-width: 640px) 50vw, 100vw"

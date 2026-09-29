@@ -18,10 +18,8 @@ export const profile = {
   phone: { display: "+63 915 660 4726", href: "tel:+639156604726" },
   status: "Open to opportunities & collaborations",
   availability: "Open to opportunities & collaborations. Feel free to reach out.",
-  /** Home About section photo (different from the /experience one). */
-  homeImage: "/images/MeAgain.jpeg",
-  /** /experience About me photo. */
-  aboutImage: "/images/About.jpg",
+  /** Profile photo, shared by the home About section and /experience "About me". */
+  photo: "/images/MeAgain.jpeg",
 };
 
 /** About text in Aaron's own wording: /experience "About me" section + home About teaser. */
