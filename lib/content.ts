@@ -258,7 +258,11 @@ export const techStack: TechGroup[] = [
   },
   {
     group: "Design",
-    items: [{ name: "UI/UX Design" }],
+    items: [
+      { name: "UI/UX Design" },
+      { name: "Figma", icon: "SiFigma" },
+      { name: "Canva", icon: "SiCanva" },
+    ],
   },
 ];
 

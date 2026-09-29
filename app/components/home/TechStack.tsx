@@ -1,10 +1,12 @@
 import type { IconType } from "react-icons";
 import {
+  SiCanva,
   SiCmake,
   SiCplusplus,
   SiCss3,
   SiDart,
   SiDjango,
+  SiFigma,
   SiFlutter,
   SiHtml5,
   SiJavascript,
@@ -26,11 +28,13 @@ import { Label, SectionHeader } from "../ui/primitives";
 
 /** Logos for items in lib/content.ts `techStack` (monochrome via currentColor). */
 const icons: Record<string, IconType> = {
+  SiCanva,
   SiCmake,
   SiCplusplus,
   SiCss3,
   SiDart,
   SiDjango,
+  SiFigma,
   SiFlutter,
   SiHtml5,
   SiJavascript,
