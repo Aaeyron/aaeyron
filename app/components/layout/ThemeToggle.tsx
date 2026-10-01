@@ -14,7 +14,7 @@ const getTheme = (): Theme => (document.documentElement.dataset.theme === "dark"
 const getServerTheme = (): Theme | null => null;
 
 const icon =
-  "absolute inset-0 m-auto transition-[transform,opacity] duration-300 ease-out motion-reduce:transition-none";
+  "absolute inset-0 m-auto transition-[transform,opacity] duration-150 ease-out motion-reduce:transition-none";
 
 export default function ThemeToggle() {
   const theme = useSyncExternalStore(subscribe, getTheme, getServerTheme);
