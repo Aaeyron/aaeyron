@@ -531,3 +531,14 @@ html.reveal-ready:not(.reveal-js) [data-reveal] .draw-x {
     animation: none;
   }
 }
+
+/* ------------------------ Theme switch ------------------------ */
+/* On <html> for one frame while the theme changes (lib/client.ts), so the
+   switch is instant everywhere. Animations are left alone: toggling them off
+   and on would replay the page's entrance/reveal animations. */
+.theme-switching,
+.theme-switching *,
+.theme-switching *::before,
+.theme-switching *::after {
+  transition: none !important;
+}
