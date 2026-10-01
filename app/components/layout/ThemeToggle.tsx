@@ -23,10 +23,7 @@ export default function ThemeToggle() {
   return (
     <button
       type="button"
-      onClick={(e) => {
-        const r = e.currentTarget.getBoundingClientRect();
-        toggleTheme({ x: r.left + r.width / 2, y: r.top + r.height / 2 });
-      }}
+      onClick={() => toggleTheme()}
       className="tap relative inline-flex cursor-pointer items-center justify-center rounded-md text-muted transition-colors duration-200 hover:text-ink"
       aria-label={label}
       title={label}

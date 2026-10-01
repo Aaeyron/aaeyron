@@ -533,18 +533,20 @@ html.reveal-ready:not(.reveal-js) [data-reveal] .draw-x {
 }
 
 /* ------------------------ Theme switch ------------------------ */
-/* Circular reveal: the default crossfade is off; lib/client.ts animates the
-   new snapshot's clip-path from the toggle button. */
-::view-transition-old(root),
-::view-transition-new(root) {
-  animation: none;
-  mix-blend-mode: normal;
+/* Crossfade: old theme fades out while the new one fades in (400ms, matched
+   by THEME_FADE_MS in lib/client.ts). The browser's default plus-lighter
+   blending keeps the midpoint from dipping. */
+@keyframes theme-fade-out {
+  to { opacity: 0; }
+}
+@keyframes theme-fade-in {
+  from { opacity: 0; }
 }
 ::view-transition-old(root) {
-  z-index: 1;
+  animation: theme-fade-out 400ms ease-in-out both;
 }
 ::view-transition-new(root) {
-  z-index: 2;
+  animation: theme-fade-in 400ms ease-in-out both;
 }
 
 /* Fallback (no View Transitions): colours fade, only while .theme-transition
@@ -554,7 +556,7 @@ html.theme-transition *,
 html.theme-transition *::before,
 html.theme-transition *::after {
   transition-property: background-color, color, border-color, outline-color, text-decoration-color, fill, stroke !important;
-  transition-duration: 300ms !important;
-  transition-timing-function: ease !important;
+  transition-duration: 400ms !important;
+  transition-timing-function: ease-in-out !important;
   transition-delay: 0s !important;
 }

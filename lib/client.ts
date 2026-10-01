@@ -9,15 +9,15 @@ function applyTheme(next: Theme) {
   } catch {}
 }
 
-const THEME_FADE_MS = 300;
-const THEME_REVEAL_MS = 500;
+/** Keep in sync with the theme crossfade duration in globals.css. */
+const THEME_FADE_MS = 400;
 
 /**
- * Flips the theme and remembers the choice. With motion allowed, the new theme
- * expands in a circle from `origin` (View Transitions API), or colours fade where
- * that API is missing. With reduced motion it switches instantly.
+ * Flips the theme and remembers the choice. With motion allowed, old and new
+ * themes crossfade (View Transitions API, animated in globals.css), or colours
+ * fade where that API is missing. With reduced motion it switches instantly.
  */
-export function toggleTheme(origin?: { x: number; y: number }): Theme {
+export function toggleTheme(): Theme {
   const root = document.documentElement;
   const next: Theme = root.dataset.theme === "dark" ? "light" : "dark";
 
@@ -27,19 +27,7 @@ export function toggleTheme(origin?: { x: number; y: number }): Theme {
   }
 
   if (typeof document.startViewTransition === "function") {
-    const x = origin?.x ?? innerWidth / 2;
-    const y = origin?.y ?? 0;
-    // Distance to the farthest corner, so the circle always covers the screen.
-    const r = Math.hypot(Math.max(x, innerWidth - x), Math.max(y, innerHeight - y));
-    const transition = document.startViewTransition(() => applyTheme(next));
-    transition.ready
-      .then(() => {
-        root.animate(
-          { clipPath: [`circle(0px at ${x}px ${y}px)`, `circle(${r}px at ${x}px ${y}px)`] },
-          { duration: THEME_REVEAL_MS, easing: "cubic-bezier(0.22, 1, 0.36, 1)", pseudoElement: "::view-transition-new(root)" },
-        );
-      })
-      .catch(() => {});
+    document.startViewTransition(() => applyTheme(next));
     return next;
   }
 
