@@ -1,35 +1,10 @@
 import { ArrowDown, FileText } from "lucide-react";
-import type { ReactNode } from "react";
 import { now, profile, resumeAriaLabel, resumeUrl } from "@/lib/content";
 import { hasInternshipStarted } from "@/lib/internship";
 import InternshipText from "../ui/InternshipText";
+import NowItem from "./NowItem";
 import ButtonLink from "../ui/ButtonLink";
 import { CornerMarks, enterStyle, Highlight, Label } from "../ui/primitives";
-
-/** Short line with the full description in a tooltip (hover, keyboard focus or tap). */
-function NowItem({ id, term, short, detail }: { id: string; term: string; short: ReactNode; detail: ReactNode }) {
-  return (
-    <div className="flex flex-col gap-x-4 sm:flex-row">
-      <dt className="shrink-0 text-muted sm:w-20">{term}</dt>
-      <dd className="group relative">
-        <span
-          tabIndex={0}
-          aria-describedby={id}
-          className="cursor-help underline decoration-line-strong decoration-dotted underline-offset-4 outline-none focus-visible:rounded-sm focus-visible:outline-2 focus-visible:outline-accent"
-        >
-          {short}
-        </span>
-        <span
-          id={id}
-          role="tooltip"
-          className="pointer-events-none invisible absolute left-0 top-full z-10 mt-2 w-[min(20rem,80vw)] translate-y-1 rounded-md border border-line bg-bg p-3 font-sans text-sm leading-snug text-ink opacity-0 shadow-lg transition-[opacity,transform,visibility] duration-200 group-hover:visible group-hover:translate-y-0 group-hover:opacity-100 group-focus-within:visible group-focus-within:translate-y-0 group-focus-within:opacity-100"
-        >
-          {detail}
-        </span>
-      </dd>
-    </div>
-  );
-}
 
 export default function Hero() {
   const started = hasInternshipStarted();
@@ -64,7 +39,7 @@ export default function Hero() {
               status.log
             </span>
           </div>
-          <dl className="space-y-2 border-l-2 border-accent pl-4 font-mono text-sm">
+          <dl className="space-y-1 border-l-2 border-accent pl-4 font-mono text-sm">
             <NowItem id="now-building" term="building" short={now.building.short} detail={now.building.detail} />
             <NowItem
               id="now-learning"
