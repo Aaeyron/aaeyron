@@ -290,6 +290,7 @@ export const certifications: Certificate[] = [
     issuer: "CodeChum Academy",
     date: "May 18, 2025",
     image: "/images/Certificate1.png",
+    credentialUrl: "https://hcdc.codechum.com/certificates/11063",
     alt: "CodeChum Academy certificate",
     description:
       "Completed Information Management through CodeChum, earning a total score of 1069/1130. This certificate recognizes my completion of the course’s MySQL-based learning activities and assessments.",
