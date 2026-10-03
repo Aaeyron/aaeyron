@@ -51,6 +51,12 @@ function CertificationRow({ cert, index, boxed }: { cert: Certificate; index: nu
             {cert.title}
           </h3>
 
+          {cert.description && (
+            <p className="mt-4 text-sm leading-relaxed text-muted sm:text-base">
+              {cert.description}
+            </p>
+          )}
+
           <dl className="mt-6 grid max-w-md grid-cols-[auto_1fr] gap-x-6 gap-y-2 border-l border-line pl-4 text-sm">
             <dt className="font-mono text-xs uppercase tracking-wider text-muted">Issued</dt>
             <dd>

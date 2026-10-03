@@ -270,8 +270,7 @@ export const techStack: TechGroup[] = [
 ];
 
 // Certifications shown on the site (home + /experience), in display order.
-// Image paths are matched from the original app/certificates/page.tsx data.
-// Event certificates (GDG Certificate.png, Cyber Hygiene Cert.png) and Certificate2.jpg
+// Event certificates (GDG Certificate.png, Cyber Hygiene Cert.png)
 // stay in /public/images but are intentionally not displayed.
 export type Certificate = {
   id: string;
@@ -280,6 +279,7 @@ export type Certificate = {
   date: string;
   image: string;
   alt: string;
+  description?: string;
 };
 
 export const certifications: Certificate[] = [
@@ -292,12 +292,14 @@ export const certifications: Certificate[] = [
     alt: "CodeChum Academy certificate",
   },
   {
-    id: "intro-cybersecurity",
-    title: "Introduction to Cybersecurity",
-    issuer: "Networking Academy",
-    date: "December 15, 2025",
-    image: "/images/Certificate3.png",
-    alt: "Introduction to Cybersecurity certificate",
+    id: "cs50-ai",
+    title: "CS50’s Introduction to Artificial Intelligence with Python",
+    issuer: "Harvard University · CS50",
+    date: "2026",
+    image: "/images/Certificate 2.png",
+    alt: "CS50 certificate awarded to Aaron Seth Nagtalon for completing Introduction to Artificial Intelligence with Python, including twelve projects, in 2026",
+    description:
+      "Completed all 12 hands-on projects covering search, knowledge representation, probability, optimization, machine learning, neural networks, computer vision, and natural language processing. Built AI systems in Python, from Bayesian inference and game AI to traffic sign classification, sentence parsing, and BERT attention visualization. This journey strengthened my problem-solving, testing, and debugging skills, and my understanding of how AI systems work beyond using existing tools or APIs.",
   },
 ];
 
