@@ -280,6 +280,7 @@ export type Certificate = {
   image: string;
   alt: string;
   description?: string;
+  credentialUrl?: string;
 };
 
 export const certifications: Certificate[] = [
@@ -290,13 +291,16 @@ export const certifications: Certificate[] = [
     date: "May 18, 2025",
     image: "/images/Certificate1.png",
     alt: "CodeChum Academy certificate",
+    description:
+      "Completed Information Management through CodeChum, earning a total score of 1069/1130. This certificate recognizes my completion of the course’s MySQL-based learning activities and assessments.",
   },
   {
     id: "cs50-ai",
     title: "CS50’s Introduction to Artificial Intelligence with Python",
     issuer: "Harvard University · CS50",
-    date: "2026",
+    date: "October 3, 2026",
     image: "/images/Certificate 2.png",
+    credentialUrl: "https://certificates.cs50.io/f6099366-f074-40a8-9d1b-13bc8e4a362d.pdf?size=letter",
     alt: "CS50 certificate awarded to Aaron Seth Nagtalon for completing Introduction to Artificial Intelligence with Python, including twelve projects, in 2026",
     description:
       "Completed all 12 hands-on projects covering search, knowledge representation, probability, optimization, machine learning, neural networks, computer vision, and natural language processing. Built AI systems in Python, from Bayesian inference and game AI to traffic sign classification, sentence parsing, and BERT attention visualization. This journey strengthened my problem-solving, testing, and debugging skills, and my understanding of how AI systems work beyond using existing tools or APIs.",

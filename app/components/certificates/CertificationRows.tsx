@@ -64,19 +64,36 @@ function CertificationRow({ cert, index, boxed }: { cert: Certificate; index: nu
             </dd>
           </dl>
 
-          <button
-            type="button"
-            aria-haspopup="dialog"
-            onClick={open}
-            className="group/btn mt-6 inline-flex min-h-11 items-center gap-1.5 font-medium transition-colors duration-200 hover:text-accent-text"
-          >
-            View certificate <span className="sr-only">: {cert.title}</span>
-            <ArrowUpRight
-              size={16}
-              aria-hidden
-              className="transition-transform duration-200 group-hover/btn:-translate-y-0.5 group-hover/btn:translate-x-0.5"
-            />
-          </button>
+          {cert.credentialUrl ? (
+            <a
+              href={cert.credentialUrl}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="group/btn mt-6 inline-flex min-h-11 items-center gap-1.5 font-medium transition-colors duration-200 hover:text-accent-text"
+            >
+              View Credentials
+              <span className="sr-only">: {cert.title} (opens in a new tab)</span>
+              <ArrowUpRight
+                size={16}
+                aria-hidden
+                className="transition-transform duration-200 group-hover/btn:-translate-y-0.5 group-hover/btn:translate-x-0.5"
+              />
+            </a>
+          ) : (
+            <button
+              type="button"
+              aria-haspopup="dialog"
+              onClick={open}
+              className="group/btn mt-6 inline-flex min-h-11 items-center gap-1.5 font-medium transition-colors duration-200 hover:text-accent-text"
+            >
+              View certificate <span className="sr-only">: {cert.title}</span>
+              <ArrowUpRight
+                size={16}
+                aria-hidden
+                className="transition-transform duration-200 group-hover/btn:-translate-y-0.5 group-hover/btn:translate-x-0.5"
+              />
+            </button>
+          )}
         </div>
       </article>
 
