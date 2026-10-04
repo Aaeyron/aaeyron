@@ -17,7 +17,7 @@ const description =
 export const metadata: Metadata = {
   metadataBase: new URL(siteUrl),
   title: {
-    default: `${profile.name} — ${profile.role}`,
+    default: `${profile.name} (Aaeyron) - ${profile.role}`,
     template: `%s — ${profile.shortName}`,
   },
   description,
