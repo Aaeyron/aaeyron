@@ -20,9 +20,8 @@ export default function AboutTeaser() {
                 className="object-cover object-[50%_35%]"
               />
             </div>
-            <p aria-hidden className="mt-3 flex justify-between font-mono text-[0.7rem] text-muted">
+            <p aria-hidden className="mt-3 font-mono text-[0.7rem] text-muted">
               <span>fig. 01</span>
-              <span>{profile.locationShort}</span>
             </p>
           </div>
         </div>
