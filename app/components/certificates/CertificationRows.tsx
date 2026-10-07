@@ -71,7 +71,7 @@ function CertificationRow({ cert, index, boxed }: { cert: Certificate; index: nu
               rel="noopener noreferrer"
               className="group/btn mt-6 inline-flex min-h-11 items-center gap-1.5 font-medium transition-colors duration-200 hover:text-accent-text"
             >
-              View Credentials
+              Verify Credentials
               <span className="sr-only">: {cert.title} (opens in a new tab)</span>
               <ArrowUpRight
                 size={16}
