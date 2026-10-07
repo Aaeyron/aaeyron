@@ -306,6 +306,17 @@ export const certifications: Certificate[] = [
     description:
       "Completed all 12 hands-on projects covering search, knowledge representation, probability, optimization, machine learning, neural networks, computer vision, and natural language processing. Built AI systems in Python, from Bayesian inference and game AI to traffic sign classification, sentence parsing, and BERT attention visualization. This journey strengthened my problem-solving, testing, and debugging skills, and my understanding of how AI systems work beyond using existing tools or APIs.",
   },
+  {
+    id: "cs50-python",
+    title: "CS50’s Introduction to Programming with Python",
+    issuer: "Harvard University · CS50P",
+    date: "2026",
+    image: "/images/Certificate3.png",
+    credentialUrl: "https://certificates.cs50.io/d68a6b9c-467a-496d-8ea1-4c2be6a093fc.pdf?size=letter",
+    alt: "CS50 certificate awarded to Aaron Seth Nagtalon for completing Introduction to Programming with Python, including nine problem sets and one final project, in 2026",
+    description:
+      "Completed all nine problem sets and a final project covering functions, conditionals, loops, exceptions, libraries, unit testing, file I/O, regular expressions, and object-oriented programming. Built Python command-line programs working with APIs and files, then developed DataLens, a CSV dataset analyzer using Pandas with pytest tests for dataset summaries, column statistics, validation, and error handling. This journey strengthened my problem-solving, modular programming, testing, and debugging skills, and my ability to turn raw data into useful insights.",
+  },
 ];
 
 /** "Currently working on" copy for /experience (Aaron's wording). */
