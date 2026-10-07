@@ -6,6 +6,7 @@ import Hero from "./components/home/Hero";
 import SchoolProjectRow from "./components/home/SchoolProjectRow";
 import TechStack from "./components/home/TechStack";
 import AboutTeaser from "./components/home/AboutTeaser";
+import GitHubContributions from "./components/home/GitHubContributions";
 import ContactBlock from "./components/home/ContactBlock";
 import SelectedProjectCard from "./components/projects/SelectedProjectCard";
 import CertificationRows from "./components/certificates/CertificationRows";
@@ -97,6 +98,7 @@ export default function Home() {
       </section>
 
       <AboutTeaser />
+      <GitHubContributions />
       <ContactBlock />
     </>
   );

@@ -310,7 +310,7 @@ export const certifications: Certificate[] = [
     id: "cs50-python",
     title: "CS50’s Introduction to Programming with Python",
     issuer: "Harvard University · CS50P",
-    date: "2026",
+    date: "October 7, 2026",
     image: "/images/Certificate3.png",
     credentialUrl: "https://certificates.cs50.io/d68a6b9c-467a-496d-8ea1-4c2be6a093fc.pdf?size=letter",
     alt: "CS50 certificate awarded to Aaron Seth Nagtalon for completing Introduction to Programming with Python, including nine problem sets and one final project, in 2026",

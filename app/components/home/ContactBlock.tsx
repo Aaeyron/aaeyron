@@ -7,7 +7,7 @@ export default function ContactBlock() {
     <section aria-labelledby="contact-title" className="section border-t border-line">
       <div className="container-x">
         <div data-reveal>
-          <Label index="06" className="mb-5">
+          <Label index="07" className="mb-5">
             Contact
           </Label>
           <h2 id="contact-title" className="display max-w-[16ch]">
