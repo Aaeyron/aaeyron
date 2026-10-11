@@ -1,11 +1,11 @@
 <h1 align="center">Hi, I'm Aaron</h1>
 
 <h3 align="center">
-  Aspiring Software Developer
+  Aspiring Software & AI/ML Engineer
 </h3>
 
 <p align="center">
-  Learning AI and Machine Learning
+  More on self study, and learning from other people's knowledge
 </p>
 
 <p align="center">
