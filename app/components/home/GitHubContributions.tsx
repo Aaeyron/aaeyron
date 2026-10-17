@@ -61,7 +61,7 @@ async function ContributionCalendar() {
           role="img"
           aria-labelledby="contributions-chart-title contributions-chart-description"
         >
-          <title id="contributions-chart-title">GitHub contributions for {githubProfile.handle}</title>
+          <title id="contributions-chart-title">{`GitHub contributions for ${githubProfile.handle}`}</title>
           <desc id="contributions-chart-description">
             {total} contributions across {activeDays} active days, from {dateFormat.format(firstDate)} to {dateFormat.format(last)}. Darker blue squares show more daily contributions.
           </desc>
@@ -84,7 +84,7 @@ async function ContributionCalendar() {
                 stroke="var(--line)"
                 strokeWidth={0.5}
               >
-                <title>{day.count} {day.count === 1 ? "contribution" : "contributions"} on {dateFormat.format(date)}</title>
+                <title>{`${day.count} ${day.count === 1 ? "contribution" : "contributions"} on ${dateFormat.format(date)}`}</title>
               </rect>
             );
           })}

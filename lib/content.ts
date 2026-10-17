@@ -4,7 +4,7 @@
 export const siteUrl = process.env.NEXT_PUBLIC_SITE_URL ?? "https://aaeyron.vercel.app";
 
 /** Résumé on Google Drive — every "View résumé" link uses this. Opens in a new tab. */
-export const resumeUrl = "https://drive.google.com/file/d/1KY1VFjOZdBADFLHZlbeNZwm0yjq3mFfE/view";
+export const resumeUrl = "https://drive.google.com/file/d/1g2lJryccjEkwapYsiCwVDADL4mhaL39I/view?usp=sharing";
 export const resumeAriaLabel = "View my résumé (opens in a new tab)";
 
 export const profile = {
