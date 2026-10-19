@@ -18,8 +18,10 @@ const markBR: CSSProperties = { bottom: -4, right: -4, borderBottomWidth: 1, bor
  */
 export default function Hero() {
   return (
-    <section aria-labelledby="hero-title" className="container-x pb-20 pt-14 sm:pb-28 sm:pt-24 lg:pt-32">
-      <div className="grid gap-y-8 md:grid-cols-[minmax(0,1fr)_18.5rem] md:gap-x-8 lg:grid-cols-[minmax(0,1fr)_minmax(0,30rem)] lg:gap-x-10">
+    // @container: lets the photo size from this section's content width (cqw), exactly like the
+    // "05 Focus" photo, which spans 4 columns of the same grid-12 inside the same container width.
+    <section aria-labelledby="hero-title" className="@container container-x pb-20 pt-14 sm:pb-28 sm:pt-24 lg:pt-32">
+      <div className="grid gap-y-8 md:grid-cols-[minmax(0,1fr)_calc(50cqw-12px)] md:gap-x-8 lg:grid-cols-[minmax(0,1fr)_calc(100cqw/3-16px)] lg:gap-x-10">
         {/* Left-aligned at every size (the rest of the hero is centered on mobile). */}
         <div className="md:col-start-1">
           <div className="enter" style={enterStyle(0)}>
@@ -69,9 +71,10 @@ export default function Hero() {
           </div>
         </div>
 
-        {/* Photo + capabilities share one column as wide as the photo (--photo-w: 240px, 300px from
-            768px, 330px from 1024px), starting where it always has; a bigger photo grows rightward. */}
-        <div className="mx-auto mt-6 w-[var(--photo-w)] [--photo-w:240px] md:col-start-2 md:row-start-2 md:mx-0 md:mt-0 md:[--photo-w:300px] lg:[--photo-w:330px]">
+        {/* Photo + capabilities share one column as wide as the photo. --photo-w matches the
+            "05 Focus" photo (grid-12 col-span-4): full content width under 640px, half minus 12px
+            from 640px, a third minus 16px from 1024px (100cqw = the content width). */}
+        <div className="mx-auto mt-6 w-[var(--photo-w)] [--photo-w:100cqw] sm:[--photo-w:calc(50cqw-12px)] md:col-start-2 md:row-start-2 md:mx-0 md:mt-0 lg:[--photo-w:calc(100cqw/3-16px)]">
           {/* Photo: field-style border and corner marks, an offset outline frame behind it
               with an accent square on its far corner, and a small tab on the bottom border. */}
           <div className="enter" style={enterStyle(3)}>
@@ -83,7 +86,7 @@ export default function Hero() {
                 src={heroPhoto}
                 alt={`Photo of ${profile.name} working on a laptop`}
                 priority
-                sizes="(min-width: 1024px) 330px, (min-width: 768px) 300px, 240px"
+                sizes="(min-width: 1024px) 33vw, (min-width: 640px) 50vw, 100vw"
                 placeholder="blur"
                 className="relative block aspect-[3/4] w-full border border-[var(--field-line)] object-cover"
               />
@@ -94,12 +97,12 @@ export default function Hero() {
 
           {/* Capabilities: one box each, stacked. Each box has crop marks on two corners and a
               short accent tick on its left border, level with the title.
-              Wider than the photo (--cap-w: 290px, 370px from 768px, 410px from 1024px): the negative
-              left margin equals the extra width, so the right edge stays on the photo's right edge and
-              only the left edge grows. On narrow phones the width caps at 50vw + 104px, which keeps
-              the boxes' left edge at least 16px from the screen edge (photo is centered there). */}
+              --cap-w is the photo width plus 50px (640px+), 70px (768px+) or 80px (1024px+); under
+              640px the photo is already full width, so the boxes match it. The negative left margin
+              equals the extra width, so the right edge stays on the photo's right edge and only the
+              left edge grows. */}
           <ul
-            className="enter mt-8 ml-[calc(var(--photo-w)-var(--cap-w))] grid w-[var(--cap-w)] gap-3 [--cap-w:min(290px,calc(50vw+104px))] md:[--cap-w:370px] lg:[--cap-w:410px]"
+            className="enter mt-8 ml-[calc(var(--photo-w)-var(--cap-w))] grid w-[var(--cap-w)] gap-3 [--cap-w:var(--photo-w)] sm:[--cap-w:calc(var(--photo-w)+50px)] md:[--cap-w:calc(var(--photo-w)+70px)] lg:[--cap-w:calc(var(--photo-w)+80px)]"
             style={enterStyle(4)}
           >
             {capabilities.map((c) => (
