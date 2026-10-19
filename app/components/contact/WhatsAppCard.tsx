@@ -32,6 +32,11 @@ export default function WhatsAppCard() {
             />
           </a>
         </div>
+
+        <p className="mt-4 text-ink">
+          Good for quick questions, project ideas, and internship or collaboration talks. If I miss your message, I will
+          reply as soon as I can.
+        </p>
       </Panel>
     </div>
   );

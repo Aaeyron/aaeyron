@@ -33,7 +33,7 @@ export default function Contact() {
       </section>
       <section aria-labelledby="reach-directly" className="mt-[var(--space-section)]">
         <div data-reveal>
-          <Label className="mb-5">
+          <Label index="03" className="mb-5">
             <span id="reach-directly">Or reach me directly</span>
           </Label>
         </div>
