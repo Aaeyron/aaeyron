@@ -6,67 +6,81 @@ import heroPhoto from "@/public/images/profile home.png";
 import InternshipText from "../ui/InternshipText";
 import NowItem from "./NowItem";
 import ButtonLink from "../ui/ButtonLink";
-import { CornerMarks, enterStyle, Highlight, Label } from "../ui/primitives";
+import { CornerMarks, enterStyle, Label } from "../ui/primitives";
 
 export default function Hero() {
   const started = hasInternshipStarted();
   return (
     <section aria-labelledby="hero-title" className="container-x pb-20 pt-14 sm:pb-28 sm:pt-24 lg:pt-32">
-      {/* Photo: sharp corners, field-style border and small corner marks. */}
-      <div className="field-frame enter w-[140px] sm:w-[200px]" style={enterStyle(0)}>
-        <CornerMarks inset="-4px" />
-        <Image
-          src={heroPhoto}
-          alt={`Photo of ${profile.name} working on a laptop`}
-          priority
-          sizes="(min-width: 640px) 200px, 140px"
-          placeholder="blur"
-          className="block aspect-[3/4] w-full border border-[var(--field-line)] object-cover"
-        />
-      </div>
-
-      <p className="h2 enter mt-6 font-bold text-ink" style={enterStyle(0)}>
-        {profile.name}
-      </p>
-
-      <div className="enter mt-6 flex flex-wrap items-center gap-2" style={enterStyle(0)}>
-        <span className="chip text-ink">
-          <span aria-hidden className="status-dot" />
-          {profile.status}
-        </span>
-        {/* Davao City's coordinates — a small technical detail. */}
-        <span className="hidden font-mono text-xs text-muted sm:inline">
-          <span className="sr-only">Coordinates: </span>7.07°N 125.61°E
-        </span>
-      </div>
-
-      <h1 id="hero-title" className="display enter mt-8 max-w-[18ch]" style={enterStyle(1)}>
-        I build web apps <Highlight>end to end</Highlight>, from the interface to the database behind it.
-      </h1>
-
-      <div className="grid-12 mt-10 gap-y-10">
-        <p className="enter col-span-4 text-lg text-muted sm:col-span-6 lg:col-span-6" style={enterStyle(2)}>
-          Aspiring Software &amp; AI/ML Engineer based in Davao City, Philippines, building web, mobile, and AI-powered
-          projects. Open to opportunities and collaborations.
-        </p>
-
-        <div className="enter relative col-span-4 border border-line bg-bg p-5 sm:col-span-8 lg:col-span-5 lg:col-start-8" style={enterStyle(3)}>
-          <CornerMarks />
-          <div className="mb-4 flex items-center justify-between gap-4">
-            <Label accent>Now</Label>
-            <span aria-hidden className="font-mono text-[0.7rem] text-muted">
-              status.log
+      {/* Left: status, name, bio. Right: photo + Now. Stacked below 1024px. */}
+      <div className="grid-12 items-center gap-y-12 lg:gap-x-8">
+        <div className="col-span-4 sm:col-span-8 lg:col-span-7">
+          <div className="enter flex flex-wrap items-center gap-2" style={enterStyle(0)}>
+            <span className="chip text-ink">
+              <span aria-hidden className="status-dot" />
+              {profile.status}
+            </span>
+            {/* Davao City's coordinates — a small technical detail. */}
+            <span className="hidden font-mono text-xs text-muted sm:inline">
+              <span className="sr-only">Coordinates: </span>7.07°N 125.61°E
             </span>
           </div>
-          <dl className="space-y-1 border-l-2 border-accent pl-4 font-mono text-sm">
-            <NowItem id="now-building" term="building" short={now.building.short} detail={now.building.detail} />
-            <NowItem
-              id="now-learning"
-              term="learning"
-              short={<InternshipText field="nowShort" serverStarted={started} />}
-              detail={<InternshipText field="nowDetail" serverStarted={started} />}
+
+          {/* One word group per line so the name always breaks the same way. */}
+          <h1
+            id="hero-title"
+            className="enter mt-8 text-[clamp(3rem,8vw,6.5rem)] font-extrabold leading-[0.92] tracking-[-0.05em] text-ink"
+            style={enterStyle(1)}
+          >
+            <span className="block">Aaron Seth</span>
+            <span className="block">Nagtalon</span>
+          </h1>
+          {/* Thin rule with an accent tip that draws in under the name (same motif as section labels). */}
+          <span
+            aria-hidden
+            className="enter draw-x mt-6 block h-px w-full max-w-64 bg-[linear-gradient(to_right,var(--accent)_0,var(--accent)_28px,var(--line-strong)_28px)]"
+            style={enterStyle(1)}
+          />
+
+          <p className="enter measure mt-6 text-lg text-muted" style={enterStyle(2)}>
+            Aspiring Software &amp; AI/ML Engineer based in Davao City, Philippines, building web, mobile, and AI-powered
+            projects. Open to opportunities and collaborations.
+          </p>
+        </div>
+
+        <div className="enter col-span-4 sm:col-span-8 lg:col-span-5" style={enterStyle(3)}>
+          <Label className="mb-3">Profile</Label>
+          {/* Photo: sharp corners, field-style border and small corner marks. */}
+          <div className="field-frame w-[140px] sm:w-[200px]">
+            <CornerMarks inset="-4px" />
+            <Image
+              src={heroPhoto}
+              alt={`Photo of ${profile.name} working on a laptop`}
+              priority
+              sizes="(min-width: 640px) 200px, 140px"
+              placeholder="blur"
+              className="block aspect-[3/4] w-full border border-[var(--field-line)] object-cover"
             />
-          </dl>
+          </div>
+
+          <div className="relative mt-4 border border-line bg-bg p-5">
+            <CornerMarks />
+            <div className="mb-4 flex items-center justify-between gap-4">
+              <Label accent>Now</Label>
+              <span aria-hidden className="font-mono text-[0.7rem] text-muted">
+                status.log
+              </span>
+            </div>
+            <dl className="space-y-1 border-l-2 border-accent pl-4 font-mono text-sm">
+              <NowItem id="now-building" term="building" short={now.building.short} detail={now.building.detail} />
+              <NowItem
+                id="now-learning"
+                term="learning"
+                short={<InternshipText field="nowShort" serverStarted={started} />}
+                detail={<InternshipText field="nowDetail" serverStarted={started} />}
+              />
+            </dl>
+          </div>
         </div>
       </div>
 
