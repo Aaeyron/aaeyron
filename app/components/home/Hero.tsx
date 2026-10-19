@@ -35,7 +35,7 @@ export default function Hero() {
           {/* One word group per line so the name always breaks the same way. */}
           <h1
             id="hero-title"
-            className="enter text-[clamp(3rem,7vw,6.5rem)] font-extrabold leading-[0.92] tracking-[-0.05em] text-ink"
+            className="enter text-[clamp(2.75rem,5.5vw,5.25rem)] font-extrabold leading-[0.92] tracking-[-0.05em] text-ink"
             style={enterStyle(1)}
           >
             <span className="block">Aaron Seth</span>
