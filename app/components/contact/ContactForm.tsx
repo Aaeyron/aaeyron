@@ -78,7 +78,7 @@ function FieldError({ id, message }: { id: string; message?: string }) {
 }
 
 const primaryBtn =
-  "inline-flex min-h-11 items-center justify-center gap-2 border border-accent bg-accent px-5 text-[0.9375rem] font-medium whitespace-nowrap text-on-accent transition-[background-color,transform] duration-200 ease-out hover:bg-[color-mix(in_srgb,var(--accent)_82%,black)] active:translate-y-px disabled:opacity-50 disabled:hover:bg-accent disabled:active:translate-y-0";
+  "inline-flex min-h-11 items-center justify-center gap-2 border border-accent bg-accent px-5 text-[0.9375rem] font-medium whitespace-nowrap text-on-accent transition-[background-color,transform] duration-200 ease-out hover:bg-[color-mix(in_srgb,var(--accent)_82%,black)] active:translate-y-px aria-disabled:opacity-50 aria-disabled:hover:bg-accent aria-disabled:active:translate-y-0";
 
 /** "Send a message" form for the Contact page. Sends through Web3Forms. */
 export default function ContactForm() {
@@ -90,11 +90,12 @@ export default function ContactForm() {
   const [status, setStatus] = useState<Status>("idle");
   const [cooldown, setCooldown] = useState(0);
   const honeypot = useRef<HTMLInputElement>(null);
-  const successHeading = useRef<HTMLHeadingElement>(null);
-  const focusNameNext = useRef(false);
 
   const errors = validate(values);
   const shown = (f: Field) => (touched[f] ? errors[f] : undefined);
+  // The note shows during the cooldown only; typing again also hides it (see `set`).
+  const showSent = status === "success" && cooldown > 0;
+  const busy = status === "sending" || cooldown > 0;
 
   // Simple rate limit: no new send for 30s after a successful one.
   useEffect(() => {
@@ -102,16 +103,6 @@ export default function ContactForm() {
     const t = setTimeout(() => setCooldown((s) => s - 1), 1000);
     return () => clearTimeout(t);
   }, [cooldown]);
-
-  // Move focus to the result so keyboard and screen reader users land on it.
-  useEffect(() => {
-    if (status === "success") successHeading.current?.focus();
-    if (status === "idle" && focusNameNext.current) {
-      focusNameNext.current = false;
-      document.getElementById(id("name"))?.focus();
-    }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [status]);
 
   const set = (f: Field) => (e: { target: { value: string } }) => {
     setValues((v) => ({ ...v, [f]: e.target.value }));
@@ -182,11 +173,6 @@ export default function ContactForm() {
       console.error("[contact] Web3Forms send failed:", err);
       setStatus("error"); // entered text is kept
     }
-  };
-
-  const sendAnother = () => {
-    focusNameNext.current = true;
-    setStatus("idle");
   };
 
   const describedBy = (...ids: (string | false | undefined)[]) => ids.filter(Boolean).join(" ") || undefined;
@@ -337,9 +323,10 @@ export default function ContactForm() {
             <input ref={honeypot} id={id("botcheck")} type="text" name="botcheck" tabIndex={-1} autoComplete="off" />
           </div>
 
-          {/* Send button, with the success panel beside it (stacked under 640px). */}
-          <div className="mt-5 flex flex-col items-start gap-5 sm:flex-row">
-            <button type="submit" disabled={status === "sending" || cooldown > 0} className={`${primaryBtn} shrink-0`}>
+          {/* Send button, with the "sent" note beside it (stacked under 640px). aria-disabled
+              (not disabled) during sending/cooldown, so keyboard focus stays on the button. */}
+          <div className="mt-5 flex flex-col items-start gap-4 sm:flex-row sm:items-center">
+            <button type="submit" aria-disabled={busy} className={`${primaryBtn} shrink-0`}>
               {status === "sending" ? (
                 "Sending..."
               ) : cooldown > 0 ? (
@@ -352,35 +339,20 @@ export default function ContactForm() {
               )}
             </button>
 
-            {/* Stays until "Send another" or new typing. */}
-            {status === "success" && (
-              <div className="w-full min-w-0 sm:flex-1">
-                <FieldFrame>
-                  <div className="flex flex-col items-start gap-5 border border-[var(--field-line)] p-5 sm:p-7 lg:flex-row lg:items-center lg:justify-between">
-                    <div className="flex min-w-0 items-start gap-4">
-                      <span aria-hidden className="grid size-9 shrink-0 place-items-center border border-[var(--field-line)] text-ink">
-                        <Check size={18} aria-hidden />
-                      </span>
-                      <div className="min-w-0">
-                        <h2 ref={successHeading} tabIndex={-1} className="h3">
-                          Message sent.
-                        </h2>
-                        <p className="mt-1 text-muted">I will reply to your email soon.</p>
-                      </div>
-                    </div>
-                    <button type="button" onClick={sendAnother} className={`${primaryBtn} shrink-0`}>
-                      Send another
-                    </button>
-                  </div>
-                </FieldFrame>
-              </div>
-            )}
+            {/* Always mounted so the note is announced when it appears. */}
+            <div role="status" aria-live="polite" className="min-w-0">
+              {showSent && (
+                <p className="flex items-start gap-2 text-ink">
+                  <Check size={18} aria-hidden className="mt-1 shrink-0" />
+                  <span>Message sent. I will reply to your email soon.</span>
+                </p>
+              )}
+            </div>
           </div>
         </form>
 
-        {/* Announces the result. Errors and the mailto note are also shown here. */}
+        {/* Announces and shows errors and the mailto note. */}
         <div role="status" aria-live="polite">
-          {status === "success" && <span className="sr-only">Message sent. I will reply to your email soon.</span>}
           {status === "error" && (
             <p className="mt-8 border border-ink p-4 text-sm">
               Could not send. Please try again or email me directly at {emailLink}.
