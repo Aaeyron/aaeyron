@@ -19,7 +19,7 @@ const markBR: CSSProperties = { bottom: -4, right: -4, borderBottomWidth: 1, bor
 export default function Hero() {
   return (
     <section aria-labelledby="hero-title" className="container-x pb-20 pt-14 sm:pb-28 sm:pt-24 lg:pt-32">
-      <div className="grid gap-y-8 md:grid-cols-[minmax(0,1fr)_18.5rem] md:gap-x-8 lg:grid-cols-[minmax(0,1fr)_minmax(0,30rem)] lg:gap-x-10">
+      <div className="grid gap-y-8 md:grid-cols-[minmax(0,1fr)_312px] md:gap-x-8 lg:grid-cols-[minmax(0,1fr)_340px] lg:gap-x-10">
         {/* Left-aligned at every size (the rest of the hero is centered on mobile). */}
         <div className="md:col-start-1">
           <div className="enter" style={enterStyle(0)}>
@@ -69,12 +69,13 @@ export default function Hero() {
           </div>
         </div>
 
-        {/* Photo + capabilities share one fixed-width column (200px, 280px from 768px), so the
-            boxes' right edges line up exactly with the photo's right edge at every size. */}
-        <div className="mx-auto mt-6 w-[200px] md:col-start-2 md:row-start-2 md:mx-0 md:mt-0 md:w-[280px]">
+        {/* Photo + capabilities column, as wide as the boxes (240px, 312px from 768px, 340px from
+            1024px). The photo (200px / 280px) is pushed to its right edge, so the boxes' right
+            edges stay locked to the photo's right edge while the extra width extends left. */}
+        <div className="mx-auto mt-6 w-[240px] md:col-start-2 md:row-start-2 md:mx-0 md:mt-0 md:w-full">
           {/* Photo: field-style border and corner marks, an offset outline frame behind it
               with an accent square on its far corner, and a small tab on the bottom border. */}
-          <div className="enter" style={enterStyle(3)}>
+          <div className="enter ml-auto w-[200px] md:w-[280px]" style={enterStyle(3)}>
             <div className="field-frame">
               <span aria-hidden className="absolute inset-0 translate-x-3 translate-y-3 border border-line-strong">
                 <span className="absolute -bottom-[3px] -right-[3px] size-1.5 bg-accent" />
