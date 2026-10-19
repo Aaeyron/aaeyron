@@ -90,10 +90,10 @@ export function ContactButtonsCompact({ className = "", startIndex = 0 }: { clas
   );
 }
 
-/** GitHub · LinkedIn · Email buttons. 3 across on desktop, stacked on mobile. */
-export default function ContactButtons({ className = "" }: { className?: string }) {
+/** GitHub · LinkedIn · Email buttons. 3 across on desktop, stacked on mobile (or always, with `stacked`). */
+export default function ContactButtons({ className = "", stacked = false }: { className?: string; stacked?: boolean }) {
   return (
-    <ul className={`grid gap-6 md:grid-cols-3 ${className}`}>
+    <ul className={`grid gap-6 ${stacked ? "" : "md:grid-cols-3"} ${className}`}>
       {contactLinks.map((link, i) => {
         const Icon = icons[link.id];
         return (

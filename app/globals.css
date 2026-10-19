@@ -384,6 +384,45 @@ html:has(dialog[open]) {
   .group:focus-within .corner-hover {
     border-color: var(--accent);
   }
+
+  /* Text inputs for the contact form: 1px border, sharp corners. 1rem text
+     so iOS doesn't zoom in on focus. */
+  .field {
+    display: block;
+    width: 100%;
+    border: 1px solid var(--line-strong);
+    border-radius: 0;
+    background: var(--bg);
+    color: var(--ink);
+    padding: 0.7rem 0.85rem;
+    font: inherit;
+    font-size: 1rem;
+    line-height: 1.5;
+  }
+  .field::placeholder {
+    color: var(--muted);
+    opacity: 1;
+  }
+  .field[aria-invalid="true"] {
+    border-color: var(--ink);
+  }
+  textarea.field {
+    min-height: 9rem;
+    resize: vertical;
+  }
+}
+
+/* Unlayered so it beats the global :focus-visible radius: the form stays sharp. */
+.contact-form :focus-visible {
+  border-radius: 0;
+}
+.contact-form .field:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 0;
+  border-color: var(--accent);
+}
+.contact-form [tabindex="-1"]:focus-visible {
+  outline: none;
 }
 
 /* ============================ Motion ============================
