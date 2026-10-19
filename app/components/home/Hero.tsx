@@ -11,15 +11,16 @@ const markTL: CSSProperties = { top: -4, left: -4, borderTopWidth: 1, borderLeft
 const markBR: CSSProperties = { bottom: -4, right: -4, borderBottomWidth: 1, borderRightWidth: 1, transformOrigin: "bottom right" };
 
 /**
- * Intro (About, status, name, bio) across the top. Below it: the photo, with the four
- * capability boxes to its right (tops aligned) and the buttons under them.
- * Under 768px everything stacks, centered: intro → photo → capabilities → buttons.
+ * From 768px: row 1 holds About + status (left only). Row 2 holds name, bio and buttons on
+ * the left, photo + capabilities on the right, so the photo's top lines up with the name.
+ * The buttons are pushed to the bottom of row 2, level with the last capability box.
+ * Under 768px everything stacks, centered: About → status → name → bio → buttons → photo → capabilities.
  */
 export default function Hero() {
   return (
     <section aria-labelledby="hero-title" className="container-x pb-20 pt-14 sm:pb-28 sm:pt-24 lg:pt-32">
-      <div className="grid gap-y-12 md:grid-cols-[auto_minmax(0,36rem)] md:gap-x-8">
-        <div className="text-center md:col-span-2 md:text-left">
+      <div className="grid gap-y-8 md:grid-cols-[minmax(0,1fr)_18.5rem] md:gap-x-8 lg:grid-cols-[minmax(0,1fr)_minmax(0,30rem)] lg:gap-x-10">
+        <div className="text-center md:col-start-1 md:text-left">
           <div className="enter" style={enterStyle(0)}>
             <Label className="field-label mb-5">About</Label>
           </div>
@@ -33,11 +34,13 @@ export default function Hero() {
               <span className="sr-only">Coordinates: </span>7.07°N 125.61°E
             </span>
           </div>
+        </div>
 
+        <div className="flex flex-col text-center md:col-start-1 md:row-start-2 md:text-left">
           {/* One word group per line so the name always breaks the same way. */}
           <h1
             id="hero-title"
-            className="enter mt-8 text-[clamp(3rem,8vw,6.5rem)] font-extrabold leading-[0.92] tracking-[-0.05em] text-ink"
+            className="enter text-[clamp(3rem,8vw,6.5rem)] font-extrabold leading-[0.92] tracking-[-0.05em] text-ink"
             style={enterStyle(1)}
           >
             <span className="block">Aaron Seth</span>
@@ -54,47 +57,11 @@ export default function Hero() {
             Aspiring Software &amp; AI/ML Engineer based in Davao City, Philippines, building web, mobile, and AI-powered
             projects. Open to opportunities and collaborations.
           </p>
-        </div>
 
-        {/* Photo: field-style border and corner marks, an offset outline frame behind it
-            with an accent square on its far corner, and a small tab on the bottom border. */}
-        <div className="enter justify-self-center md:justify-self-start" style={enterStyle(3)}>
-          <div className="field-frame w-[200px] sm:w-[280px]">
-            <span aria-hidden className="absolute inset-0 translate-x-3 translate-y-3 border border-line-strong">
-              <span className="absolute -bottom-[3px] -right-[3px] size-1.5 bg-accent" />
-            </span>
-            <Image
-              src={heroPhoto}
-              alt={`Photo of ${profile.name} working on a laptop`}
-              priority
-              sizes="(min-width: 640px) 280px, 200px"
-              placeholder="blur"
-              className="relative block aspect-[3/4] w-full border border-[var(--field-line)] object-cover"
-            />
-            <CornerMarks inset="-4px" />
-            <span className="chip absolute -bottom-2.5 left-3 z-10 py-0 text-[0.65rem]">4th-year IT student</span>
-          </div>
-        </div>
-
-        <div className="min-w-0">
-          {/* Capabilities: one box each, stacked. Each box has crop marks on two corners and a
-              short accent tick on its left border, level with the title. */}
-          <ul className="enter grid gap-3" style={enterStyle(4)}>
-            {capabilities.map((c) => (
-              <li key={c.title} className="field-frame border border-[var(--field-line)] bg-bg p-4 md:p-3 lg:p-4">
-                <span aria-hidden className="corner" style={markTL} />
-                <span aria-hidden className="corner" style={markBR} />
-                <span aria-hidden className="absolute -left-px top-4 h-5 w-0.5 bg-accent md:top-3 lg:top-4" />
-                <p className="font-semibold leading-snug tracking-[-0.01em] text-ink">{c.title}</p>
-                <p className="mt-1 text-[0.9375rem] leading-snug text-ink">{c.detail}</p>
-              </li>
-            ))}
-          </ul>
-
-          {/* Under the capabilities. Stacked full-width on small phones. */}
+          {/* Below the bio; pushed to the bottom on desktop. Stacked full-width on small phones. */}
           <div
-            className="enter mt-8 flex flex-col justify-center gap-3 min-[400px]:flex-row md:justify-start"
-            style={enterStyle(5)}
+            className="enter mt-10 flex flex-col justify-center gap-3 min-[400px]:flex-row md:mt-auto md:justify-start md:pt-10"
+            style={enterStyle(3)}
           >
             <ButtonLink href="#work" className="sharp w-full rounded-none! min-[400px]:w-auto">
               See my work <ArrowDown size={17} aria-hidden className="transition-transform duration-200 group-hover:translate-y-0.5" />
@@ -109,6 +76,42 @@ export default function Hero() {
               <FileText size={17} aria-hidden /> View résumé
             </ButtonLink>
           </div>
+        </div>
+
+        <div className="mt-6 min-w-0 md:col-start-2 md:row-start-2 md:mt-0">
+          {/* Photo: field-style border and corner marks, an offset outline frame behind it
+              with an accent square on its far corner, and a small tab on the bottom border. */}
+          <div className="enter mx-auto w-[200px] sm:w-[280px] md:mx-0" style={enterStyle(3)}>
+            <div className="field-frame">
+              <span aria-hidden className="absolute inset-0 translate-x-3 translate-y-3 border border-line-strong">
+                <span className="absolute -bottom-[3px] -right-[3px] size-1.5 bg-accent" />
+              </span>
+              <Image
+                src={heroPhoto}
+                alt={`Photo of ${profile.name} working on a laptop`}
+                priority
+                sizes="(min-width: 640px) 280px, 200px"
+                placeholder="blur"
+                className="relative block aspect-[3/4] w-full border border-[var(--field-line)] object-cover"
+              />
+              <CornerMarks inset="-4px" />
+              <span className="chip absolute -bottom-2.5 left-3 z-10 py-0 text-[0.65rem]">4th-year IT student</span>
+            </div>
+          </div>
+
+          {/* Capabilities: one box each, stacked. Each box has crop marks on two corners and a
+              short accent tick on its left border, level with the title. */}
+          <ul className="enter mt-8 grid gap-3" style={enterStyle(4)}>
+            {capabilities.map((c) => (
+              <li key={c.title} className="field-frame border border-[var(--field-line)] bg-bg p-4 md:p-3 lg:p-4">
+                <span aria-hidden className="corner" style={markTL} />
+                <span aria-hidden className="corner" style={markBR} />
+                <span aria-hidden className="absolute -left-px top-4 h-5 w-0.5 bg-accent md:top-3 lg:top-4" />
+                <p className="font-semibold leading-snug tracking-[-0.01em] text-ink">{c.title}</p>
+                <p className="mt-1 text-[0.9375rem] leading-snug text-ink">{c.detail}</p>
+              </li>
+            ))}
+          </ul>
         </div>
       </div>
     </section>
