@@ -27,7 +27,14 @@ export default function Hero() {
         {/* Left-aligned at every size (the rest of the hero is centered on mobile). */}
         <div className="md:col-start-1 md:row-start-1">
           <div className="enter" style={enterStyle(0)}>
-            <Label className="field-label">About</Label>
+            {/* "About" + a short tagline, split by a thin divider (same as the index divider in <Label>). */}
+            <Label className="field-label" wrap>
+              <span className="inline-flex flex-wrap items-center gap-x-2 gap-y-1">
+                <span>About</span>
+                <span aria-hidden className="h-3 w-px bg-line-strong" />
+                <span className="font-medium">Building web apps end to end</span>
+              </span>
+            </Label>
           </div>
         </div>
 
@@ -78,26 +85,34 @@ export default function Hero() {
           </div>
         </div>
 
-        {/* Capabilities: side by side under the bio on desktop (same width as the bio), stacked
-            below that. Each box: crop marks on two corners, accent tick on the left border. */}
-        <ul
-          className="enter measure mx-auto mt-4 grid w-full gap-3 md:col-start-1 md:row-start-3 md:mx-0 md:mt-2 lg:grid-cols-2"
+        {/* Capabilities: a small caption + hairline rule, then the boxes side by side under the bio
+            on desktop (same width as the bio), stacked below that. Each box: crop marks on two
+            corners, accent tick on the left border. */}
+        <div
+          className="enter measure mx-auto mt-4 w-full md:col-start-1 md:row-start-3 md:mx-0 md:mt-2"
           style={enterStyle(4)}
         >
-          {capabilities.map((c) => (
-            <li key={c.title} className="field-frame border border-[var(--field-line)] bg-bg p-3">
-              <span aria-hidden className="corner" style={markTL} />
-              <span aria-hidden className="corner" style={markBR} />
-              <span aria-hidden className="absolute -left-px top-3 h-4 w-0.5 bg-accent" />
-              <p className="text-base font-semibold leading-snug tracking-[-0.01em] text-ink">{c.title}</p>
-              <p className="mt-0.5 text-[0.8125rem] leading-snug text-ink">{c.detail}</p>
-            </li>
-          ))}
-        </ul>
+          <div className="mb-4 flex items-center gap-3">
+            <span className="font-mono text-[0.7rem] uppercase tracking-[0.08em] text-muted">Capabilities</span>
+            <span aria-hidden className="h-px flex-1 bg-line" />
+          </div>
+          <ul className="grid gap-3 text-left lg:grid-cols-2">
+            {capabilities.map((c) => (
+              <li key={c.title} className="field-frame border border-[var(--field-line)] bg-bg p-3">
+                <span aria-hidden className="corner" style={markTL} />
+                <span aria-hidden className="corner" style={markBR} />
+                <span aria-hidden className="absolute -left-px top-3 h-4 w-0.5 bg-accent" />
+                <p className="text-base font-semibold leading-snug tracking-[-0.01em] text-ink">{c.title}</p>
+                <p className="mt-0.5 text-[0.8125rem] leading-snug text-ink">{c.detail}</p>
+              </li>
+            ))}
+          </ul>
+        </div>
 
-        {/* Directly under the capabilities. Stacked full-width on small phones. */}
+        {/* Directly under the capabilities, set off by a hairline divider the same width as the
+            bio and boxes. Stacked full-width on small phones. */}
         <div
-          className="enter flex flex-col justify-center gap-3 min-[400px]:flex-row md:col-start-1 md:row-start-4 md:justify-start"
+          className="enter measure mx-auto flex w-full flex-col justify-center gap-3 border-t border-line pt-6 min-[400px]:flex-row md:col-start-1 md:row-start-4 md:mx-0 md:justify-start"
           style={enterStyle(5)}
         >
           <ButtonLink href="#work" className="sharp w-full rounded-none! min-[400px]:w-auto">
