@@ -79,8 +79,6 @@ function FieldError({ id, message }: { id: string; message?: string }) {
 
 const primaryBtn =
   "inline-flex min-h-11 items-center justify-center gap-2 border border-accent bg-accent px-5 text-[0.9375rem] font-medium whitespace-nowrap text-on-accent transition-[background-color,transform] duration-200 ease-out hover:bg-[color-mix(in_srgb,var(--accent)_82%,black)] active:translate-y-px disabled:opacity-50 disabled:hover:bg-accent disabled:active:translate-y-0";
-const secondaryBtn =
-  "inline-flex min-h-11 items-center justify-center gap-2 border border-line-strong bg-transparent px-5 text-[0.9375rem] font-medium whitespace-nowrap text-ink hover:border-accent hover:text-accent-text active:translate-y-px";
 
 /** "Send a message" form for the Contact page. Sends through Web3Forms. */
 export default function ContactForm() {
@@ -115,7 +113,10 @@ export default function ContactForm() {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [status]);
 
-  const set = (f: Field) => (e: { target: { value: string } }) => setValues((v) => ({ ...v, [f]: e.target.value }));
+  const set = (f: Field) => (e: { target: { value: string } }) => {
+    setValues((v) => ({ ...v, [f]: e.target.value }));
+    if (status === "success") setStatus("idle"); // starting a new message hides the confirmation
+  };
   const touch = (f: Field) => () => setTouched((t) => ({ ...t, [f]: true }));
 
   // The chip group counts as "blurred" only when focus leaves the whole group.
@@ -201,172 +202,179 @@ export default function ContactForm() {
         Send a message
       </Label>
       <Panel className="contact-form p-5 sm:p-7 lg:p-8">
-        {status === "success" ? (
-          <div className="flex flex-col items-start gap-5 py-4">
-            <span aria-hidden className="grid size-11 place-items-center border border-accent bg-accent text-on-accent">
-              <Check size={20} aria-hidden />
-            </span>
-            <div>
-              <h2 ref={successHeading} tabIndex={-1} className="h3">
-                Message sent.
-              </h2>
-              <p className="mt-2 text-muted">I will reply to your email soon.</p>
-            </div>
-            <button type="button" onClick={sendAnother} className={secondaryBtn}>
-              Send another
-            </button>
-          </div>
-        ) : (
-          <form noValidate onSubmit={onSubmit} className="grid gap-5">
-            <div className="grid gap-5 sm:grid-cols-2">
-              <div className="min-w-0">
-                <FieldLabel htmlFor={id("name")}>Name</FieldLabel>
-                <FieldFrame>
-                  <input
-                    id={id("name")}
-                    type="text"
-                    autoComplete="name"
-                    placeholder="Your name"
-                    className="field"
-                    value={values.name}
-                    onChange={set("name")}
-                    onBlur={touch("name")}
-                    aria-required="true"
-                    aria-invalid={!!shown("name")}
-                    aria-describedby={describedBy(shown("name") && id("name-error"))}
-                  />
-                </FieldFrame>
-                <FieldError id={id("name-error")} message={shown("name")} />
-              </div>
-
-              <div className="min-w-0">
-                <FieldLabel htmlFor={id("email")}>Email</FieldLabel>
-                <FieldFrame>
-                  <input
-                    id={id("email")}
-                    type="email"
-                    inputMode="email"
-                    autoComplete="email"
-                    placeholder="you@example.com"
-                    className="field"
-                    value={values.email}
-                    onChange={set("email")}
-                    onBlur={touch("email")}
-                    aria-required="true"
-                    aria-invalid={!!shown("email")}
-                    aria-describedby={describedBy(shown("email") && id("email-error"))}
-                  />
-                </FieldFrame>
-                <FieldError id={id("email-error")} message={shown("email")} />
-              </div>
-            </div>
-
-            <fieldset
-              role="radiogroup"
-              aria-labelledby={id("need-label")}
-              aria-required="true"
-              aria-invalid={!!shown("need")}
-              aria-describedby={describedBy(shown("need") && id("need-error"))}
-              className="min-w-0"
-              onBlur={onNeedBlur}
-            >
-              <legend id={id("need-label")} className="mb-2">
-                <Label className="field-label">What do you need?</Label>
-              </legend>
-              <FieldFrame>
-                <div className="flex flex-wrap gap-2 border border-[var(--field-line)] px-3 py-2.5">
-                  {NEEDS.map((need, i) => {
-                    const checked = values.need === need;
-                    return (
-                      <label
-                        key={need}
-                        className={`chip min-h-11 cursor-pointer px-3 leading-[1.6] has-[:focus-visible]:outline-2 has-[:focus-visible]:outline-offset-2 has-[:focus-visible]:outline-accent ${
-                          checked ? "chip-accent" : "text-ink hover:border-ink"
-                        }`}
-                      >
-                        <input
-                          id={id(`need-${i}`)}
-                          type="radio"
-                          name={id("need")}
-                          value={need}
-                          checked={checked}
-                          onChange={set("need")}
-                          className="sr-only"
-                        />
-                        {checked && <Check size={13} aria-hidden />}
-                        {need}
-                      </label>
-                    );
-                  })}
-                </div>
-              </FieldFrame>
-              <FieldError id={id("need-error")} message={shown("need")} />
-            </fieldset>
-
+        <form noValidate onSubmit={onSubmit} className="grid gap-5">
+          <div className="grid gap-5 sm:grid-cols-2">
             <div className="min-w-0">
-              <FieldLabel htmlFor={id("timeline")} optional>
-                Timeline
-              </FieldLabel>
+              <FieldLabel htmlFor={id("name")}>Name</FieldLabel>
               <FieldFrame>
                 <input
-                  id={id("timeline")}
+                  id={id("name")}
                   type="text"
-                  placeholder="For example: next month"
-                  maxLength={100}
+                  autoComplete="name"
+                  placeholder="Your name"
                   className="field"
-                  value={values.timeline}
-                  onChange={set("timeline")}
+                  value={values.name}
+                  onChange={set("name")}
+                  onBlur={touch("name")}
+                  aria-required="true"
+                  aria-invalid={!!shown("name")}
+                  aria-describedby={describedBy(shown("name") && id("name-error"))}
                 />
               </FieldFrame>
+              <FieldError id={id("name-error")} message={shown("name")} />
             </div>
 
             <div className="min-w-0">
-              <FieldLabel htmlFor={id("message")}>Message</FieldLabel>
+              <FieldLabel htmlFor={id("email")}>Email</FieldLabel>
               <FieldFrame>
-                <textarea
-                  id={id("message")}
-                  rows={6}
-                  maxLength={MESSAGE_MAX}
-                  placeholder="Tell me what you need and any details I should know."
+                <input
+                  id={id("email")}
+                  type="email"
+                  inputMode="email"
+                  autoComplete="email"
+                  placeholder="you@example.com"
                   className="field"
-                  value={values.message}
-                  onChange={set("message")}
-                  onBlur={touch("message")}
+                  value={values.email}
+                  onChange={set("email")}
+                  onBlur={touch("email")}
                   aria-required="true"
-                  aria-invalid={!!shown("message")}
-                  aria-describedby={describedBy(shown("message") && id("message-error"), id("message-count"))}
+                  aria-invalid={!!shown("email")}
+                  aria-describedby={describedBy(shown("email") && id("email-error"))}
                 />
               </FieldFrame>
-              <div className="flex items-start justify-between gap-4">
-                <FieldError id={id("message-error")} message={shown("message")} />
-                <p id={id("message-count")} className="mt-2 ml-auto shrink-0 font-mono text-xs text-muted tabular-nums">
-                  {values.message.length}/{MESSAGE_MAX}
-                  <span className="sr-only"> characters</span>
-                </p>
+              <FieldError id={id("email-error")} message={shown("email")} />
+            </div>
+          </div>
+
+          <fieldset
+            role="radiogroup"
+            aria-labelledby={id("need-label")}
+            aria-required="true"
+            aria-invalid={!!shown("need")}
+            aria-describedby={describedBy(shown("need") && id("need-error"))}
+            className="min-w-0"
+            onBlur={onNeedBlur}
+          >
+            <legend id={id("need-label")} className="mb-2">
+              <Label className="field-label">What do you need?</Label>
+            </legend>
+            <FieldFrame>
+              <div className="flex flex-wrap gap-2 border border-[var(--field-line)] px-3 py-2.5">
+                {NEEDS.map((need, i) => {
+                  const checked = values.need === need;
+                  return (
+                    <label
+                      key={need}
+                      className={`chip min-h-11 cursor-pointer px-3 leading-[1.6] has-[:focus-visible]:outline-2 has-[:focus-visible]:outline-offset-2 has-[:focus-visible]:outline-accent ${
+                        checked ? "chip-accent" : "text-ink hover:border-ink"
+                      }`}
+                    >
+                      <input
+                        id={id(`need-${i}`)}
+                        type="radio"
+                        name={id("need")}
+                        value={need}
+                        checked={checked}
+                        onChange={set("need")}
+                        className="sr-only"
+                      />
+                      {checked && <Check size={13} aria-hidden />}
+                      {need}
+                    </label>
+                  );
+                })}
               </div>
-            </div>
+            </FieldFrame>
+            <FieldError id={id("need-error")} message={shown("need")} />
+          </fieldset>
 
-            {/* Honeypot: hidden from people and screen readers, filled in by bots. */}
-            <div aria-hidden className="sr-only">
-              <label htmlFor={id("botcheck")}>Leave this empty</label>
-              <input ref={honeypot} id={id("botcheck")} type="text" name="botcheck" tabIndex={-1} autoComplete="off" />
-            </div>
+          <div className="min-w-0">
+            <FieldLabel htmlFor={id("timeline")} optional>
+              Timeline
+            </FieldLabel>
+            <FieldFrame>
+              <input
+                id={id("timeline")}
+                type="text"
+                placeholder="For example: next month"
+                maxLength={100}
+                className="field"
+                value={values.timeline}
+                onChange={set("timeline")}
+              />
+            </FieldFrame>
+          </div>
 
-            <div className="mt-5">
-              <button type="submit" disabled={status === "sending" || cooldown > 0} className={primaryBtn}>
-                {status === "sending" ? (
-                  "Sending..."
-                ) : cooldown > 0 ? (
-                  `Please wait ${cooldown}s`
-                ) : (
-                  <>
-                    Send message
-                    <Send size={16} aria-hidden />
-                  </>
-                )}
-              </button>
+          <div className="min-w-0">
+            <FieldLabel htmlFor={id("message")}>Message</FieldLabel>
+            <FieldFrame>
+              <textarea
+                id={id("message")}
+                rows={6}
+                maxLength={MESSAGE_MAX}
+                placeholder="Tell me what you need and any details I should know."
+                className="field"
+                value={values.message}
+                onChange={set("message")}
+                onBlur={touch("message")}
+                aria-required="true"
+                aria-invalid={!!shown("message")}
+                aria-describedby={describedBy(shown("message") && id("message-error"), id("message-count"))}
+              />
+            </FieldFrame>
+            <div className="flex items-start justify-between gap-4">
+              <FieldError id={id("message-error")} message={shown("message")} />
+              <p id={id("message-count")} className="mt-2 ml-auto shrink-0 font-mono text-xs text-muted tabular-nums">
+                {values.message.length}/{MESSAGE_MAX}
+                <span className="sr-only"> characters</span>
+              </p>
             </div>
-          </form>
+          </div>
+
+          {/* Honeypot: hidden from people and screen readers, filled in by bots. */}
+          <div aria-hidden className="sr-only">
+            <label htmlFor={id("botcheck")}>Leave this empty</label>
+            <input ref={honeypot} id={id("botcheck")} type="text" name="botcheck" tabIndex={-1} autoComplete="off" />
+          </div>
+
+          <div className="mt-5">
+            <button type="submit" disabled={status === "sending" || cooldown > 0} className={primaryBtn}>
+              {status === "sending" ? (
+                "Sending..."
+              ) : cooldown > 0 ? (
+                `Please wait ${cooldown}s`
+              ) : (
+                <>
+                  Send message
+                  <Send size={16} aria-hidden />
+                </>
+              )}
+            </button>
+          </div>
+        </form>
+
+        {/* Shown below the (now disabled) Send button until "Send another" or new typing. */}
+        {status === "success" && (
+          <div className="mt-8">
+            <FieldFrame>
+              <div className="flex flex-col items-start gap-5 border border-[var(--field-line)] p-5 sm:flex-row sm:items-center sm:justify-between sm:p-7">
+                <div className="flex min-w-0 items-start gap-4">
+                  <span aria-hidden className="grid size-9 shrink-0 place-items-center border border-[var(--field-line)] text-ink">
+                    <Check size={18} aria-hidden />
+                  </span>
+                  <div className="min-w-0">
+                    <h2 ref={successHeading} tabIndex={-1} className="h3">
+                      Message sent.
+                    </h2>
+                    <p className="mt-1 text-muted">I will reply to your email soon.</p>
+                  </div>
+                </div>
+                <button type="button" onClick={sendAnother} className={primaryBtn}>
+                  Send another
+                </button>
+              </div>
+            </FieldFrame>
+          </div>
         )}
 
         {/* Announces the result. Errors and the mailto note are also shown here. */}
