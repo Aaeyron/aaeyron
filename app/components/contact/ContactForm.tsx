@@ -194,7 +194,7 @@ export default function ContactForm() {
       <Label index="02" className="mb-5">
         Send a message
       </Label>
-      <Panel className="contact-form p-5 sm:p-8">
+      <Panel className="contact-form p-5 sm:p-7 lg:p-8">
         {status === "success" ? (
           <div className="flex flex-col items-start gap-5 py-4">
             <span aria-hidden className="grid size-11 place-items-center border border-accent bg-accent text-on-accent">
@@ -211,8 +211,8 @@ export default function ContactForm() {
             </button>
           </div>
         ) : (
-          <form noValidate onSubmit={onSubmit} className="grid gap-4">
-            <div className="grid gap-4 sm:grid-cols-2">
+          <form noValidate onSubmit={onSubmit} className="grid gap-5">
+            <div className="grid gap-5 sm:grid-cols-2">
               <div className="min-w-0">
                 <FieldLabel htmlFor={id("name")}>Name</FieldLabel>
                 <FieldFrame>
@@ -346,7 +346,7 @@ export default function ContactForm() {
               <input ref={honeypot} id={id("botcheck")} type="text" name="botcheck" tabIndex={-1} autoComplete="off" />
             </div>
 
-            <div className="mt-2">
+            <div className="mt-5">
               <button type="submit" disabled={status === "sending" || cooldown > 0} className={primaryBtn}>
                 {status === "sending" ? (
                   "Sending..."
@@ -367,12 +367,12 @@ export default function ContactForm() {
         <div role="status" aria-live="polite">
           {status === "success" && <span className="sr-only">Message sent. I will reply to your email soon.</span>}
           {status === "error" && (
-            <p className="mt-6 border border-ink p-4 text-sm">
+            <p className="mt-8 border border-ink p-4 text-sm">
               Could not send. Please try again or email me directly at {emailLink}.
             </p>
           )}
           {status === "mailto" && (
-            <p className="mt-6 border border-line-strong p-4 text-sm text-muted">
+            <p className="mt-8 border border-line-strong p-4 text-sm text-muted">
               Your email app should open with your message filled in. If it does not, email me at {emailLink}.
             </p>
           )}
