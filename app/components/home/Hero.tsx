@@ -20,7 +20,8 @@ export default function Hero() {
   return (
     <section aria-labelledby="hero-title" className="container-x pb-20 pt-14 sm:pb-28 sm:pt-24 lg:pt-32">
       <div className="grid gap-y-8 md:grid-cols-[minmax(0,1fr)_18.5rem] md:gap-x-8 lg:grid-cols-[minmax(0,1fr)_minmax(0,30rem)] lg:gap-x-10">
-        <div className="text-center md:col-start-1 md:text-left">
+        {/* Left-aligned at every size (the rest of the hero is centered on mobile). */}
+        <div className="md:col-start-1">
           <div className="enter" style={enterStyle(0)}>
             <Label className="field-label">About</Label>
           </div>
