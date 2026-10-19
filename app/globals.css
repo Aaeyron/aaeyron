@@ -387,8 +387,19 @@ html:has(dialog[open]) {
 
   /* Text inputs for the contact form: 1px border (black in light, grey in
      dark), sharp corners, body-size text (also stops iOS zooming on focus). */
-  .field {
+  .field,
+  .field-label {
     --field-line: var(--ink);
+  }
+  :root[data-theme="dark"] :is(.field, .field-label) {
+    --field-line: var(--line-strong);
+  }
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme]) :is(.field, .field-label) {
+      --field-line: var(--line-strong);
+    }
+  }
+  .field {
     display: block;
     width: 100%;
     min-height: 3rem;
@@ -401,13 +412,12 @@ html:has(dialog[open]) {
     font-size: 1.0625rem;
     line-height: 1.5;
   }
-  :root[data-theme="dark"] .field {
-    --field-line: var(--line-strong);
-  }
-  @media (prefers-color-scheme: dark) {
-    :root:not([data-theme]) .field {
-      --field-line: var(--line-strong);
-    }
+  /* Field label tag (on top of .chip): same border as its input, semibold ink text. */
+  .field-label {
+    border-color: var(--field-line);
+    padding: 4px 6px;
+    font-weight: 600;
+    color: var(--ink);
   }
   /* A step lighter than --muted, still AA on --bg in both modes. */
   .field::placeholder {

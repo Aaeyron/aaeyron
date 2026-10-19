@@ -51,7 +51,7 @@ function mailtoHref(v: Values) {
 function FieldLabel({ htmlFor, optional, children }: { htmlFor: string; optional?: boolean; children: ReactNode }) {
   return (
     <label htmlFor={htmlFor} className="mb-2 flex items-center gap-2">
-      <Label className="font-semibold text-ink">{children}</Label>
+      <Label className="field-label">{children}</Label>
       {optional && <span className="font-mono text-xs text-muted">Optional</span>}
     </label>
   );
@@ -251,7 +251,7 @@ export default function ContactForm() {
               onBlur={onNeedBlur}
             >
               <legend id={id("need-label")} className="mb-2">
-                <Label className="font-semibold text-ink">What do you need?</Label>
+                <Label className="field-label">What do you need?</Label>
               </legend>
               <div className="flex flex-wrap gap-2">
                 {NEEDS.map((need, i) => {
