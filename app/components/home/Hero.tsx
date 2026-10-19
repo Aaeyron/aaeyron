@@ -69,10 +69,12 @@ export default function Hero() {
           </div>
         </div>
 
-        <div className="mt-6 min-w-0 md:col-start-2 md:row-start-2 md:mt-0">
+        {/* Photo + capabilities share one fixed-width column (200px, 280px from 768px), so the
+            boxes' right edges line up exactly with the photo's right edge at every size. */}
+        <div className="mx-auto mt-6 w-[200px] md:col-start-2 md:row-start-2 md:mx-0 md:mt-0 md:w-[280px]">
           {/* Photo: field-style border and corner marks, an offset outline frame behind it
               with an accent square on its far corner, and a small tab on the bottom border. */}
-          <div className="enter mx-auto w-[200px] sm:w-[280px] md:mx-0" style={enterStyle(3)}>
+          <div className="enter" style={enterStyle(3)}>
             <div className="field-frame">
               <span aria-hidden className="absolute inset-0 translate-x-3 translate-y-3 border border-line-strong">
                 <span className="absolute -bottom-[3px] -right-[3px] size-1.5 bg-accent" />
@@ -81,7 +83,7 @@ export default function Hero() {
                 src={heroPhoto}
                 alt={`Photo of ${profile.name} working on a laptop`}
                 priority
-                sizes="(min-width: 640px) 280px, 200px"
+                sizes="(min-width: 768px) 280px, 200px"
                 placeholder="blur"
                 className="relative block aspect-[3/4] w-full border border-[var(--field-line)] object-cover"
               />
@@ -94,12 +96,12 @@ export default function Hero() {
               short accent tick on its left border, level with the title. */}
           <ul className="enter mt-8 grid gap-3" style={enterStyle(4)}>
             {capabilities.map((c) => (
-              <li key={c.title} className="field-frame border border-[var(--field-line)] bg-bg p-4">
+              <li key={c.title} className="field-frame border border-[var(--field-line)] bg-bg p-3">
                 <span aria-hidden className="corner" style={markTL} />
                 <span aria-hidden className="corner" style={markBR} />
-                <span aria-hidden className="absolute -left-px top-4 h-5 w-0.5 bg-accent" />
-                <p className="font-semibold leading-snug tracking-[-0.01em] text-ink">{c.title}</p>
-                <p className="mt-1 text-[0.9375rem] leading-snug text-ink">{c.detail}</p>
+                <span aria-hidden className="absolute -left-px top-3 h-4 w-0.5 bg-accent" />
+                <p className="text-base font-semibold leading-snug tracking-[-0.01em] text-ink">{c.title}</p>
+                <p className="mt-0.5 text-[0.8125rem] leading-snug text-ink">{c.detail}</p>
               </li>
             ))}
           </ul>
