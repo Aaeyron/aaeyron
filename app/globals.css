@@ -446,8 +446,9 @@ html:has(dialog[open]) {
   }
 }
 
-/* Unlayered so it beats the global :focus-visible radius: the form stays sharp. */
-.contact-form :focus-visible {
+/* Unlayered so it beats the global :focus-visible radius: the form and .sharp elements stay sharp. */
+.contact-form :focus-visible,
+.sharp:focus-visible {
   border-radius: 0;
 }
 /* Focus: accent border plus a 1px accent ring inside it. */

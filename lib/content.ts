@@ -39,15 +39,13 @@ export const homeFocus = {
   text: "I’m building my skills as a software and AI/ML engineer through real projects, from full-stack web apps to an AI-assisted accessibility app for my capstone. I focus on making software that is simple, useful, and easy to use.",
 };
 
-// `short` fits the hero's Now block; `detail` is the full description (tooltip).
-// The "learning" line (Apno AI internship) lives in lib/internship.ts because it
-// switches from "incoming" to "currently" automatically on October 1, 2026.
-export const now = {
-  building: {
-    short: "TactileLens, my capstone project",
-    detail: "TactileLens, my capstone project. A text-to-braille mobile app for teachers who handle visually impaired students.",
-  },
-};
+/** Home hero 2×2 grid: what I work on. Kept modest: learning and building, not claims of production work. */
+export const capabilities = [
+  { title: "Generative AI", detail: "Building projects with LLMs and AI-powered features." },
+  { title: "Agentic Workflows", detail: "Exploring AI agents that plan steps and use tools." },
+  { title: "User Experience", detail: "Clean, simple interfaces that are easy to use." },
+  { title: "Engineering", detail: "Full-stack apps, databases, and deployment." },
+];
 
 export const focus = [
   "Building stronger full-stack projects with clearer structure and real-world use cases.",
