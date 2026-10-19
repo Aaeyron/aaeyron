@@ -144,7 +144,11 @@ export default function ContactForm() {
     // Bots fill the hidden field: pretend it worked, send nothing.
     if (honeypot.current?.value) return finishSuccess();
 
+    // Debug: the key is public by design (NEXT_PUBLIC_ is inlined into the browser bundle).
+    console.log("[contact] Web3Forms key:", ACCESS_KEY || "(missing)", "endpoint:", ENDPOINT);
+
     if (!ACCESS_KEY) {
+      console.warn("[contact] NEXT_PUBLIC_WEB3FORMS_KEY is not set at build time; opening mailto instead.");
       window.location.href = mailtoHref(values);
       setStatus("mailto");
       return;
@@ -169,10 +173,12 @@ export default function ContactForm() {
           botcheck: "",
         }),
       });
-      const data = (await res.json().catch(() => null)) as { success?: boolean } | null;
-      if (!res.ok || !data?.success) throw new Error("Send failed");
+      const data = (await res.json().catch(() => null)) as { success?: boolean; message?: string } | null;
+      console.log("[contact] Web3Forms response:", res.status, data);
+      if (!res.ok || !data?.success) throw new Error(data?.message || `HTTP ${res.status}`);
       finishSuccess();
-    } catch {
+    } catch (err) {
+      console.error("[contact] Web3Forms send failed:", err);
       setStatus("error"); // entered text is kept
     }
   };
