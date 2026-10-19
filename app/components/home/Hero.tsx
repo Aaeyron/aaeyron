@@ -69,9 +69,9 @@ export default function Hero() {
           </div>
         </div>
 
-        {/* Photo + capabilities share one fixed-width column (200px, 280px from 768px), so the
-            boxes' right edges line up exactly with the photo's right edge at every size. */}
-        <div className="mx-auto mt-6 w-[200px] md:col-start-2 md:row-start-2 md:mx-0 md:mt-0 md:w-[280px]">
+        {/* Photo + capabilities share one column as wide as the photo (--photo-w: 240px, 300px from
+            768px, 330px from 1024px), starting where it always has; a bigger photo grows rightward. */}
+        <div className="mx-auto mt-6 w-[var(--photo-w)] [--photo-w:240px] md:col-start-2 md:row-start-2 md:mx-0 md:mt-0 md:[--photo-w:300px] lg:[--photo-w:330px]">
           {/* Photo: field-style border and corner marks, an offset outline frame behind it
               with an accent square on its far corner, and a small tab on the bottom border. */}
           <div className="enter" style={enterStyle(3)}>
@@ -83,7 +83,7 @@ export default function Hero() {
                 src={heroPhoto}
                 alt={`Photo of ${profile.name} working on a laptop`}
                 priority
-                sizes="(min-width: 768px) 280px, 200px"
+                sizes="(min-width: 1024px) 330px, (min-width: 768px) 300px, 240px"
                 placeholder="blur"
                 className="relative block aspect-[3/4] w-full border border-[var(--field-line)] object-cover"
               />
@@ -94,10 +94,12 @@ export default function Hero() {
 
           {/* Capabilities: one box each, stacked. Each box has crop marks on two corners and a
               short accent tick on its left border, level with the title.
-              Wider than the photo column (240 / 320 / 350px): the negative left margin equals the
-              extra width, so the right edge stays on the photo's right edge and only the left grows. */}
+              Wider than the photo (--cap-w: 290px, 370px from 768px, 410px from 1024px): the negative
+              left margin equals the extra width, so the right edge stays on the photo's right edge and
+              only the left edge grows. On narrow phones the width caps at 50vw + 104px, which keeps
+              the boxes' left edge at least 16px from the screen edge (photo is centered there). */}
           <ul
-            className="enter -ml-[40px] mt-8 grid w-[240px] gap-3 md:w-[320px] lg:-ml-[70px] lg:w-[350px]"
+            className="enter mt-8 ml-[calc(var(--photo-w)-var(--cap-w))] grid w-[var(--cap-w)] gap-3 [--cap-w:min(290px,calc(50vw+104px))] md:[--cap-w:370px] lg:[--cap-w:410px]"
             style={enterStyle(4)}
           >
             {capabilities.map((c) => (
