@@ -31,7 +31,8 @@ export default function Hero() {
           </div>
         </div>
 
-        <div className="text-center md:col-start-1 md:row-start-2 md:text-left">
+        {/* Top padding lowers name + bio toward the photo's vertical middle (photo itself stays put). */}
+        <div className="pt-6 text-center md:col-start-1 md:row-start-2 md:pt-9 md:text-left lg:pt-14">
           {/* One word group per line so the name always breaks the same way. */}
           <h1
             id="hero-title"
