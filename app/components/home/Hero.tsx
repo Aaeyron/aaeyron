@@ -19,7 +19,7 @@ const markBR: CSSProperties = { bottom: -4, right: -4, borderBottomWidth: 1, bor
 export default function Hero() {
   return (
     <section aria-labelledby="hero-title" className="container-x pb-20 pt-14 sm:pb-28 sm:pt-24 lg:pt-32">
-      <div className="grid gap-y-8 md:grid-cols-[minmax(0,1fr)_312px] md:gap-x-8 lg:grid-cols-[minmax(0,1fr)_340px] lg:gap-x-10">
+      <div className="grid gap-y-8 md:grid-cols-[minmax(0,1fr)_18.5rem] md:gap-x-8 lg:grid-cols-[minmax(0,1fr)_minmax(0,30rem)] lg:gap-x-10">
         {/* Left-aligned at every size (the rest of the hero is centered on mobile). */}
         <div className="md:col-start-1">
           <div className="enter" style={enterStyle(0)}>
@@ -69,13 +69,12 @@ export default function Hero() {
           </div>
         </div>
 
-        {/* Photo + capabilities column, as wide as the boxes (240px, 312px from 768px, 340px from
-            1024px). The photo (200px / 280px) is pushed to its right edge, so the boxes' right
-            edges stay locked to the photo's right edge while the extra width extends left. */}
-        <div className="mx-auto mt-6 w-[240px] md:col-start-2 md:row-start-2 md:mx-0 md:mt-0 md:w-full">
+        {/* Photo + capabilities share one fixed-width column (200px, 280px from 768px), so the
+            boxes' right edges line up exactly with the photo's right edge at every size. */}
+        <div className="mx-auto mt-6 w-[200px] md:col-start-2 md:row-start-2 md:mx-0 md:mt-0 md:w-[280px]">
           {/* Photo: field-style border and corner marks, an offset outline frame behind it
               with an accent square on its far corner, and a small tab on the bottom border. */}
-          <div className="enter ml-auto w-[200px] md:w-[280px]" style={enterStyle(3)}>
+          <div className="enter" style={enterStyle(3)}>
             <div className="field-frame">
               <span aria-hidden className="absolute inset-0 translate-x-3 translate-y-3 border border-line-strong">
                 <span className="absolute -bottom-[3px] -right-[3px] size-1.5 bg-accent" />
@@ -94,8 +93,13 @@ export default function Hero() {
           </div>
 
           {/* Capabilities: one box each, stacked. Each box has crop marks on two corners and a
-              short accent tick on its left border, level with the title. */}
-          <ul className="enter mt-8 grid gap-3" style={enterStyle(4)}>
+              short accent tick on its left border, level with the title.
+              Wider than the photo column (240 / 320 / 350px): the negative left margin equals the
+              extra width, so the right edge stays on the photo's right edge and only the left grows. */}
+          <ul
+            className="enter -ml-[40px] mt-8 grid w-[240px] gap-3 md:w-[320px] lg:-ml-[70px] lg:w-[350px]"
+            style={enterStyle(4)}
+          >
             {capabilities.map((c) => (
               <li key={c.title} className="field-frame border border-[var(--field-line)] bg-bg p-3">
                 <span aria-hidden className="corner" style={markTL} />
