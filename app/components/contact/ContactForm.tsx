@@ -337,8 +337,9 @@ export default function ContactForm() {
             <input ref={honeypot} id={id("botcheck")} type="text" name="botcheck" tabIndex={-1} autoComplete="off" />
           </div>
 
-          <div className="mt-5">
-            <button type="submit" disabled={status === "sending" || cooldown > 0} className={primaryBtn}>
+          {/* Send button, with the success panel beside it (stacked under 640px). */}
+          <div className="mt-5 flex flex-col items-start gap-5 sm:flex-row">
+            <button type="submit" disabled={status === "sending" || cooldown > 0} className={`${primaryBtn} shrink-0`}>
               {status === "sending" ? (
                 "Sending..."
               ) : cooldown > 0 ? (
@@ -350,32 +351,32 @@ export default function ContactForm() {
                 </>
               )}
             </button>
+
+            {/* Stays until "Send another" or new typing. */}
+            {status === "success" && (
+              <div className="w-full min-w-0 sm:flex-1">
+                <FieldFrame>
+                  <div className="flex flex-col items-start gap-5 border border-[var(--field-line)] p-5 sm:p-7 lg:flex-row lg:items-center lg:justify-between">
+                    <div className="flex min-w-0 items-start gap-4">
+                      <span aria-hidden className="grid size-9 shrink-0 place-items-center border border-[var(--field-line)] text-ink">
+                        <Check size={18} aria-hidden />
+                      </span>
+                      <div className="min-w-0">
+                        <h2 ref={successHeading} tabIndex={-1} className="h3">
+                          Message sent.
+                        </h2>
+                        <p className="mt-1 text-muted">I will reply to your email soon.</p>
+                      </div>
+                    </div>
+                    <button type="button" onClick={sendAnother} className={`${primaryBtn} shrink-0`}>
+                      Send another
+                    </button>
+                  </div>
+                </FieldFrame>
+              </div>
+            )}
           </div>
         </form>
-
-        {/* Shown below the (now disabled) Send button until "Send another" or new typing. */}
-        {status === "success" && (
-          <div className="mt-8">
-            <FieldFrame>
-              <div className="flex flex-col items-start gap-5 border border-[var(--field-line)] p-5 sm:flex-row sm:items-center sm:justify-between sm:p-7">
-                <div className="flex min-w-0 items-start gap-4">
-                  <span aria-hidden className="grid size-9 shrink-0 place-items-center border border-[var(--field-line)] text-ink">
-                    <Check size={18} aria-hidden />
-                  </span>
-                  <div className="min-w-0">
-                    <h2 ref={successHeading} tabIndex={-1} className="h3">
-                      Message sent.
-                    </h2>
-                    <p className="mt-1 text-muted">I will reply to your email soon.</p>
-                  </div>
-                </div>
-                <button type="button" onClick={sendAnother} className={primaryBtn}>
-                  Send another
-                </button>
-              </div>
-            </FieldFrame>
-          </div>
-        )}
 
         {/* Announces the result. Errors and the mailto note are also shown here. */}
         <div role="status" aria-live="polite">
