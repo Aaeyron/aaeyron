@@ -1,11 +1,10 @@
 "use client";
 
-import { useEffect, useId, useRef, useState, type FocusEvent, type FormEvent, type ReactNode } from "react";
+import { useEffect, useId, useRef, useState, type FormEvent, type ReactNode } from "react";
 import { Check, Send } from "lucide-react";
 import { profile } from "@/lib/content";
 import { CornerMarks, Label, Panel } from "../ui/primitives";
 
-const NEEDS = ["Internship or job", "School or personal project", "Collaboration", "Question", "Other"] as const;
 const MESSAGE_MIN = 10;
 const MESSAGE_MAX = 1000;
 const COOLDOWN_S = 30;
@@ -13,35 +12,36 @@ const ENDPOINT = "https://api.web3forms.com/submit";
 // Inlined at build time. Missing → the form falls back to a mailto: link.
 const ACCESS_KEY = process.env.NEXT_PUBLIC_WEB3FORMS_KEY;
 
-type Values = { name: string; email: string; need: string; timeline: string; message: string };
+type Values = { firstName: string; lastName: string; email: string; phone: string; subject: string; message: string };
 type Field = keyof Values;
 type Errors = Partial<Record<Field, string>>;
 type Status = "idle" | "sending" | "success" | "error" | "mailto";
 
-const EMPTY: Values = { name: "", email: "", need: "", timeline: "", message: "" };
-const REQUIRED: Field[] = ["name", "email", "need", "message"];
+const EMPTY: Values = { firstName: "", lastName: "", email: "", phone: "", subject: "", message: "" };
+const REQUIRED: Field[] = ["firstName", "lastName", "email", "subject", "message"];
 const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/;
 
 function validate(v: Values): Errors {
   const e: Errors = {};
-  if (!v.name.trim()) e.name = "Please enter your name";
+  if (!v.firstName.trim()) e.firstName = "Please enter your first name";
+  if (!v.lastName.trim()) e.lastName = "Please enter your last name";
   if (!v.email.trim()) e.email = "Please enter your email";
   else if (!EMAIL_RE.test(v.email.trim())) e.email = "Please enter a valid email";
-  if (!v.need) e.need = "Please choose what you need";
+  if (!v.subject.trim()) e.subject = "Please enter a subject";
   const len = v.message.trim().length;
   if (!len) e.message = "Please write a message";
   else if (len < MESSAGE_MIN) e.message = `Please write at least ${MESSAGE_MIN} characters`;
   return e;
 }
 
-const subjectFor = (v: Values) => `Portfolio message: ${v.need} from ${v.name.trim()}`;
+const fullName = (v: Values) => `${v.firstName.trim()} ${v.lastName.trim()}`;
+const subjectFor = (v: Values) => `Portfolio message: ${v.subject.trim()} from ${fullName(v)}`;
 
 function mailtoHref(v: Values) {
   const body = [
-    `Name: ${v.name.trim()}`,
+    `Name: ${fullName(v)}`,
     `Email: ${v.email.trim()}`,
-    `What I need: ${v.need}`,
-    `Timeline: ${v.timeline.trim() || "Not given"}`,
+    `Phone: ${v.phone.trim() || "Not given"}`,
     "",
     v.message.trim(),
   ].join("\n");
@@ -80,7 +80,7 @@ function FieldError({ id, message }: { id: string; message?: string }) {
 const primaryBtn =
   "inline-flex min-h-11 items-center justify-center gap-2 border border-accent bg-accent px-5 text-[0.9375rem] font-medium whitespace-nowrap text-on-accent transition-[background-color,transform] duration-200 ease-out hover:bg-[color-mix(in_srgb,var(--accent)_82%,black)] active:translate-y-px aria-disabled:opacity-50 aria-disabled:hover:bg-accent aria-disabled:active:translate-y-0";
 
-/** "Send a message" form for the Contact page. Sends through Web3Forms. */
+/** "Send Me a Message" form for the Contact page. Sends through Web3Forms. */
 export default function ContactForm() {
   const uid = useId();
   const id = (f: string) => `${uid}-${f}`;
@@ -110,11 +110,6 @@ export default function ContactForm() {
   };
   const touch = (f: Field) => () => setTouched((t) => ({ ...t, [f]: true }));
 
-  // The chip group counts as "blurred" only when focus leaves the whole group.
-  const onNeedBlur = (e: FocusEvent<HTMLFieldSetElement>) => {
-    if (!e.currentTarget.contains(e.relatedTarget as Node | null)) touch("need")();
-  };
-
   const finishSuccess = () => {
     setValues(EMPTY);
     setTouched({});
@@ -124,12 +119,12 @@ export default function ContactForm() {
 
   const onSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    if (status === "sending" || cooldown > 0) return;
+    if (busy) return;
 
-    setTouched({ name: true, email: true, need: true, message: true });
+    setTouched(Object.fromEntries(REQUIRED.map((f) => [f, true])));
     const firstInvalid = REQUIRED.find((f) => errors[f]);
     if (firstInvalid) {
-      document.getElementById(id(firstInvalid === "need" ? "need-0" : firstInvalid))?.focus();
+      document.getElementById(id(firstInvalid))?.focus();
       return;
     }
 
@@ -157,10 +152,12 @@ export default function ContactForm() {
           subject: subjectFor(values),
           from_name: "Portfolio contact form",
           replyto: email,
-          name: values.name.trim(),
+          name: fullName(values),
+          firstName: values.firstName.trim(),
+          lastName: values.lastName.trim(),
           email,
-          need: values.need,
-          timeline: values.timeline.trim() || "Not given",
+          phone: values.phone.trim() || "Not given",
+          topic: values.subject.trim(),
           message: values.message.trim(),
           botcheck: "",
         }),
@@ -182,114 +179,57 @@ export default function ContactForm() {
     </a>
   );
 
+  /** A single-line text input with label, corner marks and inline error. */
+  const textField = (
+    f: Field,
+    label: string,
+    props: { type?: string; inputMode?: "email" | "tel" | "text"; autoComplete?: string; placeholder: string; optional?: boolean },
+  ) => (
+    <div className="min-w-0">
+      <FieldLabel htmlFor={id(f)} optional={props.optional}>
+        {label}
+      </FieldLabel>
+      <FieldFrame>
+        <input
+          id={id(f)}
+          type={props.type ?? "text"}
+          inputMode={props.inputMode}
+          autoComplete={props.autoComplete}
+          placeholder={props.placeholder}
+          maxLength={200}
+          className="field"
+          value={values[f]}
+          onChange={set(f)}
+          {...(props.optional
+            ? {}
+            : {
+                onBlur: touch(f),
+                "aria-required": true,
+                "aria-invalid": !!shown(f),
+                "aria-describedby": describedBy(shown(f) && id(`${f}-error`)),
+              })}
+        />
+      </FieldFrame>
+      {!props.optional && <FieldError id={id(`${f}-error`)} message={shown(f)} />}
+    </div>
+  );
+
   return (
-    <div data-reveal>
-      <Label index="02" className="mb-5">
-        Send a message
-      </Label>
-      <Panel className="contact-form p-5 sm:p-7 lg:p-8">
-        <form noValidate onSubmit={onSubmit} className="grid gap-5">
+    <div data-reveal className="min-w-0">
+      <Panel className="contact-form p-5 sm:p-7">
+        <h2 className="h3">Send Me a Message</h2>
+        <p className="mt-2 text-muted">Fill out the form below and I’ll get back to you within 24 hours.</p>
+
+        <form noValidate onSubmit={onSubmit} className="mt-7 grid gap-5">
           <div className="grid gap-5 sm:grid-cols-2">
-            <div className="min-w-0">
-              <FieldLabel htmlFor={id("name")}>Name</FieldLabel>
-              <FieldFrame>
-                <input
-                  id={id("name")}
-                  type="text"
-                  autoComplete="name"
-                  placeholder="Your name"
-                  className="field"
-                  value={values.name}
-                  onChange={set("name")}
-                  onBlur={touch("name")}
-                  aria-required="true"
-                  aria-invalid={!!shown("name")}
-                  aria-describedby={describedBy(shown("name") && id("name-error"))}
-                />
-              </FieldFrame>
-              <FieldError id={id("name-error")} message={shown("name")} />
-            </div>
-
-            <div className="min-w-0">
-              <FieldLabel htmlFor={id("email")}>Email</FieldLabel>
-              <FieldFrame>
-                <input
-                  id={id("email")}
-                  type="email"
-                  inputMode="email"
-                  autoComplete="email"
-                  placeholder="you@example.com"
-                  className="field"
-                  value={values.email}
-                  onChange={set("email")}
-                  onBlur={touch("email")}
-                  aria-required="true"
-                  aria-invalid={!!shown("email")}
-                  aria-describedby={describedBy(shown("email") && id("email-error"))}
-                />
-              </FieldFrame>
-              <FieldError id={id("email-error")} message={shown("email")} />
-            </div>
+            {textField("firstName", "First name", { autoComplete: "given-name", placeholder: "Your first name" })}
+            {textField("lastName", "Last name", { autoComplete: "family-name", placeholder: "Your last name" })}
           </div>
-
-          <fieldset
-            role="radiogroup"
-            aria-labelledby={id("need-label")}
-            aria-required="true"
-            aria-invalid={!!shown("need")}
-            aria-describedby={describedBy(shown("need") && id("need-error"))}
-            className="min-w-0"
-            onBlur={onNeedBlur}
-          >
-            <legend id={id("need-label")} className="mb-2">
-              <Label className="field-label">What do you need?</Label>
-            </legend>
-            <FieldFrame>
-              <div className="flex flex-wrap gap-2 border border-[var(--field-line)] px-3 py-2.5">
-                {NEEDS.map((need, i) => {
-                  const checked = values.need === need;
-                  return (
-                    <label
-                      key={need}
-                      className={`chip min-h-11 cursor-pointer px-3 leading-[1.6] has-[:focus-visible]:outline-2 has-[:focus-visible]:outline-offset-2 has-[:focus-visible]:outline-accent ${
-                        checked ? "chip-accent" : "text-ink hover:border-ink"
-                      }`}
-                    >
-                      <input
-                        id={id(`need-${i}`)}
-                        type="radio"
-                        name={id("need")}
-                        value={need}
-                        checked={checked}
-                        onChange={set("need")}
-                        className="sr-only"
-                      />
-                      {checked && <Check size={13} aria-hidden />}
-                      {need}
-                    </label>
-                  );
-                })}
-              </div>
-            </FieldFrame>
-            <FieldError id={id("need-error")} message={shown("need")} />
-          </fieldset>
-
-          <div className="min-w-0">
-            <FieldLabel htmlFor={id("timeline")} optional>
-              Timeline
-            </FieldLabel>
-            <FieldFrame>
-              <input
-                id={id("timeline")}
-                type="text"
-                placeholder="For example: next month"
-                maxLength={100}
-                className="field"
-                value={values.timeline}
-                onChange={set("timeline")}
-              />
-            </FieldFrame>
+          <div className="grid gap-5 sm:grid-cols-2">
+            {textField("email", "Email", { type: "email", inputMode: "email", autoComplete: "email", placeholder: "you@example.com" })}
+            {textField("phone", "Phone", { type: "tel", inputMode: "tel", autoComplete: "tel", placeholder: "Your phone number", optional: true })}
           </div>
+          {textField("subject", "Subject", { placeholder: "What is this about?" })}
 
           <div className="min-w-0">
             <FieldLabel htmlFor={id("message")}>Message</FieldLabel>
@@ -344,7 +284,7 @@ export default function ContactForm() {
               {showSent && (
                 <p className="flex items-start gap-2 text-ink">
                   <Check size={18} aria-hidden className="mt-1 shrink-0" />
-                  <span>Message sent. I will reply to your email soon.</span>
+                  <span>Message sent. I will reply within 24 hours.</span>
                 </p>
               )}
             </div>

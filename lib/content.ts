@@ -15,6 +15,8 @@ export const profile = {
   locationShort: "Davao City, PH",
   email: "aaronseth041@gmail.com",
   phone: { display: "+63 915 660 4726", href: "tel:+639156604726" },
+  /** Same number; wa.me needs the international format without "+" or the leading 0. */
+  whatsapp: { display: "09156604726", href: "https://wa.me/639156604726" },
   status: "Open to opportunities & collaborations",
   availability: "Open to opportunities & collaborations. Feel free to reach out.",
   /** Profile photo, shared by the home About section and /experience "About me". */

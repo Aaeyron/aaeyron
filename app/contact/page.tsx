@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import ContactForm from "../components/contact/ContactForm";
+import WhatsAppCard from "../components/contact/WhatsAppCard";
 import ContactButtons from "../components/ui/ContactButtons";
 import { Highlight, Label, SectionHeader } from "../components/ui/primitives";
 
@@ -18,7 +19,18 @@ export default function Contact() {
           Have a project, opportunity, or idea you want to discuss? Send me a message and tell me what you’re working on.
         </p>
       </SectionHeader>
-      <ContactForm />
+      {/* 02: form + WhatsApp side by side from 1024px, stacked below. */}
+      <section aria-label="Send a message">
+        <div data-reveal>
+          <Label index="02" className="mb-5">
+            Send a message
+          </Label>
+        </div>
+        <div className="grid gap-6 lg:grid-cols-2 lg:items-start">
+          <ContactForm />
+          <WhatsAppCard />
+        </div>
+      </section>
       <section aria-labelledby="reach-directly" className="mt-[var(--space-section)]">
         <div data-reveal>
           <Label className="mb-5">
