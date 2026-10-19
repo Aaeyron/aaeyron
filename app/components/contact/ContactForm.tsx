@@ -181,8 +181,10 @@ export default function ContactForm() {
 
   return (
     <div data-reveal>
-      <Panel index="04" className="contact-form p-5 sm:p-8">
-        <Label className="mb-6">Send a message</Label>
+      <Panel className="contact-form p-5 sm:p-8">
+        <Label index="05" className="mb-6">
+          Send a message
+        </Label>
 
         {status === "success" ? (
           <div className="flex flex-col items-start gap-5 py-4">
