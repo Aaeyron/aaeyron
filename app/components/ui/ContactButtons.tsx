@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useRef, useState, type ComponentType, type KeyboardEvent } from "react";
-import { ArrowUpRight, Check, Copy, Github, Linkedin, Mail } from "lucide-react";
+import { ArrowUpRight, Check, Copy, Mail } from "lucide-react";
 import { FaGithub, FaLinkedinIn } from "react-icons/fa";
 import { contactLinks, profile, type ContactLink } from "@/lib/content";
 import { copyText } from "@/lib/client";
@@ -90,47 +90,12 @@ export function ContactButtonsCompact({ className = "", startIndex = 0 }: { clas
   );
 }
 
-const rowIcons: Record<ContactLink["id"], ComponentType<{ size?: number; "aria-hidden"?: boolean }>> = {
-  github: Github,
-  linkedin: Linkedin,
-  email: Mail,
-};
-
 // Links only activate on Enter natively; let Space work too, like a button.
 const activateOnSpace = (e: KeyboardEvent<HTMLAnchorElement>) => {
   if (e.key !== " ") return;
   e.preventDefault();
   e.currentTarget.click();
 };
-
-/**
- * Plain GitHub · LinkedIn · Email buttons styled like the contact form's
- * inputs: equal width in one row, stacked on mobile. Hover turns only the
- * border accent.
- */
-export function ContactButtonsRow({ className = "" }: { className?: string }) {
-  return (
-    <ul className={`grid gap-3 sm:grid-cols-3 ${className}`}>
-      {contactLinks.map((link) => {
-        const Icon = rowIcons[link.id];
-        return (
-          <li key={link.id} data-reveal>
-            <a
-              href={link.href}
-              aria-label={link.ariaLabel}
-              onKeyDown={activateOnSpace}
-              {...(link.external ? { target: "_blank", rel: "noopener noreferrer" } : {})}
-              className="flex min-h-12 w-full cursor-pointer items-center justify-center gap-2.5 border border-line-strong bg-bg px-[0.85rem] py-[0.7rem] font-medium text-ink transition-[border-color] duration-200 hover:border-accent focus-visible:border-accent"
-            >
-              <Icon size={18} aria-hidden />
-              {link.label}
-            </a>
-          </li>
-        );
-      })}
-    </ul>
-  );
-}
 
 /** GitHub · LinkedIn · Email buttons. 3 across on desktop, stacked on mobile. */
 export default function ContactButtons({ className = "" }: { className?: string }) {
@@ -151,6 +116,7 @@ export default function ContactButtons({ className = "" }: { className?: string 
               <a
                 href={link.href}
                 aria-label={link.ariaLabel}
+                onKeyDown={activateOnSpace}
                 {...(link.external ? { target: "_blank", rel: "noopener noreferrer" } : {})}
                 className="flex min-h-[4.75rem] min-w-0 flex-1 items-center gap-4 px-4 py-4 outline-offset-[-3px]"
               >

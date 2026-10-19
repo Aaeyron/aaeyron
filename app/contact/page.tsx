@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import ContactForm from "../components/contact/ContactForm";
-import { ContactButtonsRow } from "../components/ui/ContactButtons";
+import ContactButtons from "../components/ui/ContactButtons";
 import { Highlight, Label, SectionHeader } from "../components/ui/primitives";
 
 export const metadata: Metadata = {
@@ -19,13 +19,14 @@ export default function Contact() {
         </p>
       </SectionHeader>
       <ContactForm />
-      <section aria-labelledby="reach-directly" className="contact-links mt-[var(--space-section)]">
-        <div data-reveal className="mb-5">
-          <Label>
+      <section aria-labelledby="reach-directly" className="mt-[var(--space-section)]">
+        <div data-reveal>
+          <Label className="mb-5">
             <span id="reach-directly">Or reach me directly</span>
           </Label>
         </div>
-        <ContactButtonsRow />
+        {/* Same buttons as the home page contact section; each reveals on its own. */}
+        <ContactButtons className="mt-8" />
       </section>
     </div>
   );
