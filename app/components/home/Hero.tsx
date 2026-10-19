@@ -12,9 +12,13 @@ export default function Hero() {
   const started = hasInternshipStarted();
   return (
     <section aria-labelledby="hero-title" className="container-x pb-20 pt-14 sm:pb-28 sm:pt-24 lg:pt-32">
-      {/* Left: status, name, bio. Right: photo + Now. Stacked below 1024px. */}
-      <div className="grid-12 items-center gap-y-12 lg:gap-x-8">
-        <div className="col-span-4 sm:col-span-8 lg:col-span-7">
+      {/* Left: status, name, bio, actions. Right: photo + Now. Stacked below 1024px.
+          Columns stretch to equal height, so the actions sit level with the bottom of Now. */}
+      <div className="grid-12 gap-y-14 lg:gap-x-8">
+        <div className="col-span-4 flex flex-col sm:col-span-8 lg:col-span-7">
+          <div className="enter" style={enterStyle(0)}>
+            <Label className="field-label mb-5">About</Label>
+          </div>
           <div className="enter flex flex-wrap items-center gap-2" style={enterStyle(0)}>
             <span className="chip text-ink">
               <span aria-hidden className="status-dot" />
@@ -46,24 +50,48 @@ export default function Hero() {
             Aspiring Software &amp; AI/ML Engineer based in Davao City, Philippines, building web, mobile, and AI-powered
             projects. Open to opportunities and collaborations.
           </p>
+
+          {/* Side by side, stacked full-width on small phones. Pushed to the bottom on desktop. */}
+          <div className="enter mt-10 flex flex-col gap-3 min-[400px]:flex-row lg:mt-auto lg:pt-10" style={enterStyle(3)}>
+            <ButtonLink href="#work" className="w-full min-[400px]:w-auto">
+              See my work <ArrowDown size={17} aria-hidden className="transition-transform duration-200 group-hover:translate-y-0.5" />
+            </ButtonLink>
+            <ButtonLink
+              href={resumeUrl}
+              variant="secondary"
+              external
+              aria-label={resumeAriaLabel}
+              className="w-full min-[400px]:w-auto"
+            >
+              <FileText size={17} aria-hidden /> View résumé
+            </ButtonLink>
+          </div>
         </div>
 
-        <div className="enter col-span-4 sm:col-span-8 lg:col-span-5" style={enterStyle(3)}>
-          <Label className="mb-3">Profile</Label>
-          {/* Photo: sharp corners, field-style border and small corner marks. */}
-          <div className="field-frame w-[140px] sm:w-[200px]">
-            <CornerMarks inset="-4px" />
+        <div className="enter col-span-4 sm:col-span-8 lg:col-span-5" style={enterStyle(4)}>
+          <Label className="field-label mb-5">Profile</Label>
+          {/* Photo: field-style border and corner marks, an offset outline frame behind it
+              with an accent square on its far corner, and a location tab on the bottom border. */}
+          <div className="field-frame w-[200px] sm:w-[280px]">
+            <span aria-hidden className="absolute inset-0 translate-x-3 translate-y-3 border border-line-strong">
+              <span className="absolute -bottom-[3px] -right-[3px] size-1.5 bg-accent" />
+            </span>
             <Image
               src={heroPhoto}
               alt={`Photo of ${profile.name} working on a laptop`}
               priority
-              sizes="(min-width: 640px) 200px, 140px"
+              sizes="(min-width: 640px) 280px, 200px"
               placeholder="blur"
-              className="block aspect-[3/4] w-full border border-[var(--field-line)] object-cover"
+              className="relative block aspect-[3/4] w-full border border-[var(--field-line)] object-cover"
             />
+            <CornerMarks inset="-4px" />
+            <span className="chip absolute -bottom-2.5 left-3 z-10 py-0 text-[0.65rem]">
+              <span className="sr-only">Location: </span>
+              {profile.locationShort}
+            </span>
           </div>
 
-          <div className="relative mt-4 border border-line bg-bg p-5">
+          <div className="relative mt-10 border border-line bg-bg p-5">
             <CornerMarks />
             <div className="mb-4 flex items-center justify-between gap-4">
               <Label accent>Now</Label>
@@ -82,22 +110,6 @@ export default function Hero() {
             </dl>
           </div>
         </div>
-      </div>
-
-      {/* Side by side, stacked full-width on small phones. */}
-      <div className="enter mt-10 flex flex-col gap-3 min-[400px]:flex-row" style={enterStyle(4)}>
-        <ButtonLink href="#work" className="w-full min-[400px]:w-auto">
-          See my work <ArrowDown size={17} aria-hidden className="transition-transform duration-200 group-hover:translate-y-0.5" />
-        </ButtonLink>
-        <ButtonLink
-          href={resumeUrl}
-          variant="secondary"
-          external
-          aria-label={resumeAriaLabel}
-          className="w-full min-[400px]:w-auto"
-        >
-          <FileText size={17} aria-hidden /> View résumé
-        </ButtonLink>
       </div>
     </section>
   );
