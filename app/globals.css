@@ -388,16 +388,27 @@ html:has(dialog[open]) {
   /* Text inputs for the contact form: 1px border (black in light, grey in
      dark), sharp corners, body-size text (also stops iOS zooming on focus). */
   .field,
-  .field-label {
+  .field-label,
+  .field-frame {
     --field-line: var(--ink);
   }
-  :root[data-theme="dark"] :is(.field, .field-label) {
+  :root[data-theme="dark"] :is(.field, .field-label, .field-frame) {
     --field-line: var(--line-strong);
   }
   @media (prefers-color-scheme: dark) {
-    :root:not([data-theme]) :is(.field, .field-label) {
+    :root:not([data-theme]) :is(.field, .field-label, .field-frame) {
       --field-line: var(--line-strong);
     }
+  }
+  /* Wrapper that puts small corner marks (<CornerMarks>) around a field,
+     in the field's border colour. They stay put on focus. */
+  .field-frame {
+    position: relative;
+  }
+  .field-frame .corner {
+    width: 7px;
+    height: 7px;
+    border-color: var(--field-line);
   }
   .field {
     display: block;

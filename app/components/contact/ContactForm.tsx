@@ -3,7 +3,7 @@
 import { useEffect, useId, useRef, useState, type FocusEvent, type FormEvent, type ReactNode } from "react";
 import { Check, Send } from "lucide-react";
 import { profile } from "@/lib/content";
-import { Label, Panel } from "../ui/primitives";
+import { CornerMarks, Label, Panel } from "../ui/primitives";
 
 const NEEDS = ["Internship or job", "School or personal project", "Collaboration", "Question", "Other"] as const;
 const MESSAGE_MIN = 10;
@@ -54,6 +54,16 @@ function FieldLabel({ htmlFor, optional, children }: { htmlFor: string; optional
       <Label className="field-label">{children}</Label>
       {optional && <span className="font-mono text-xs text-muted">Optional</span>}
     </label>
+  );
+}
+
+/** Small corner marks just outside a field's border. Decorative, never in the way of taps. */
+function FieldFrame({ children }: { children: ReactNode }) {
+  return (
+    <div className="field-frame">
+      <CornerMarks inset="-4px" />
+      {children}
+    </div>
   );
 }
 
@@ -205,38 +215,42 @@ export default function ContactForm() {
             <div className="grid gap-4 sm:grid-cols-2">
               <div className="min-w-0">
                 <FieldLabel htmlFor={id("name")}>Name</FieldLabel>
-                <input
-                  id={id("name")}
-                  type="text"
-                  autoComplete="name"
-                  placeholder="Your name"
-                  className="field"
-                  value={values.name}
-                  onChange={set("name")}
-                  onBlur={touch("name")}
-                  aria-required="true"
-                  aria-invalid={!!shown("name")}
-                  aria-describedby={describedBy(shown("name") && id("name-error"))}
-                />
+                <FieldFrame>
+                  <input
+                    id={id("name")}
+                    type="text"
+                    autoComplete="name"
+                    placeholder="Your name"
+                    className="field"
+                    value={values.name}
+                    onChange={set("name")}
+                    onBlur={touch("name")}
+                    aria-required="true"
+                    aria-invalid={!!shown("name")}
+                    aria-describedby={describedBy(shown("name") && id("name-error"))}
+                  />
+                </FieldFrame>
                 <FieldError id={id("name-error")} message={shown("name")} />
               </div>
 
               <div className="min-w-0">
                 <FieldLabel htmlFor={id("email")}>Email</FieldLabel>
-                <input
-                  id={id("email")}
-                  type="email"
-                  inputMode="email"
-                  autoComplete="email"
-                  placeholder="you@example.com"
-                  className="field"
-                  value={values.email}
-                  onChange={set("email")}
-                  onBlur={touch("email")}
-                  aria-required="true"
-                  aria-invalid={!!shown("email")}
-                  aria-describedby={describedBy(shown("email") && id("email-error"))}
-                />
+                <FieldFrame>
+                  <input
+                    id={id("email")}
+                    type="email"
+                    inputMode="email"
+                    autoComplete="email"
+                    placeholder="you@example.com"
+                    className="field"
+                    value={values.email}
+                    onChange={set("email")}
+                    onBlur={touch("email")}
+                    aria-required="true"
+                    aria-invalid={!!shown("email")}
+                    aria-describedby={describedBy(shown("email") && id("email-error"))}
+                  />
+                </FieldFrame>
                 <FieldError id={id("email-error")} message={shown("email")} />
               </div>
             </div>
@@ -253,31 +267,33 @@ export default function ContactForm() {
               <legend id={id("need-label")} className="mb-2">
                 <Label className="field-label">What do you need?</Label>
               </legend>
-              <div className="flex flex-wrap gap-2">
-                {NEEDS.map((need, i) => {
-                  const checked = values.need === need;
-                  return (
-                    <label
-                      key={need}
-                      className={`chip min-h-11 cursor-pointer px-3 leading-[1.6] has-[:focus-visible]:outline-2 has-[:focus-visible]:outline-offset-2 has-[:focus-visible]:outline-accent ${
-                        checked ? "chip-accent" : "text-ink hover:border-ink"
-                      }`}
-                    >
-                      <input
-                        id={id(`need-${i}`)}
-                        type="radio"
-                        name={id("need")}
-                        value={need}
-                        checked={checked}
-                        onChange={set("need")}
-                        className="sr-only"
-                      />
-                      {checked && <Check size={13} aria-hidden />}
-                      {need}
-                    </label>
-                  );
-                })}
-              </div>
+              <FieldFrame>
+                <div className="flex flex-wrap gap-2 border border-[var(--field-line)] px-3 py-2.5">
+                  {NEEDS.map((need, i) => {
+                    const checked = values.need === need;
+                    return (
+                      <label
+                        key={need}
+                        className={`chip min-h-11 cursor-pointer px-3 leading-[1.6] has-[:focus-visible]:outline-2 has-[:focus-visible]:outline-offset-2 has-[:focus-visible]:outline-accent ${
+                          checked ? "chip-accent" : "text-ink hover:border-ink"
+                        }`}
+                      >
+                        <input
+                          id={id(`need-${i}`)}
+                          type="radio"
+                          name={id("need")}
+                          value={need}
+                          checked={checked}
+                          onChange={set("need")}
+                          className="sr-only"
+                        />
+                        {checked && <Check size={13} aria-hidden />}
+                        {need}
+                      </label>
+                    );
+                  })}
+                </div>
+              </FieldFrame>
               <FieldError id={id("need-error")} message={shown("need")} />
             </fieldset>
 
@@ -285,32 +301,36 @@ export default function ContactForm() {
               <FieldLabel htmlFor={id("timeline")} optional>
                 Timeline
               </FieldLabel>
-              <input
-                id={id("timeline")}
-                type="text"
-                placeholder="For example: next month"
-                maxLength={100}
-                className="field"
-                value={values.timeline}
-                onChange={set("timeline")}
-              />
+              <FieldFrame>
+                <input
+                  id={id("timeline")}
+                  type="text"
+                  placeholder="For example: next month"
+                  maxLength={100}
+                  className="field"
+                  value={values.timeline}
+                  onChange={set("timeline")}
+                />
+              </FieldFrame>
             </div>
 
             <div className="min-w-0">
               <FieldLabel htmlFor={id("message")}>Message</FieldLabel>
-              <textarea
-                id={id("message")}
-                rows={6}
-                maxLength={MESSAGE_MAX}
-                placeholder="Tell me what you need and any details I should know."
-                className="field"
-                value={values.message}
-                onChange={set("message")}
-                onBlur={touch("message")}
-                aria-required="true"
-                aria-invalid={!!shown("message")}
-                aria-describedby={describedBy(shown("message") && id("message-error"), id("message-count"))}
-              />
+              <FieldFrame>
+                <textarea
+                  id={id("message")}
+                  rows={6}
+                  maxLength={MESSAGE_MAX}
+                  placeholder="Tell me what you need and any details I should know."
+                  className="field"
+                  value={values.message}
+                  onChange={set("message")}
+                  onBlur={touch("message")}
+                  aria-required="true"
+                  aria-invalid={!!shown("message")}
+                  aria-describedby={describedBy(shown("message") && id("message-error"), id("message-count"))}
+                />
+              </FieldFrame>
               <div className="flex items-start justify-between gap-4">
                 <FieldError id={id("message-error")} message={shown("message")} />
                 <p id={id("message-count")} className="mt-2 ml-auto shrink-0 font-mono text-xs text-muted tabular-nums">
