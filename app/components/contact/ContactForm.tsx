@@ -51,7 +51,7 @@ function mailtoHref(v: Values) {
 function FieldLabel({ htmlFor, optional, children }: { htmlFor: string; optional?: boolean; children: ReactNode }) {
   return (
     <label htmlFor={htmlFor} className="mb-2 flex items-center gap-2">
-      <Label>{children}</Label>
+      <Label className="font-semibold text-ink">{children}</Label>
       {optional && <span className="font-mono text-xs text-muted">Optional</span>}
     </label>
   );
@@ -181,11 +181,10 @@ export default function ContactForm() {
 
   return (
     <div data-reveal>
+      <Label index="02" className="mb-5">
+        Send a message
+      </Label>
       <Panel className="contact-form p-5 sm:p-8">
-        <Label index="05" className="mb-6">
-          Send a message
-        </Label>
-
         {status === "success" ? (
           <div className="flex flex-col items-start gap-5 py-4">
             <span aria-hidden className="grid size-11 place-items-center border border-accent bg-accent text-on-accent">
@@ -202,8 +201,8 @@ export default function ContactForm() {
             </button>
           </div>
         ) : (
-          <form noValidate onSubmit={onSubmit} className="grid gap-6">
-            <div className="grid gap-6 sm:grid-cols-2">
+          <form noValidate onSubmit={onSubmit} className="grid gap-4">
+            <div className="grid gap-4 sm:grid-cols-2">
               <div className="min-w-0">
                 <FieldLabel htmlFor={id("name")}>Name</FieldLabel>
                 <input
@@ -252,7 +251,7 @@ export default function ContactForm() {
               onBlur={onNeedBlur}
             >
               <legend id={id("need-label")} className="mb-2">
-                <Label>What do you need?</Label>
+                <Label className="font-semibold text-ink">What do you need?</Label>
               </legend>
               <div className="flex flex-wrap gap-2">
                 {NEEDS.map((need, i) => {
@@ -260,7 +259,7 @@ export default function ContactForm() {
                   return (
                     <label
                       key={need}
-                      className={`chip min-h-10 cursor-pointer px-3 has-[:focus-visible]:outline-2 has-[:focus-visible]:outline-offset-2 has-[:focus-visible]:outline-accent ${
+                      className={`chip min-h-11 cursor-pointer px-3 leading-[1.6] has-[:focus-visible]:outline-2 has-[:focus-visible]:outline-offset-2 has-[:focus-visible]:outline-accent ${
                         checked ? "chip-accent" : "text-ink hover:border-ink"
                       }`}
                     >
@@ -327,7 +326,7 @@ export default function ContactForm() {
               <input ref={honeypot} id={id("botcheck")} type="text" name="botcheck" tabIndex={-1} autoComplete="off" />
             </div>
 
-            <div>
+            <div className="mt-2">
               <button type="submit" disabled={status === "sending" || cooldown > 0} className={primaryBtn}>
                 {status === "sending" ? (
                   "Sending..."
