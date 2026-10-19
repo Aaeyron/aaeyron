@@ -39,12 +39,10 @@ export const homeFocus = {
   text: "I’m building my skills as a software and AI/ML engineer through real projects, from full-stack web apps to an AI-assisted accessibility app for my capstone. I focus on making software that is simple, useful, and easy to use.",
 };
 
-/** Home hero 2×2 grid: what I work on. Kept modest: learning and building, not claims of production work. */
+/** Home hero capability boxes (under the photo): what I work on. */
 export const capabilities = [
-  { title: "Generative AI", detail: "Building projects with LLMs and AI-powered features." },
-  { title: "Agentic Workflows", detail: "Exploring AI agents that plan steps and use tools." },
-  { title: "User Experience", detail: "Clean, simple interfaces that are easy to use." },
-  { title: "Engineering", detail: "Full-stack apps, databases, and deployment." },
+  { title: "AI & Agents", detail: "Building intelligent systems with LLMs and autonomous agents." },
+  { title: "Design & Engineering", detail: "Full-stack development with thoughtful, user-centric design." },
 ];
 
 export const focus = [

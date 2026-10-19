@@ -11,10 +11,10 @@ const markTL: CSSProperties = { top: -4, left: -4, borderTopWidth: 1, borderLeft
 const markBR: CSSProperties = { bottom: -4, right: -4, borderBottomWidth: 1, borderRightWidth: 1, transformOrigin: "bottom right" };
 
 /**
- * From 768px: row 1 holds About + status (left only). Row 2 holds name, bio and buttons on
+ * From 768px: row 1 holds the About label (left only). Row 2 holds name, bio and buttons on
  * the left, photo + capabilities on the right, so the photo's top lines up with the name.
  * The buttons are pushed to the bottom of row 2, level with the last capability box.
- * Under 768px everything stacks, centered: About → status → name → bio → buttons → photo → capabilities.
+ * Under 768px everything stacks, centered: About → name → bio → buttons → photo → capabilities.
  */
 export default function Hero() {
   return (
@@ -22,17 +22,7 @@ export default function Hero() {
       <div className="grid gap-y-8 md:grid-cols-[minmax(0,1fr)_18.5rem] md:gap-x-8 lg:grid-cols-[minmax(0,1fr)_minmax(0,30rem)] lg:gap-x-10">
         <div className="text-center md:col-start-1 md:text-left">
           <div className="enter" style={enterStyle(0)}>
-            <Label className="field-label mb-5">About</Label>
-          </div>
-          <div className="enter flex flex-wrap items-center justify-center gap-2 md:justify-start" style={enterStyle(0)}>
-            <span className="chip text-ink">
-              <span aria-hidden className="status-dot" />
-              {profile.status}
-            </span>
-            {/* Davao City's coordinates — a small technical detail. */}
-            <span className="hidden font-mono text-xs text-muted sm:inline">
-              <span className="sr-only">Coordinates: </span>7.07°N 125.61°E
-            </span>
+            <Label className="field-label">About</Label>
           </div>
         </div>
 
@@ -103,10 +93,10 @@ export default function Hero() {
               short accent tick on its left border, level with the title. */}
           <ul className="enter mt-8 grid gap-3" style={enterStyle(4)}>
             {capabilities.map((c) => (
-              <li key={c.title} className="field-frame border border-[var(--field-line)] bg-bg p-4 md:p-3 lg:p-4">
+              <li key={c.title} className="field-frame border border-[var(--field-line)] bg-bg p-4">
                 <span aria-hidden className="corner" style={markTL} />
                 <span aria-hidden className="corner" style={markBR} />
-                <span aria-hidden className="absolute -left-px top-4 h-5 w-0.5 bg-accent md:top-3 lg:top-4" />
+                <span aria-hidden className="absolute -left-px top-4 h-5 w-0.5 bg-accent" />
                 <p className="font-semibold leading-snug tracking-[-0.01em] text-ink">{c.title}</p>
                 <p className="mt-1 text-[0.9375rem] leading-snug text-ink">{c.detail}</p>
               </li>
