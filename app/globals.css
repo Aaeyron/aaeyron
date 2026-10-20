@@ -216,11 +216,31 @@ dialog[open] {
 dialog[open]::backdrop {
   animation: fade-in var(--dur-fast) var(--ease-out);
 }
+/* Closing: the same motion in reverse. JS sets data-closing, waits for the
+   animation to end, then calls dialog.close() (see MobileNav). */
+dialog[open][data-closing] {
+  animation: dialog-out var(--dur-fast) var(--ease-out) forwards;
+}
+dialog[open][data-closing]::backdrop {
+  animation: fade-out var(--dur-fast) var(--ease-out) forwards;
+}
+dialog[data-closing] .stagger > * {
+  animation: reveal-out var(--dur-fast) var(--ease-out) forwards;
+}
 @keyframes dialog-in {
   from { opacity: 0; transform: translateY(8px) scale(0.98); }
 }
+@keyframes dialog-out {
+  to { opacity: 0; transform: translateY(8px) scale(0.98); }
+}
 @keyframes fade-in {
   from { opacity: 0; }
+}
+@keyframes fade-out {
+  to { opacity: 0; }
+}
+@keyframes reveal-out {
+  to { opacity: 0; transform: translateY(var(--motion-distance)); }
 }
 @keyframes ping {
   0% { transform: scale(1); opacity: 0.6; }

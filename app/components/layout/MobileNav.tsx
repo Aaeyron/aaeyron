@@ -9,7 +9,25 @@ import { ContactButtonsCompact } from "../ui/ContactButtons";
 
 export default function MobileNav({ pathname }: { pathname: string }) {
   const dialogRef = useRef<HTMLDialogElement>(null);
-  const close = () => dialogRef.current?.close();
+
+  // Play the exit animation (globals.css: dialog[data-closing]) before actually closing.
+  // The timeout is a fallback in case animationend never fires.
+  const close = () => {
+    const dialog = dialogRef.current;
+    if (!dialog?.open || dialog.hasAttribute("data-closing")) return;
+    const finish = () => {
+      clearTimeout(fallback);
+      dialog.removeEventListener("animationend", onEnd);
+      dialog.removeAttribute("data-closing");
+      dialog.close();
+    };
+    const onEnd = (e: AnimationEvent) => {
+      if (e.target === dialog) finish();
+    };
+    dialog.addEventListener("animationend", onEnd);
+    const fallback = setTimeout(finish, 500);
+    dialog.setAttribute("data-closing", "");
+  };
 
   return (
     <>
@@ -27,6 +45,11 @@ export default function MobileNav({ pathname }: { pathname: string }) {
         ref={dialogRef}
         aria-label="Menu"
         data-lenis-prevent
+        onCancel={(e) => {
+          // Escape: animate out instead of closing instantly.
+          e.preventDefault();
+          close();
+        }}
         onClick={(e) => {
           if (e.target === dialogRef.current) close();
         }}
