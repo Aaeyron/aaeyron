@@ -3,6 +3,7 @@
 import { useEffect, useId, useRef, useState, type FormEvent, type ReactNode } from "react";
 import { Check, Send } from "lucide-react";
 import { profile } from "@/lib/content";
+import { buttonClass } from "../ui/ButtonLink";
 import { CornerMarks, Label, Panel } from "../ui/primitives";
 
 const MESSAGE_MIN = 10;
@@ -77,8 +78,12 @@ function FieldError({ id, message }: { id: string; message?: string }) {
   );
 }
 
-const primaryBtn =
-  "inline-flex min-h-11 items-center justify-center gap-2 border border-accent bg-accent px-5 text-[0.9375rem] font-medium whitespace-nowrap text-on-accent transition-[background-color,transform] duration-200 ease-out hover:bg-[color-mix(in_srgb,var(--accent)_82%,black)] active:translate-y-px aria-disabled:opacity-50 aria-disabled:hover:bg-accent aria-disabled:active:translate-y-0";
+// Same black/white "ink" button as the home hero's "See my work"; while sending/cooling down
+// (aria-disabled) it stays dimmed and doesn't invert on hover.
+const sendBtn = buttonClass(
+  "ink",
+  "shrink-0 rounded-none! aria-disabled:opacity-50 aria-disabled:hover:bg-ink aria-disabled:hover:text-bg aria-disabled:active:translate-y-0",
+);
 
 /** "Send Me a Message" form for the Contact page. Sends through Web3Forms. */
 export default function ContactForm() {
@@ -266,7 +271,8 @@ export default function ContactForm() {
           {/* Send button, with the "sent" note beside it (stacked under 640px). aria-disabled
               (not disabled) during sending/cooldown, so keyboard focus stays on the button. */}
           <div className="mt-5 flex flex-col items-start gap-4 sm:flex-row sm:items-center">
-            <button type="submit" aria-disabled={busy} className={`${primaryBtn} shrink-0`}>
+            <button type="submit" aria-disabled={busy} className={sendBtn}>
+              <CornerMarks inset="-4px" />
               {status === "sending" ? (
                 "Sending..."
               ) : cooldown > 0 ? (

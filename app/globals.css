@@ -464,6 +464,23 @@ html:has(dialog[open]) {
     min-height: 9rem;
     resize: vertical;
   }
+
+  /* Black/white "ink" button detail (ButtonLink variant="ink", contact Send button):
+     a faint dot grid on the right edge, fading out to the left. Dots use currentColor,
+     so they invert with the text on hover and follow the theme. */
+  .btn-dots::after {
+    content: "";
+    position: absolute;
+    inset-block: 5px;
+    right: 5px;
+    width: 22px;
+    background-image: radial-gradient(circle, currentColor 0.75px, transparent 1.25px);
+    background-size: 5px 5px;
+    opacity: 0.35;
+    pointer-events: none;
+    -webkit-mask-image: linear-gradient(to left, #000, transparent);
+    mask-image: linear-gradient(to left, #000, transparent);
+  }
 }
 
 /* Unlayered so it beats the global :focus-visible radius: the form and .sharp elements stay sharp. */
@@ -479,6 +496,10 @@ html:has(dialog[open]) {
 }
 .contact-form [tabindex="-1"]:focus-visible {
   outline: none;
+}
+/* Ink buttons stay black/white on keyboard focus too. */
+.btn-dots:focus-visible {
+  outline-color: var(--ink);
 }
 
 /* ============================ Motion ============================

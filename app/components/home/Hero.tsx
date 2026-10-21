@@ -14,7 +14,7 @@ const markBR: CSSProperties = { bottom: -4, right: -4, borderBottomWidth: 1, bor
  * From 768px: a text column (name → bio → capabilities → buttons) beside the photo. The About
  * label sits in its own row, so the photo's top lines up with the name. The text column and the
  * photo end at about the same height, so nothing is left floating and the buttons stay in view.
- * Under 768px: About → name → bio → photo → capabilities → buttons.
+ * Under 768px: one left-aligned column (photo centered): About → name → bio → photo → capabilities → buttons.
  *
  * The photo is sized exactly like the "05 Focus" photo (grid-12 col-span-4, 4:5), measured from
  * this section's content width via @container / cqw. On phones it's capped at 300px so the
@@ -24,7 +24,6 @@ export default function Hero() {
   return (
     <section aria-labelledby="hero-title" className="@container container-x pb-20 pt-12 sm:pb-28 sm:pt-20 lg:pt-24">
       <div className="grid gap-y-8 md:grid-cols-[minmax(0,1fr)_calc(50cqw-12px)] md:grid-rows-[auto_auto_auto_auto_1fr] md:gap-x-10 lg:grid-cols-[minmax(0,1fr)_calc(100cqw/3-16px)] lg:gap-x-16">
-        {/* Left-aligned at every size (the rest of the hero is centered on mobile). */}
         <div className="md:col-start-1 md:row-start-1">
           <div className="enter" style={enterStyle(0)}>
             {/* "About" + a short tagline, split by a thin divider (same as the index divider in <Label>). */}
@@ -39,7 +38,7 @@ export default function Hero() {
         </div>
 
         {/* Top padding lowers name + bio toward the photo's vertical middle (photo itself stays put). */}
-        <div className="pt-6 text-center md:col-start-1 md:row-start-2 md:pt-9 md:text-left lg:pt-14">
+        <div className="pt-6 md:col-start-1 md:row-start-2 md:pt-9 lg:pt-14">
           {/* One word group per line so the name always breaks the same way. */}
           <h1
             id="hero-title"
@@ -52,10 +51,10 @@ export default function Hero() {
           {/* Thin rule with an accent tip that draws in under the name (same motif as section labels). */}
           <span
             aria-hidden
-            className="enter draw-x mx-auto mt-6 block h-px w-full max-w-64 bg-[linear-gradient(to_right,var(--accent)_0,var(--accent)_28px,var(--line-strong)_28px)] md:mx-0"
+            className="enter draw-x mt-6 block h-px w-full max-w-64 bg-[linear-gradient(to_right,var(--accent)_0,var(--accent)_28px,var(--line-strong)_28px)]"
             style={enterStyle(1)}
           />
-          <p className="enter measure mx-auto mt-6 text-lg text-muted md:mx-0" style={enterStyle(2)}>
+          <p className="enter measure mt-6 text-lg text-muted" style={enterStyle(2)}>
             Aspiring Software &amp; AI/ML Engineer based in Davao City, Philippines, building web, mobile, and AI-powered
             projects. Open to opportunities and collaborations.
           </p>
@@ -89,7 +88,7 @@ export default function Hero() {
             on desktop (same width as the bio), stacked below that. Each box: crop marks on two
             corners, accent tick on the left border. */}
         <div
-          className="enter measure mx-auto mt-4 w-full md:col-start-1 md:row-start-3 md:mx-0 md:mt-2"
+          className="enter measure mt-4 w-full md:col-start-1 md:row-start-3 md:mt-2"
           style={enterStyle(4)}
         >
           <div className="mb-4 flex items-center gap-3">
@@ -112,10 +111,11 @@ export default function Hero() {
         {/* Directly under the capabilities, set off by a hairline divider the same width as the
             bio and boxes. Stacked full-width on small phones. */}
         <div
-          className="enter measure mx-auto flex w-full flex-col justify-center gap-3 border-t border-line pt-6 min-[400px]:flex-row md:col-start-1 md:row-start-4 md:mx-0 md:justify-start"
+          className="enter measure flex w-full flex-col gap-3 border-t border-line pt-6 min-[400px]:flex-row md:col-start-1 md:row-start-4"
           style={enterStyle(5)}
         >
-          <ButtonLink href="#work" className="sharp w-full rounded-none! min-[400px]:w-auto">
+          <ButtonLink href="#work" variant="ink" className="sharp w-full rounded-none! min-[400px]:w-auto">
+            <CornerMarks inset="-4px" />
             See my work <ArrowDown size={17} aria-hidden className="transition-transform duration-200 group-hover:translate-y-0.5" />
           </ButtonLink>
           <ButtonLink

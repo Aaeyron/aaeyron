@@ -1,7 +1,7 @@
 import Link from "next/link";
 import type { ComponentProps, ReactNode } from "react";
 
-type Variant = "primary" | "secondary" | "ghost";
+type Variant = "primary" | "secondary" | "ghost" | "ink";
 
 const base =
   "group inline-flex min-h-11 cursor-pointer items-center disabled:cursor-not-allowed disabled:opacity-50 justify-center gap-2 rounded-md px-5 text-[0.9375rem] font-medium whitespace-nowrap transition-[background-color,border-color,color,transform] duration-200 ease-out active:translate-y-px";
@@ -10,6 +10,9 @@ const variants: Record<Variant, string> = {
   primary: "bg-accent text-on-accent hover:bg-[color-mix(in_srgb,var(--accent)_82%,black)]",
   secondary: "border border-line-strong bg-transparent text-ink hover:border-accent hover:text-accent-text",
   ghost: "px-3 text-ink hover:text-accent-text",
+  // Black/white only: ink fill that inverts on hover, plus a faint dot strip on the right
+  // (.btn-dots in globals.css; extra right padding keeps it clear of the label/icon).
+  ink: "btn-dots relative border border-ink bg-ink pr-9 text-bg hover:bg-bg hover:text-ink",
 };
 
 export const buttonClass = (variant: Variant = "primary", extra = "") =>
