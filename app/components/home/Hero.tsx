@@ -1,9 +1,9 @@
-import Image from "next/image";
 import type { CSSProperties } from "react";
 import { ArrowDown, FileText } from "lucide-react";
 import { capabilities, profile, resumeAriaLabel, resumeUrl } from "@/lib/content";
 import heroPhoto from "@/public/images/profile home.png";
 import ButtonLink from "../ui/ButtonLink";
+import PhotoFrame from "../ui/PhotoFrame";
 import { CornerMarks, enterStyle, Label } from "../ui/primitives";
 
 // Two of the four crop marks (top-left, bottom-right) for each capability box.
@@ -60,28 +60,20 @@ export default function Hero() {
           </p>
         </div>
 
-        {/* Photo: field-style border and corner marks, an offset outline frame behind it with an
-            accent square on its far corner, and a small tab on the bottom border. Spans the text
-            rows on desktop; the trailing 1fr row absorbs any extra height. */}
+        {/* Photo in the shared PhotoFrame (same frame as the 05 Focus and Experience photos).
+            Spans the text rows on desktop; the trailing 1fr row absorbs any extra height. */}
         <div
           className="enter mx-auto mt-2 w-[min(100cqw,300px)] md:col-start-2 md:row-span-4 md:row-start-2 md:mx-0 md:mt-0 md:w-full md:self-start"
           style={enterStyle(3)}
         >
-          <div className="field-frame">
-            <span aria-hidden className="absolute inset-0 translate-x-3 translate-y-3 border border-line-strong">
-              <span className="absolute -bottom-[3px] -right-[3px] size-1.5 bg-accent" />
-            </span>
-            <Image
-              src={heroPhoto}
-              alt={`Photo of ${profile.name} working on a laptop`}
-              priority
-              sizes="(min-width: 1024px) 33vw, (min-width: 768px) 50vw, 300px"
-              placeholder="blur"
-              className="relative block aspect-[4/5] w-full border border-[var(--field-line)] object-cover object-[50%_40%]"
-            />
-            <CornerMarks inset="-4px" />
-            <span className="chip absolute -bottom-2.5 left-3 z-10 py-0 text-[0.65rem]">Aaeyron</span>
-          </div>
+          <PhotoFrame
+            src={heroPhoto}
+            alt={`Photo of ${profile.name} working on a laptop`}
+            priority
+            sizes="(min-width: 1024px) 33vw, (min-width: 768px) 50vw, 300px"
+            position="object-[50%_40%]"
+            label="Aaeyron"
+          />
         </div>
 
         {/* Capabilities: a small caption + hairline rule, then the boxes side by side under the bio

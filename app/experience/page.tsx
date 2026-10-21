@@ -17,6 +17,7 @@ import {
 import { hasInternshipStarted, internshipCopy } from "@/lib/internship";
 import CertificationRows from "../components/certificates/CertificationRows";
 import ProjectLinks from "../components/projects/ProjectLinks";
+import PhotoFrame from "../components/ui/PhotoFrame";
 import InternshipText, { InternshipBadge } from "../components/ui/InternshipText";
 import {
   CornerMarks,
@@ -81,22 +82,13 @@ export default function Experience() {
       <section id="about" aria-labelledby="about-title" className="pb-16 sm:pb-24">
         <div className="container-x grid-12 items-start gap-y-10">
           <div className="col-span-4 sm:col-span-4 lg:col-span-4" data-reveal>
-            <div className="relative">
-              <CornerMarks />
-              <div className="relative aspect-[4/5] overflow-hidden border border-line bg-surface">
-                <Image
-                  src={profile.photo}
-                  alt={profile.name}
-                  fill
-                  priority
-                  sizes="(min-width: 1024px) 33vw, (min-width: 640px) 50vw, 100vw"
-                  className="object-cover object-[50%_35%]"
-                />
-              </div>
-              <p aria-hidden className="mt-3 font-mono text-[0.7rem] text-muted">
-                <span>aaeyron</span>
-              </p>
-            </div>
+            <PhotoFrame
+              src={profile.photo}
+              alt={profile.name}
+              priority
+              sizes="(min-width: 1024px) 33vw, (min-width: 640px) 50vw, 100vw"
+              label="aaeyron"
+            />
           </div>
 
           <div className="col-span-4 sm:col-span-8 lg:col-span-7 lg:col-start-6" data-reveal>
