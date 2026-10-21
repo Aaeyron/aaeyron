@@ -65,10 +65,23 @@ export default function SiteFooter() {
 
       <div className="container-x flex flex-col gap-3 border-t border-line py-6 text-sm text-muted sm:flex-row sm:items-center sm:justify-between">
         <p>© {new Date().getFullYear()} {profile.name}</p>
-        <p className="flex items-center gap-2">
-          <span aria-hidden className="status-dot" />
-          {profile.status}
-        </p>
+        <nav aria-label="Legal">
+          <ul className="flex items-center gap-2">
+            <li>
+              <Link href="/privacy" className="inline-flex min-h-11 items-center transition-colors hover:text-ink sm:min-h-9">
+                Privacy Policy
+              </Link>
+            </li>
+            <li aria-hidden className="text-line-strong">
+              ·
+            </li>
+            <li>
+              <Link href="/terms" className="inline-flex min-h-11 items-center transition-colors hover:text-ink sm:min-h-9">
+                Terms &amp; Conditions
+              </Link>
+            </li>
+          </ul>
+        </nav>
       </div>
     </footer>
   );
