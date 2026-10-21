@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import Image from "next/image";
 import Link from "next/link";
-import { ArrowRight, ArrowUpRight, Layers, Sparkles, type LucideIcon } from "lucide-react";
+import { ArrowRight, ArrowUpRight, CalendarDays, Layers, Sparkles, type LucideIcon } from "lucide-react";
 import {
   aboutMe,
   certifications,
@@ -53,16 +53,6 @@ const profileIcons: Record<(typeof profileCapabilities)[number]["id"], LucideIco
 const cardLinkCls = "group/link inline-flex min-h-11 items-center gap-1.5 font-medium text-ink";
 const arrowRight = "transition-transform duration-200 group-hover/link:translate-x-0.5";
 const arrowUpRight = "transition-transform duration-200 group-hover/link:-translate-y-0.5 group-hover/link:translate-x-0.5";
-
-/** Small key/value metadata row in mono. */
-function Meta({ k, children }: { k: string; children: React.ReactNode }) {
-  return (
-    <div className="flex flex-wrap items-baseline gap-x-3 gap-y-1">
-      <dt className="w-20 shrink-0 font-mono text-[0.7rem] uppercase tracking-wider text-muted">{k}</dt>
-      <dd className="text-sm">{children}</dd>
-    </div>
-  );
-}
 
 export default function Experience() {
   const started = hasInternshipStarted();
@@ -244,36 +234,68 @@ export default function Experience() {
         <div className="container-x">
           <SectionHeader rule id="internship-title" index="03" label="Internship" title={<><InternshipText field="headingLead" serverStarted={started} /> <Highlight>working</Highlight>.</>} />
 
+          {/* Internship card, in the same language as the Tech events / current-project cards: index
+              tab on the top border, corner marks, a faint diagonal texture fading in from the
+              top-right, an accent tick on the left border, and an ink rule that grows on hover
+              while the border darkens to ink. Fields sit in a divided grid. Black/white only. */}
           <ol className="grid gap-8">
             {experience.map((job, i) => (
               <li key={job.company} data-reveal>
-                <Panel index={pad(i + 1)} className="p-5 sm:p-8">
-                  <div className="flex gap-5 sm:gap-8">
-                    {/* Timeline: vertical line with an accent dot. */}
-                    <div aria-hidden className="relative w-3 shrink-0">
-                      <span className="absolute inset-y-0 left-1/2 w-px -translate-x-1/2 bg-line-strong" />
-                      <span className="absolute left-1/2 top-1.5 size-3 -translate-x-1/2 border-2 border-bg bg-accent outline outline-1 outline-accent" />
-                    </div>
+                <article className="group relative border border-line bg-bg p-6 transition-colors duration-200 hover:border-ink sm:p-8">
+                  <CornerMarks />
+                  <span
+                    aria-hidden
+                    className="chip absolute -top-2.5 left-4 z-10 py-0 text-[0.65rem] transition-colors duration-200 group-hover:border-ink group-hover:text-ink"
+                  >
+                    {pad(i + 1)} / {pad(experience.length)}
+                  </span>
+                  <span
+                    aria-hidden
+                    className="pointer-events-none absolute inset-0 bg-[repeating-linear-gradient(135deg,var(--lines)_0_1px,transparent_1px_9px)] [mask-image:linear-gradient(225deg,#000,transparent_45%)]"
+                  />
+                  <span aria-hidden className="absolute -left-px top-6 h-5 w-0.5 bg-accent sm:top-8" />
 
-                    <div className="min-w-0 flex-1">
-                      <div className="flex flex-wrap items-center gap-2">
-                        <InternshipBadge serverStarted={started} />
-                      </div>
-                      <h3 className="mt-5 text-2xl font-semibold tracking-[-0.025em] sm:text-3xl">{job.role}</h3>
-                      <p className="mt-1 text-lg">
-                        <span className="font-semibold text-accent-text">{job.company}</span>
-                      </p>
-                      <dl className="mt-5 space-y-2.5 border-t border-line pt-4">
-                        <Meta k="Type">Internship</Meta>
-                        <Meta k="Start">
-                          <time dateTime="2026-10-01">October 1, 2026</time>
-                        </Meta>
-                        <Meta k="Company">{job.company}</Meta>
-                        <Meta k="About">{job.companyNote}</Meta>
-                      </dl>
-                    </div>
+                  {/* Header: caption + hairline rule, date badge on the right. */}
+                  <div className="relative flex flex-wrap items-center gap-x-3 gap-y-3">
+                    <span className="font-mono text-[0.7rem] uppercase tracking-[0.08em] text-muted">Position</span>
+                    <span aria-hidden className="hidden h-px min-w-8 flex-1 bg-line sm:block" />
+                    <InternshipBadge
+                      serverStarted={started}
+                      mono
+                      icon={<CalendarDays size={13} aria-hidden className="text-muted" />}
+                    />
                   </div>
-                </Panel>
+
+                  <h3 className="relative mt-6 text-2xl font-semibold leading-tight tracking-[-0.025em] sm:text-3xl">
+                    {job.role}
+                  </h3>
+                  <p className="relative mt-1 text-lg font-semibold text-ink">{job.company}</p>
+                  <span
+                    aria-hidden
+                    className="draw-x relative mt-5 block h-px w-8 bg-ink transition-[width] duration-300 group-hover:w-16"
+                  />
+
+                  {/* Fields: Type / Start / Company in three divided cells, About full width below. */}
+                  <dl className="relative mt-6 grid border border-line sm:grid-cols-3">
+                    {[
+                      { k: "Type", v: job.type },
+                      { k: "Start", v: <time dateTime={job.start.iso}>{job.start.label}</time> },
+                      { k: "Company", v: job.company },
+                    ].map((f, n) => (
+                      <div
+                        key={f.k}
+                        className={`bg-bg p-4 ${n > 0 ? "border-t border-line sm:border-l sm:border-t-0" : ""}`}
+                      >
+                        <dt className="font-mono text-[0.7rem] uppercase tracking-[0.08em] text-muted">{f.k}</dt>
+                        <dd className="mt-1.5 text-sm font-medium text-ink">{f.v}</dd>
+                      </div>
+                    ))}
+                    <div className="border-t border-line bg-bg p-4 sm:col-span-3">
+                      <dt className="font-mono text-[0.7rem] uppercase tracking-[0.08em] text-muted">About</dt>
+                      <dd className="mt-1.5 text-sm text-ink">{job.companyNote}</dd>
+                    </div>
+                  </dl>
+                </article>
               </li>
             ))}
           </ol>

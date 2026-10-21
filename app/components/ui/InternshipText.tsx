@@ -20,13 +20,32 @@ export default function InternshipText({ field, serverStarted }: { field: keyof 
   return <>{internshipCopy(started)[field]}</>;
 }
 
-/** Status badge: "Starting Oct 1, 2026" before the start date, "Oct 2026 · Present" with the pulsing dot after. */
-export function InternshipBadge({ serverStarted }: { serverStarted: boolean }) {
+/**
+ * Status badge: "Starting Oct 1, 2026" before the start date, "Oct 2026 · Present" with the pulsing dot after.
+ * `mono` is the black/white version (ink text and square marker, no accent) with an optional leading icon.
+ */
+export function InternshipBadge({
+  serverStarted,
+  mono = false,
+  icon,
+}: {
+  serverStarted: boolean;
+  mono?: boolean;
+  icon?: React.ReactNode;
+}) {
   const started = useInternshipStarted(serverStarted);
+  const marker = mono ? (
+    <span aria-hidden className={`size-1.5 border border-ink ${started ? "bg-ink" : ""}`} />
+  ) : started ? (
+    <span aria-hidden className="status-dot" />
+  ) : (
+    <span aria-hidden className="size-1.5 border border-accent" />
+  );
   return (
-    <span className={`chip ${started ? "chip-accent" : ""}`}>
+    <span className={`chip ${mono ? "text-ink" : started ? "chip-accent" : ""}`}>
       <span className="inline-flex items-center gap-2">
-        {started ? <span aria-hidden className="status-dot" /> : <span aria-hidden className="size-1.5 border border-accent" />}
+        {icon}
+        {marker}
         {internshipCopy(started).badge}
       </span>
     </span>

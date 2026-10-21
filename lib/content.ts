@@ -358,6 +358,8 @@ export const experience = [
     role: "AI/ML Engineer Intern",
     company: "Apno AI",
     companyNote: "A Government of India registered MSME enterprise.",
+    type: "Internship",
+    start: { label: "October 1, 2026", iso: "2026-10-01" },
   },
 ];
 
