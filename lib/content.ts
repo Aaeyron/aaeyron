@@ -365,7 +365,9 @@ export const experience = [
 export const techEvents = [
   { title: "Build With AI: Davao", org: "GDG Davao" },
   { title: "AWS Community Day", org: "AWS User Group Davao" },
-  { title: "Cyber Hygiene Training", org: "Holy Cross of Davao College · IAES" },];
+  { title: "Cyber Hygiene Training", org: "Holy Cross of Davao College · IAES" },
+  { title: "DurianPy", org: "Davao Python User Group" },
+];
 
 export const navLinks = [
   { href: "/", label: "Home" },

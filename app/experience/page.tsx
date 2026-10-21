@@ -355,9 +355,9 @@ export default function Experience() {
 
       {/* 05 · Tech events */}
       <section id="events" aria-labelledby="events-title" className="section border-t border-line">
-        <div className="container-x grid-12 gap-y-10">
-          <div className="col-span-4 sm:col-span-8 lg:col-span-6" data-reveal>
-            <LabelRule index="05" className="mb-5">
+        <div className="container-x">
+          <div className="mb-10 sm:mb-14" data-reveal>
+            <LabelRule index="05" className="mb-5 max-w-md">
               Tech events
             </LabelRule>
             <h2 id="events-title" className="h2">
@@ -370,24 +370,38 @@ export default function Experience() {
             </p>
           </div>
 
-          <div className="col-span-4 self-end sm:col-span-8 lg:col-span-5 lg:col-start-8" data-reveal>
-            <Panel className="px-5 sm:px-6">
-              <ul>
-                {techEvents.map((e, i) => (
-                  <li key={e.title} className="flex items-start gap-4 border-t border-line py-4 first:border-t-0">
-                    <span aria-hidden className="pt-1 font-mono text-xs text-muted">
-                      {pad(i + 1)}
-                    </span>
-                    <span aria-hidden className="mt-2.5 size-1.5 shrink-0 bg-accent" />
-                    <span className="min-w-0">
-                      <span className="block font-medium">{e.title}</span>
-                      <span className="font-mono text-xs text-muted">{e.org}</span>
-                    </span>
-                  </li>
-                ))}
-              </ul>
-            </Panel>
-          </div>
+          {/* 2×2 grid of equal event cards (stacked on phones), styled like the "Currently working
+              on" cards: index tab on the top border, corner marks, a faint diagonal texture fading
+              in from the top-right, an accent tick on the left border, and a short ink rule that
+              grows on hover while the border darkens to ink. */}
+          <ul className="grid gap-8 sm:grid-cols-2">
+            {techEvents.map((e, i) => (
+              <li key={e.title} className="flex" data-reveal>
+                <article className="group relative flex w-full flex-col border border-line bg-bg p-6 transition-colors duration-200 hover:border-ink">
+                  <CornerMarks />
+                  <span
+                    aria-hidden
+                    className="chip absolute -top-2.5 left-4 z-10 py-0 text-[0.65rem] transition-colors duration-200 group-hover:border-ink group-hover:text-ink"
+                  >
+                    {pad(i + 1)} / {pad(techEvents.length)}
+                  </span>
+                  <span
+                    aria-hidden
+                    className="pointer-events-none absolute inset-0 bg-[repeating-linear-gradient(135deg,var(--lines)_0_1px,transparent_1px_9px)] [mask-image:linear-gradient(225deg,#000,transparent_55%)]"
+                  />
+                  <span aria-hidden className="absolute -left-px top-6 h-5 w-0.5 bg-accent" />
+
+                  <span className="relative font-mono text-[0.7rem] uppercase tracking-[0.08em] text-muted">Event</span>
+                  <span
+                    aria-hidden
+                    className="draw-x relative mt-4 block h-px w-8 bg-ink transition-[width] duration-300 group-hover:w-16"
+                  />
+                  <h3 className="relative mt-4 text-xl font-semibold leading-snug tracking-[-0.02em] text-ink">{e.title}</h3>
+                  <p className="relative mt-auto pt-3 font-mono text-xs text-muted">{e.org}</p>
+                </article>
+              </li>
+            ))}
+          </ul>
         </div>
       </section>
 
