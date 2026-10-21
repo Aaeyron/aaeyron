@@ -80,7 +80,7 @@ export default function Hero() {
               className="relative block aspect-[4/5] w-full border border-[var(--field-line)] object-cover object-[50%_40%]"
             />
             <CornerMarks inset="-4px" />
-            <span className="chip absolute -bottom-2.5 left-3 z-10 py-0 text-[0.65rem]">4th-year IT student</span>
+            <span className="chip absolute -bottom-2.5 left-3 z-10 py-0 text-[0.65rem]">Aaeyron</span>
           </div>
         </div>
 

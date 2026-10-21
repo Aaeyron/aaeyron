@@ -21,7 +21,7 @@ export default function AboutTeaser() {
               />
             </div>
             <p aria-hidden className="mt-3 font-mono text-[0.7rem] text-muted">
-              <span>fig. 01</span>
+              <span>aaeyron</span>
             </p>
           </div>
         </div>

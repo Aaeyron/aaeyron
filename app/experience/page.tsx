@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import Image from "next/image";
 import Link from "next/link";
-import { ArrowRight, ArrowUpRight } from "lucide-react";
+import { ArrowRight, ArrowUpRight, Layers, Sparkles, type LucideIcon } from "lucide-react";
 import {
   aboutMe,
   certifications,
@@ -9,6 +9,7 @@ import {
   earlySolo,
   experience,
   profile,
+  profileCapabilities,
   projects,
   selectedProjects,
   techEvents,
@@ -42,8 +43,14 @@ export function generateMetadata(): Metadata {
 
 const pad = (n: number) => String(n).padStart(2, "0");
 
-const linkCls =
-  "group/link inline-flex min-h-11 items-center gap-1.5 font-medium transition-colors duration-200 hover:text-accent-text";
+/** Icon per Profile capability area: a stack for architecture, sparks for generative AI. */
+const profileIcons: Record<(typeof profileCapabilities)[number]["id"], LucideIcon> = {
+  architecture: Layers,
+  genai: Sparkles,
+};
+
+/** Black/white link for the "Currently working on" cards: only the arrow moves on hover. */
+const cardLinkCls = "group/link inline-flex min-h-11 items-center gap-1.5 font-medium text-ink";
 const arrowRight = "transition-transform duration-200 group-hover/link:translate-x-0.5";
 const arrowUpRight = "transition-transform duration-200 group-hover/link:-translate-y-0.5 group-hover/link:translate-x-0.5";
 
@@ -59,8 +66,8 @@ function Meta({ k, children }: { k: string; children: React.ReactNode }) {
 
 export default function Experience() {
   const started = hasInternshipStarted();
-  const featured = selectedProjects.find((p) => p.slug === currentWork.featured.slug);
-  const also = currentWork.also
+  // Capstone first, then the other current projects.
+  const current = [currentWork.featured.slug, ...currentWork.also]
     .map((slug) => selectedProjects.find((p) => p.slug === slug))
     .filter((p) => p !== undefined);
 
@@ -97,7 +104,7 @@ export default function Experience() {
                 />
               </div>
               <p aria-hidden className="mt-3 font-mono text-[0.7rem] text-muted">
-                <span>fig. 01</span>
+                <span>aaeyron</span>
               </p>
             </div>
           </div>
@@ -117,17 +124,54 @@ export default function Experience() {
               ))}
             </div>
 
-            <Panel className="mt-8 max-w-md p-5">
-              <dl className="space-y-2.5">
-                <Meta k="Role">{profile.role}</Meta>                <Meta k="Based in">{profile.location}</Meta>
-                <Meta k="Status">
-                  <span className="inline-flex items-center gap-2">
-                    <span aria-hidden className="status-dot" />
-                    {profile.status}
+            {/* Profile: two capability areas side by side (stacked on phones), split by a hairline.
+                Details: corner marks, a faint diagonal hairline texture fading in from the top-right,
+                an accent tick on the left border, a "Profile" caption with a hairline rule, and an
+                icon box per area that inverts to ink on hover. */}
+            <div className="relative mt-8">
+              <CornerMarks />
+              <div className="relative overflow-hidden border border-line bg-bg p-6">
+                <span
+                  aria-hidden
+                  className="pointer-events-none absolute inset-0 bg-[repeating-linear-gradient(135deg,var(--lines)_0_1px,transparent_1px_9px)] [mask-image:linear-gradient(225deg,#000,transparent_60%)]"
+                />
+                <span aria-hidden className="absolute -left-px top-6 h-5 w-0.5 bg-accent" />
+                <div className="relative mb-6 flex items-center gap-3">
+                  <span className="font-mono text-[0.7rem] uppercase tracking-[0.08em] text-muted">Profile</span>
+                  <span aria-hidden className="h-px flex-1 bg-line" />
+                  <span aria-hidden className="font-mono text-[0.7rem] text-muted">
+                    {pad(profileCapabilities.length)}
                   </span>
-                </Meta>
-              </dl>
-            </Panel>
+                </div>
+                <ul className="relative grid sm:grid-cols-2">
+                  {profileCapabilities.map((c, i) => {
+                    const Icon = profileIcons[c.id];
+                    return (
+                      <li
+                        key={c.id}
+                        className={`group/cap ${
+                          i === 0 ? "pb-6 sm:pb-0 sm:pr-6" : "border-t border-line-strong pt-6 sm:border-l sm:border-t-0 sm:pl-6 sm:pt-0"
+                        }`}
+                      >
+                        <div className="flex items-center gap-3">
+                          <span
+                            aria-hidden
+                            className="field-label grid size-9 shrink-0 place-items-center border bg-bg text-ink transition-colors duration-200 group-hover/cap:bg-ink group-hover/cap:text-bg"
+                          >
+                            <Icon size={17} aria-hidden />
+                          </span>
+                          <span aria-hidden className="font-mono text-[0.7rem] text-muted">
+                            {pad(i + 1)}
+                          </span>
+                        </div>
+                        <h3 className="mt-4 text-lg font-semibold leading-snug tracking-[-0.015em] text-ink">{c.title}</h3>
+                        <p className="mt-2 text-[0.9375rem] leading-relaxed text-muted">{c.detail}</p>
+                      </li>
+                    );
+                  })}
+                </ul>
+              </div>
+            </div>
           </div>
         </div>
       </section>
@@ -137,74 +181,58 @@ export default function Experience() {
         <div className="container-x">
           <SectionHeader rule id="current-title" index="02" label="Currently working on" title={<>What I’m <Highlight>building</Highlight> now.</>} />
 
-          {featured && (
-            <div data-reveal>
-              <Panel index="01" hover className="p-6 sm:p-8">
-                <div className="flex flex-wrap items-center gap-1.5">
-                  {featured.badges.map((b) => (
-                    <Tag key={b} accent>
-                      {b}
-                    </Tag>
-                  ))}
-                  <Label plain wrap>
-                    {featured.category}
-                  </Label>
-                </div>
-                <span aria-hidden className="draw-x mt-6 block h-px w-8 bg-accent" />
-                <h3 className="mt-5 text-3xl font-semibold tracking-[-0.03em] sm:text-4xl">{featured.title}</h3>
-                <p className="measure mt-4 text-lg">
-                  {currentWork.featured.lead}{" "}
-                  <span className="text-muted">
-                    <Emphasis
-                      text={currentWork.featured.description}
-                      phrase="digital text, UEB, and Nemeth Braille"
-                    />
-                  </span>
-                </p>
-                <div className="mt-6 flex flex-wrap gap-x-6 border-t border-line pt-3">
-                  {featured.repo && (
-                    <a href={featured.repo} target="_blank" rel="noopener noreferrer" className={linkCls}>
-                      View on GitHub <span className="sr-only">: {featured.title}</span>
-                      <ArrowUpRight size={16} aria-hidden className={arrowUpRight} />
-                    </a>
-                  )}
-                  <Link href={`/projects#${featured.slug}`} className={linkCls}>
-                    See it on Projects
-                    <ArrowRight size={16} aria-hidden className={arrowRight} />
-                  </Link>
-                </div>
-              </Panel>
-            </div>
-          )}
-
-          <ul className="mt-10 grid gap-8 sm:grid-cols-2">
-            {also.map((p, i) => (
+          {/* All three projects in one row on desktop (capstone first), stacked below 1024px.
+              Black/white cards: index tab on the top border, corner marks, a dot-grid accent in the
+              top-right, and a short ink rule that grows on hover while the border darkens to ink. */}
+          <ul className="grid gap-8 lg:grid-cols-3">
+            {current.map((p, i) => (
               <li key={p.slug} className="flex" data-reveal>
-                <Panel index={pad(i + 2)} hover className="flex w-full">
-                  <Link href={`/projects#${p.slug}`} className="flex w-full flex-col p-5 sm:p-6">
-                    <span className="flex flex-wrap gap-1.5">
-                      {p.badges.map((b) => (
-                        <Tag key={b} accent>
-                          {b}
-                        </Tag>
-                      ))}
-                    </span>
-                    <span className="mt-4 text-xl font-semibold tracking-[-0.02em] transition-colors duration-200 group-hover:text-accent-text">
-                      {p.title}
-                    </span>
-                    <span className="mt-2 block text-sm text-muted">{p.category}</span>
-                    <span className="mt-auto block pt-5">
-                      <span className="flex items-center justify-between gap-4 border-t border-line pt-3 text-sm font-medium">
-                        View on Projects
-                        <ArrowRight
-                          size={15}
-                          aria-hidden
-                          className="transition-transform duration-200 group-hover:translate-x-1"
-                        />
-                      </span>
-                    </span>
-                  </Link>
-                </Panel>
+                <article className="group relative flex w-full flex-col border border-line bg-bg p-6 transition-colors duration-200 hover:border-ink focus-within:border-ink">
+                  <CornerMarks />
+                  <span
+                    aria-hidden
+                    className="chip absolute -top-2.5 left-4 z-10 py-0 text-[0.65rem] transition-colors duration-200 group-hover:border-ink group-hover:text-ink"
+                  >
+                    {pad(i + 1)} / {pad(current.length)}
+                  </span>
+                  <span
+                    aria-hidden
+                    className="pointer-events-none absolute right-4 top-4 size-12 bg-[radial-gradient(circle,currentColor_0.75px,transparent_1.25px)] bg-[length:6px_6px] text-line-strong [mask-image:linear-gradient(225deg,#000,transparent_75%)]"
+                  />
+
+                  <div className="flex flex-wrap gap-1.5 pr-14">
+                    {p.badges.map((b) => (
+                      <Label key={b}>{b}</Label>
+                    ))}
+                  </div>
+                  <span
+                    aria-hidden
+                    className="draw-x mt-6 block h-px w-8 bg-ink transition-[width] duration-300 group-hover:w-16"
+                  />
+                  <h3 className="mt-5 text-2xl font-semibold leading-tight tracking-[-0.02em]">{p.title}</h3>
+                  <p className="mt-2 text-sm text-muted">{p.category}</p>
+                  <p className="mt-4 text-[0.9375rem] leading-relaxed text-ink">{p.description}</p>
+
+                  <div className="mt-auto pt-6">
+                    <div className="flex flex-wrap gap-x-6 border-t border-line pt-3">
+                      {p.repo ? (
+                        <a href={p.repo} target="_blank" rel="noopener noreferrer" className={cardLinkCls}>
+                          View on GitHub <span className="sr-only">: {p.title}</span>
+                          <ArrowUpRight size={16} aria-hidden className={arrowUpRight} />
+                        </a>
+                      ) : (
+                        // Same wording as the Projects page; also keeps every card's footer the same height.
+                        <span className="inline-flex min-h-11 items-center">
+                          <Label>Repository coming soon</Label>
+                        </span>
+                      )}
+                      <Link href={`/projects#${p.slug}`} className={cardLinkCls}>
+                        See it on Projects <span className="sr-only">: {p.title}</span>
+                        <ArrowRight size={16} aria-hidden className={arrowRight} />
+                      </Link>
+                    </div>
+                  </div>
+                </article>
               </li>
             ))}
           </ul>

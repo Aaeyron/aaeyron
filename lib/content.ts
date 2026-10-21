@@ -39,6 +39,20 @@ export const homeFocus = {
   text: "I’m building my skills as a software and AI/ML engineer through real projects, from full-stack web apps to an AI-assisted accessibility app for my capstone. I focus on making software that is simple, useful, and easy to use.",
 };
 
+/** /experience "Profile" box: two capability areas side by side (icons are picked in the page by id). */
+export const profileCapabilities = [
+  {
+    id: "architecture",
+    title: "Application Architecture",
+    detail: "Web and mobile development. Frontend to database. Building systems that scale.",
+  },
+  {
+    id: "genai",
+    title: "Generative AI Systems",
+    detail: "LLMs, computer vision, agentic workflows. Integrating intelligence into applications.",
+  },
+] as const;
+
 /** Home hero capability boxes (under the photo): what I work on. */
 export const capabilities = [
   { title: "AI & Agents", detail: "Building intelligent systems with LLMs and autonomous agents." },
