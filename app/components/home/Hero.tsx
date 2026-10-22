@@ -3,6 +3,7 @@ import { ArrowDown, FileText } from "lucide-react";
 import { capabilities, profile, resumeAriaLabel, resumeUrl } from "@/lib/content";
 import heroPhoto from "@/public/images/profile home.png";
 import ButtonLink from "../ui/ButtonLink";
+import Doodle from "../ui/Doodle";
 import PhotoFrame from "../ui/PhotoFrame";
 import { CornerMarks, enterStyle, Label } from "../ui/primitives";
 
@@ -73,25 +74,29 @@ export default function Hero() {
             sizes="(min-width: 1024px) 33vw, (min-width: 768px) 50vw, 300px"
             position="object-[50%_40%]"
             label="Aaeyron"
+            fig="Fig. 01"
           />
         </div>
 
         {/* Capabilities: a small caption + hairline rule, then the boxes side by side under the bio
-            on desktop (same width as the bio), stacked below that. Each box: crop marks on two
-            corners, accent tick on the left border. */}
+            on desktop (same width as the bio), stacked below that. Each box: card shadow + lift,
+            crop marks on two corners (accent on hover), accent tick on the left border, and an
+            accent line drawing along the top on hover. A small hand-drawn arrow points at them. */}
         <div
           className="enter measure mt-4 w-full md:col-start-1 md:row-start-3 md:mt-2"
           style={enterStyle(4)}
         >
           <div className="mb-4 flex items-center gap-3">
             <span className="font-mono text-[0.7rem] uppercase tracking-[0.08em] text-muted">Capabilities</span>
+            <Doodle variant="arrow" className="-mb-3 h-4 w-6 shrink-0 text-muted" />
             <span aria-hidden className="h-px flex-1 bg-line" />
           </div>
           <ul className="grid gap-3 text-left lg:grid-cols-2">
             {capabilities.map((c) => (
-              <li key={c.title} className="field-frame border border-[var(--field-line)] bg-bg p-3">
-                <span aria-hidden className="corner" style={markTL} />
-                <span aria-hidden className="corner" style={markBR} />
+              <li key={c.title} className="field-frame card card-lift group relative border border-[var(--field-line)] bg-bg p-3">
+                <span aria-hidden className="corner corner-hover" style={markTL} />
+                <span aria-hidden className="corner corner-hover" style={markBR} />
+                <span aria-hidden className="edge-draw" />
                 <span aria-hidden className="absolute -left-px top-3 h-4 w-0.5 bg-accent" />
                 <p className="text-base font-semibold leading-snug tracking-[-0.01em] text-ink">{c.title}</p>
                 <p className="mt-0.5 text-[0.8125rem] leading-snug text-ink">{c.detail}</p>

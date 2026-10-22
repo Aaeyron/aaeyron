@@ -3,15 +3,16 @@ import { CornerMarks } from "./primitives";
 
 /**
  * Shared frame for profile photos (home hero, 05 Focus, Experience): an outer 1px frame with
- * 12px padding and a fine diagonal hairline texture showing in that ring, corner marks,
- * registration ticks at the middle of each edge, the photo in its own 1px border, and a
- * caption bar (label · hairline · ink marker). Black/white only.
+ * a hard card shadow and 12px padding, a fine diagonal hairline texture showing in that ring,
+ * corner marks, a "FIG." annotation on the top border, the photo in its own 1px border, and
+ * a caption bar (label · hairline · ink marker).
  */
 export default function PhotoFrame({
   src,
   alt,
   sizes,
   label,
+  fig,
   priority = false,
   aspect = "aspect-[4/5]",
   position = "object-[50%_35%]",
@@ -21,6 +22,8 @@ export default function PhotoFrame({
   alt: string;
   sizes: string;
   label: string;
+  /** Technical-drawing annotation on the top border, e.g. "FIG. 01". */
+  fig?: string;
   priority?: boolean;
   /** Tailwind aspect-ratio class for the photo. */
   aspect?: string;
@@ -31,16 +34,16 @@ export default function PhotoFrame({
   return (
     <figure className={`relative ${className}`}>
       <CornerMarks />
-      <div className="field-frame relative border border-line bg-bg p-3">
+      <div className="field-frame card relative border border-line bg-bg p-3">
         <span
           aria-hidden
           className="pointer-events-none absolute inset-0 bg-[repeating-linear-gradient(135deg,var(--lines)_0_1px,transparent_1px_6px)]"
         />
-        {/* Registration ticks at the middle of each edge, pointing inward. */}
-        <span aria-hidden className="absolute left-1/2 top-0 h-2 w-px -translate-x-1/2 bg-line-strong" />
-        <span aria-hidden className="absolute bottom-0 left-1/2 h-2 w-px -translate-x-1/2 bg-line-strong" />
-        <span aria-hidden className="absolute left-0 top-1/2 h-px w-2 -translate-y-1/2 bg-line-strong" />
-        <span aria-hidden className="absolute right-0 top-1/2 h-px w-2 -translate-y-1/2 bg-line-strong" />
+        {fig && (
+          <span aria-hidden className="annot right-4 top-0 -translate-y-1/2">
+            {fig}
+          </span>
+        )}
 
         <div className={`relative ${aspect} overflow-hidden border border-[var(--field-line)] bg-surface`}>
           <Image

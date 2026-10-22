@@ -15,10 +15,16 @@
      60  --bg                          white / black
      30  --ink --muted --line --surface  greys between black and white
      10  --accent family               electric blue, for life only:
-         primary buttons, status dot, highlights, hover, tags.
+         primary buttons, status dot, highlights, hover, tags, accent
+         ticks, corner marks on hover, the hover shadow tint.
    Contrast (AA): #3B6BF5 fill = 4.56:1 on white, 4.61:1 on black, and
    white text on it = 4.56:1. --accent-text is the same blue nudged per
    mode so small text passes on --surface as well (≥5:1).
+
+   Depth: containers sit on the page with a hard offset shadow
+   (--shadow-card, sharp, no blur) that grows and picks up the accent tint
+   on hover (--shadow-card-hover). Dark mode uses a faint light shadow,
+   since black shadows vanish on black.
    ------------------------------------------------------------------ */
 :root {
   --bg: #ffffff;
@@ -33,6 +39,11 @@
   --on-accent: #ffffff;
   /* Decorative only (background lines) — never used for text. */
   --lines: rgb(10 10 10 / 0.08);
+
+  --shadow-tone: rgb(10 10 10 / 0.1);
+  --shadow-tone-hover: color-mix(in srgb, var(--accent) 30%, transparent);
+  --shadow-card: 4px 4px 0 var(--shadow-tone);
+  --shadow-card-hover: 6px 6px 0 var(--shadow-tone-hover);
 
   --space-section: clamp(4rem, 10vw, 8rem);
   --gutter: 1rem;
@@ -56,6 +67,8 @@
   --line-strong: #474747;
   --accent-text: #6b92ff;
   --lines: rgb(255 255 255 / 0.08);
+  --shadow-tone: rgb(255 255 255 / 0.08);
+  --shadow-tone-hover: color-mix(in srgb, var(--accent) 35%, transparent);
   color-scheme: dark;
 }
 
@@ -70,6 +83,8 @@
     --line-strong: #474747;
     --accent-text: #6b92ff;
     --lines: rgb(255 255 255 / 0.08);
+    --shadow-tone: rgb(255 255 255 / 0.08);
+    --shadow-tone-hover: color-mix(in srgb, var(--accent) 35%, transparent);
     color-scheme: dark;
   }
 }
@@ -465,6 +480,124 @@ html:has(dialog[open]) {
     resize: vertical;
   }
 
+  /* --------------------- Container system ---------------------
+     Shared vocabulary for cards and panels. Keep it to ~3 details per
+     container and vary them (corners: brackets / notch / plus marks;
+     textures: lines / dots / crosshatch) so sections don't all match. */
+
+  /* Depth: hard offset shadow. Add .card-lift for the hover lift (cards
+     only; big panels and forms just get the shadow). Put these on an inner
+     element, not on a [data-reveal] wrapper (its reveal transform wins). */
+  .card {
+    box-shadow: var(--shadow-card);
+    transition:
+      box-shadow var(--dur-fast) var(--ease-out),
+      transform var(--dur-fast) var(--ease-out),
+      border-color var(--dur-fast) var(--ease-out);
+  }
+  .card-lift:hover,
+  .card-lift:focus-within {
+    transform: translate(-2px, -2px);
+    box-shadow: var(--shadow-card-hover);
+  }
+
+  /* Textures: an aria-hidden span with .tex + one pattern + one fade. */
+  .tex {
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+  }
+  .tex-lines {
+    background-image: repeating-linear-gradient(135deg, var(--lines) 0 1px, transparent 1px 9px);
+  }
+  .tex-dots {
+    background-image: radial-gradient(circle, var(--line-strong) 0.7px, transparent 1.2px);
+    background-size: 7px 7px;
+    opacity: 0.7;
+  }
+  .tex-cross {
+    background-image:
+      repeating-linear-gradient(45deg, var(--lines) 0 1px, transparent 1px 8px),
+      repeating-linear-gradient(135deg, var(--lines) 0 1px, transparent 1px 8px);
+  }
+  .fade-tr { -webkit-mask-image: linear-gradient(225deg, #000, transparent 50%); mask-image: linear-gradient(225deg, #000, transparent 50%); }
+  .fade-bl { -webkit-mask-image: linear-gradient(45deg, #000, transparent 50%); mask-image: linear-gradient(45deg, #000, transparent 50%); }
+  .fade-br { -webkit-mask-image: linear-gradient(315deg, #000, transparent 50%); mask-image: linear-gradient(315deg, #000, transparent 50%); }
+
+  /* Cut corner (top-left): covers the corner with the page colour and draws
+     the diagonal edge. Don't combine with corner brackets on that corner. */
+  .notch {
+    position: absolute;
+    top: -1px;
+    left: -1px;
+    width: 16px;
+    height: 16px;
+    z-index: 1;
+    pointer-events: none;
+    background: linear-gradient(
+      135deg,
+      var(--bg) calc(50% - 0.5px),
+      var(--line-strong) calc(50% - 0.5px) calc(50% + 0.5px),
+      transparent calc(50% + 0.5px)
+    );
+  }
+
+  /* Plus marks at the corners (see <PlusMarks>); accent on group hover. */
+  .plus {
+    position: absolute;
+    width: 9px;
+    height: 9px;
+    color: var(--line-strong);
+    pointer-events: none;
+    transition: color var(--dur-fast) var(--ease-out);
+  }
+  .plus::before,
+  .plus::after {
+    content: "";
+    position: absolute;
+    background: currentColor;
+  }
+  .plus::before { left: 4px; top: 0; width: 1px; height: 9px; }
+  .plus::after { top: 4px; left: 0; width: 9px; height: 1px; }
+  .group:hover .plus-hover,
+  .group:focus-within .plus-hover {
+    color: var(--accent);
+  }
+
+  /* Technical-drawing annotation sitting on a border ("FIG. 01", "REF 02"). */
+  .annot {
+    position: absolute;
+    z-index: 2;
+    padding: 0 6px;
+    background: var(--bg);
+    font-family: var(--font-mono);
+    font-size: 0.6rem;
+    line-height: 1;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--muted);
+    white-space: nowrap;
+    pointer-events: none;
+  }
+
+  /* Hover reveal: a thin accent line draws along the top edge of a .group. */
+  .edge-draw {
+    position: absolute;
+    top: -1px;
+    left: 0;
+    width: 100%;
+    height: 1px;
+    background: var(--accent);
+    transform: scaleX(0);
+    transform-origin: left center;
+    pointer-events: none;
+    transition: transform var(--dur-base) var(--ease-out);
+  }
+  .group:hover .edge-draw,
+  .group:focus-within .edge-draw {
+    transform: scaleX(1);
+  }
+
   /* Black/white "ink" button detail (ButtonLink variant="ink", contact Send button):
      a faint dot grid on the right edge, fading out to the left. Dots use currentColor,
      so they invert with the text on hover and follow the theme. */
@@ -645,6 +778,11 @@ html.reveal-ready:not(.reveal-js) [data-reveal] .draw-x {
   }
   .stagger > * {
     animation: none;
+  }
+  /* Cards keep their shadow (and the hover shadow) but don't move. */
+  .card-lift:hover,
+  .card-lift:focus-within {
+    transform: none;
   }
 }
 

@@ -1,12 +1,16 @@
 import { ArrowUpRight, MessageCircle } from "lucide-react";
 import { profile } from "@/lib/content";
+import Doodle from "../ui/Doodle";
 import { CornerMarks, Panel } from "../ui/primitives";
 
 /** "Chat with me directly": WhatsApp quick contact, styled like the form's fields. */
 export default function WhatsAppCard() {
   return (
     <div data-reveal className="min-w-0">
-      <Panel className="contact-form p-5 sm:p-7">
+      {/* Card shadow + lift, corner marks, and a small hand-drawn arrow by the heading
+          pointing down toward the WhatsApp link. */}
+      <Panel className="contact-form card card-lift p-5 sm:p-7">
+        <Doodle variant="arrow" className="absolute right-5 top-6 h-6 w-9 text-muted sm:right-7 sm:top-8" />
         <h2 className="h3">Chat with me directly</h2>
         <p className="mt-2 text-muted">Prefer a quick chat? Send me a message on WhatsApp.</p>
 

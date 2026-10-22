@@ -57,6 +57,23 @@ export function CornerMarks({ hover = false, inset = "-5px" }: { hover?: boolean
 }
 
 /**
+ * Small "+" marks at the four corners of the nearest `relative` parent (a corner
+ * treatment alternative to <CornerMarks>). `hover` turns them accent when a parent
+ * `.group` is hovered or focused. Decorative.
+ */
+export function PlusMarks({ hover = false, inset = "-5px" }: { hover?: boolean; inset?: string }) {
+  const cls = `plus ${hover ? "plus-hover" : ""}`;
+  return (
+    <span aria-hidden className="pointer-events-none absolute inset-0">
+      <span className={cls} style={{ top: inset, left: inset }} />
+      <span className={cls} style={{ top: inset, right: inset }} />
+      <span className={cls} style={{ bottom: inset, left: inset }} />
+      <span className={cls} style={{ bottom: inset, right: inset }} />
+    </span>
+  );
+}
+
+/**
  * Section label box followed by a thin rule that draws in (accent tip, grey line).
  * Decorative rule is aria-hidden.
  */
@@ -110,8 +127,10 @@ export function Panel({
 }) {
   return (
     <div
-      className={`relative border border-line bg-bg transition-colors duration-200 ${
-        hover ? "group hover:border-accent focus-within:border-accent" : ""
+      className={`relative border border-line bg-bg ${
+        // Only hover panels need the colour transition; leaving it off lets a `.card`
+        // class supply its own (shadow + lift) transition.
+        hover ? "group transition-colors duration-200 hover:border-accent focus-within:border-accent" : ""
       } ${className}`}
     >
       <CornerMarks hover={hover} />

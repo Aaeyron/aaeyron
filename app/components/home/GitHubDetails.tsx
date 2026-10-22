@@ -92,9 +92,10 @@ function TickRule({ className = "" }: { className?: string }) {
  */
 export default function GitHubDetails() {
   return (
-    <div className="relative mt-8" data-reveal>
-      <CornerMarks />
-      <div className="group/panel relative border border-line bg-bg p-6 transition-colors duration-300 hover:border-ink sm:p-8">
+    <div className="group relative mt-8" data-reveal>
+      <CornerMarks hover />
+      <div className="card relative border border-line bg-bg p-6 hover:border-ink sm:p-8">
+        <span aria-hidden className="edge-draw" />
         <span
           aria-hidden
           className="pointer-events-none absolute inset-0 bg-[repeating-linear-gradient(135deg,var(--lines)_0_1px,transparent_1px_9px)] [mask-image:linear-gradient(225deg,#000,transparent_40%)]"

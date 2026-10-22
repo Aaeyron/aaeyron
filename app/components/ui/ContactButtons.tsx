@@ -112,7 +112,7 @@ export default function ContactButtons({ className = "" }: { className?: string 
               {String(i + 1).padStart(2, "0")}
             </span>
 
-            <div className="relative flex border border-line bg-bg transition-colors duration-200 group-hover:border-accent group-focus-within:border-accent">
+            <div className="card relative flex border border-line bg-bg group-hover:border-accent group-focus-within:border-accent">
               <a
                 href={link.href}
                 aria-label={link.ariaLabel}

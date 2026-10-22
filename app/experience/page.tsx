@@ -26,6 +26,7 @@ import {
   Label,
   LabelRule,
   Panel,
+  PlusMarks,
   SectionHeader,
   Tag,
 } from "../components/ui/primitives";
@@ -88,6 +89,7 @@ export default function Experience() {
               priority
               sizes="(min-width: 1024px) 33vw, (min-width: 640px) 50vw, 100vw"
               label="aaeyron"
+              fig="Fig. 03"
             />
           </div>
 
@@ -107,16 +109,13 @@ export default function Experience() {
             </div>
 
             {/* Profile: two capability areas side by side (stacked on phones), split by a hairline.
-                Details: corner marks, a faint diagonal hairline texture fading in from the top-right,
-                an accent tick on the left border, a "Profile" caption with a hairline rule, and an
-                icon box per area that inverts to ink on hover. */}
+                Details: card shadow + lift, a cut top-left corner, a fine crosshatch texture fading in
+                from the top-right, an accent tick on the left border, a "Profile" caption with a
+                hairline rule, and an icon box per area that inverts to ink on hover. */}
             <div className="relative mt-8">
-              <CornerMarks />
-              <div className="relative overflow-hidden border border-line bg-bg p-6">
-                <span
-                  aria-hidden
-                  className="pointer-events-none absolute inset-0 bg-[repeating-linear-gradient(135deg,var(--lines)_0_1px,transparent_1px_9px)] [mask-image:linear-gradient(225deg,#000,transparent_60%)]"
-                />
+              <div className="card card-lift relative border border-line bg-bg p-6">
+                <span aria-hidden className="notch" />
+                <span aria-hidden className="tex tex-cross fade-tr" />
                 <span aria-hidden className="absolute -left-px top-6 h-5 w-0.5 bg-accent" />
                 <div className="relative mb-6 flex items-center gap-3">
                   <span className="font-mono text-[0.7rem] uppercase tracking-[0.08em] text-muted">Profile</span>
@@ -169,13 +168,13 @@ export default function Experience() {
           <ul className="grid gap-8 lg:grid-cols-3">
             {current.map((p, i) => (
               <li key={p.slug} className="flex" data-reveal>
-                <article className="group relative flex w-full flex-col border border-line bg-bg p-6 transition-colors duration-200 hover:border-ink focus-within:border-ink">
-                  <CornerMarks />
+                <article className="group card card-lift relative flex w-full flex-col border border-line bg-bg p-6 hover:border-ink focus-within:border-ink">
+                  <PlusMarks hover />
                   <span
                     aria-hidden
                     className="chip absolute -top-2.5 left-4 z-10 py-0 text-[0.65rem] transition-colors duration-200 group-hover:border-ink group-hover:text-ink"
                   >
-                    {pad(i + 1)} / {pad(current.length)}
+                    <span className="text-accent-text">{pad(i + 1)}</span> / {pad(current.length)}
                   </span>
                   <span
                     aria-hidden
@@ -226,25 +225,22 @@ export default function Experience() {
         <div className="container-x">
           <SectionHeader rule id="internship-title" index="03" label="Internship" title={<><InternshipText field="headingLead" serverStarted={started} /> <Highlight>working</Highlight>.</>} />
 
-          {/* Internship card, in the same language as the Tech events / current-project cards: index
-              tab on the top border, corner marks, a faint diagonal texture fading in from the
-              top-right, an accent tick on the left border, and an ink rule that grows on hover
-              while the border darkens to ink. Fields sit in a divided grid. Black/white only. */}
+          {/* Internship card, in the same language as the Tech events / current-project cards: card
+              shadow + lift, index tab on the top border (accent number), corner brackets that turn
+              accent on hover, an accent tick on the left border, an accent line drawing along the
+              top on hover, and an ink rule that grows on hover. Fields sit in a divided grid. */}
           <ol className="grid gap-8">
             {experience.map((job, i) => (
               <li key={job.company} data-reveal>
-                <article className="group relative border border-line bg-bg p-6 transition-colors duration-200 hover:border-ink sm:p-8">
-                  <CornerMarks />
+                <article className="group card card-lift relative border border-line bg-bg p-6 hover:border-ink sm:p-8">
+                  <CornerMarks hover />
+                  <span aria-hidden className="edge-draw" />
                   <span
                     aria-hidden
                     className="chip absolute -top-2.5 left-4 z-10 py-0 text-[0.65rem] transition-colors duration-200 group-hover:border-ink group-hover:text-ink"
                   >
-                    {pad(i + 1)} / {pad(experience.length)}
+                    <span className="text-accent-text">{pad(i + 1)}</span> / {pad(experience.length)}
                   </span>
-                  <span
-                    aria-hidden
-                    className="pointer-events-none absolute inset-0 bg-[repeating-linear-gradient(135deg,var(--lines)_0_1px,transparent_1px_9px)] [mask-image:linear-gradient(225deg,#000,transparent_45%)]"
-                  />
                   <span aria-hidden className="absolute -left-px top-6 h-5 w-0.5 bg-accent sm:top-8" />
 
                   {/* Header: caption + hairline rule, date badge on the right. */}
@@ -384,25 +380,20 @@ export default function Experience() {
             </p>
           </div>
 
-          {/* 2×2 grid of equal event cards (stacked on phones), styled like the "Currently working
-              on" cards: index tab on the top border, corner marks, a faint diagonal texture fading
-              in from the top-right, an accent tick on the left border, and a short ink rule that
-              grows on hover while the border darkens to ink. */}
+          {/* 2×2 grid of equal event cards (stacked on phones): card shadow + lift, a cut top-left
+              corner, index tab on the top border (accent number), an accent tick on the left
+              border, and a short ink rule that grows on hover while the border darkens to ink. */}
           <ul className="grid gap-8 sm:grid-cols-2">
             {techEvents.map((e, i) => (
               <li key={e.title} className="flex" data-reveal>
-                <article className="group relative flex w-full flex-col border border-line bg-bg p-6 transition-colors duration-200 hover:border-ink">
-                  <CornerMarks />
+                <article className="group card card-lift relative flex w-full flex-col border border-line bg-bg p-6 hover:border-ink">
+                  <span aria-hidden className="notch" />
                   <span
                     aria-hidden
-                    className="chip absolute -top-2.5 left-4 z-10 py-0 text-[0.65rem] transition-colors duration-200 group-hover:border-ink group-hover:text-ink"
+                    className="chip absolute -top-2.5 left-6 z-10 py-0 text-[0.65rem] transition-colors duration-200 group-hover:border-ink group-hover:text-ink"
                   >
-                    {pad(i + 1)} / {pad(techEvents.length)}
+                    <span className="text-accent-text">{pad(i + 1)}</span> / {pad(techEvents.length)}
                   </span>
-                  <span
-                    aria-hidden
-                    className="pointer-events-none absolute inset-0 bg-[repeating-linear-gradient(135deg,var(--lines)_0_1px,transparent_1px_9px)] [mask-image:linear-gradient(225deg,#000,transparent_55%)]"
-                  />
                   <span aria-hidden className="absolute -left-px top-6 h-5 w-0.5 bg-accent" />
 
                   <span className="relative font-mono text-[0.7rem] uppercase tracking-[0.08em] text-muted">Event</span>

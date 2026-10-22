@@ -221,7 +221,12 @@ export default function ContactForm() {
 
   return (
     <div data-reveal className="min-w-0">
-      <Panel className="contact-form p-5 sm:p-7">
+      {/* Big form panel: card shadow only (no lift while typing), corner marks, and a
+          technical annotation on the top border. */}
+      <Panel className="contact-form card p-5 sm:p-7">
+        <span aria-hidden className="annot right-5 top-0 -translate-y-1/2 sm:right-7">
+          Form · Ref 02
+        </span>
         <h2 className="h3">Send Me a Message</h2>
         <p className="mt-2 text-muted">Fill out the form below and I’ll get back to you within 24 hours.</p>
 
