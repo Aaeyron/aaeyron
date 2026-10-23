@@ -129,6 +129,8 @@ export type Project = {
   repo?: string;
   /** Hosted demo, only if one really exists. */
   live?: string;
+  /** Short, honest status tag for the school-project cards (never "shipped" / "live product"). */
+  status: string;
 };
 
 /** This year's highlights, shown first. Only the details Aaron provided — nothing is deployed. */
@@ -188,6 +190,7 @@ export const projects: Project[] = [
     stack: ["React", "Django", "Python", "REST API"],
     image: { src: "/images/LMS1.png", alt: "Library Management System dashboard" },
     repo: "https://github.com/Aaeyron/Library-Management-System",
+    status: "Not deployed · code on GitHub",
   },
   {
     slug: "janas-boutique",
@@ -199,6 +202,7 @@ export const projects: Project[] = [
     stack: ["Next.js", "PHP", "MySQL"],
     image: { src: "/images/Boutique1.png", alt: "Jana’s Boutique storefront concept" },
     repo: "https://github.com/Aaeyron/Janasboutique",
+    status: "Concept · not deployed",
   },
   {
     slug: "flashmind",
@@ -212,6 +216,7 @@ export const projects: Project[] = [
     repo: "https://github.com/Aaeyron/FlashMind",
     // From the original projects page (git c54bef3: liveLink).
     live: "https://flash-mind-alpha.vercel.app/",
+    status: "Frontend-only demo",
   },
 ];
 

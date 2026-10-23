@@ -1,5 +1,4 @@
 import type { Metadata } from "next";
-import Image from "next/image";
 import Link from "next/link";
 import { ArrowRight, ArrowUpRight, CalendarDays, Layers, Sparkles, type LucideIcon } from "lucide-react";
 import {
@@ -16,7 +15,7 @@ import {
 } from "@/lib/content";
 import { hasInternshipStarted, internshipCopy } from "@/lib/internship";
 import CertificationRows from "../components/certificates/CertificationRows";
-import ProjectLinks from "../components/projects/ProjectLinks";
+import SchoolProjectCard from "../components/projects/SchoolProjectCard";
 import PhotoFrame from "../components/ui/PhotoFrame";
 import InternshipText, { InternshipBadge } from "../components/ui/InternshipText";
 import {
@@ -25,10 +24,8 @@ import {
   Highlight,
   Label,
   LabelRule,
-  Panel,
   PlusMarks,
   SectionHeader,
-  Tag,
 } from "../components/ui/primitives";
 
 // Re-render hourly so the internship "incoming" → "currently" switch also reaches the HTML and meta tags.
@@ -306,57 +303,20 @@ export default function Experience() {
             <p className="mt-3">{earlySolo.note}</p>
           </SectionHeader>
 
+          {/* Same shared card as the home page's "Where I started": one card per row, image +
+              details side by side from 1024px. Keeps this page's tagline and "first solo build"
+              marker. */}
           <ol className="grid gap-8">
             {projects.map((p, i) => (
-              <li key={p.slug} data-reveal>
-                <Panel index={pad(i + 1)} hover className="p-5 sm:p-8">
-                  <article aria-labelledby={`early-${p.slug}`} className="grid-12 gap-y-6">
-                    {/* Same screenshot as the home page's "Earlier school projects" (p.image). */}
-                    <div className="col-span-4 sm:col-span-8 lg:col-span-5">
-                      <div className="relative">
-                        <CornerMarks />
-                        <div className="relative aspect-[16/10] overflow-hidden border border-line bg-surface">
-                          <Image
-                            src={p.image.src}
-                            alt={`${p.title} screenshot`}
-                            fill
-                            sizes="(min-width: 1280px) 460px, (min-width: 1024px) 38vw, calc(100vw - 4.5rem)"
-                            className="object-cover object-top transition-transform duration-300 group-hover:scale-[1.03]"
-                          />
-                        </div>
-                      </div>
-                      <div className="mt-4 flex flex-wrap items-center gap-2">
-                        <Label accent>{earlySolo.marker}</Label>
-                        <span className="font-mono text-xs text-muted">{p.context}</span>
-                      </div>
-                    </div>
-
-                    <div className="col-span-4 sm:col-span-8 lg:col-span-7 lg:pl-4">
-                      <ul className="flex flex-wrap gap-1.5" aria-label="About this project">
-                        {earlySolo.labels.map((l) => (
-                          <li key={l}>
-                            <Label>{l}</Label>
-                          </li>
-                        ))}
-                      </ul>
-                      <h3
-                        id={`early-${p.slug}`}
-                        className="mt-4 text-2xl font-semibold tracking-[-0.025em] transition-colors duration-200 group-hover:text-accent-text sm:text-[1.75rem]"
-                      >
-                        {p.title}
-                      </h3>
-                      <p className="measure mt-3 text-muted">{p.tagline}</p>
-                      <ul className="mt-4 flex flex-wrap gap-1.5" aria-label="Tech stack">
-                        {p.stack.map((s) => (
-                          <li key={s}>
-                            <Tag>{s}</Tag>
-                          </li>
-                        ))}
-                      </ul>
-                      <ProjectLinks project={p} className="mt-6" />
-                    </div>
-                  </article>
-                </Panel>
+              <li key={p.slug} className="flex" data-reveal>
+                <SchoolProjectCard
+                  project={p}
+                  index={i}
+                  total={projects.length}
+                  description={p.tagline}
+                  extraLabel={earlySolo.marker}
+                  titleId={`early-${p.slug}`}
+                />
               </li>
             ))}
           </ol>

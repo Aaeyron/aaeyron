@@ -515,6 +515,12 @@ html:has(dialog[open]) {
     background-size: 7px 7px;
     opacity: 0.7;
   }
+  .tex-grid {
+    background-image:
+      linear-gradient(var(--lines) 1px, transparent 1px),
+      linear-gradient(90deg, var(--lines) 1px, transparent 1px);
+    background-size: 14px 14px;
+  }
   .tex-cross {
     background-image:
       repeating-linear-gradient(45deg, var(--lines) 0 1px, transparent 1px 8px),

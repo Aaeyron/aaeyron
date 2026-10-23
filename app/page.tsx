@@ -3,7 +3,7 @@ import Link from "next/link";
 import { ArrowRight } from "lucide-react";
 import { certifications, projects, projectsSummary, selectedProjects } from "@/lib/content";
 import Hero from "./components/home/Hero";
-import SchoolProjectRow from "./components/home/SchoolProjectRow";
+import SchoolProjectCard from "./components/projects/SchoolProjectCard";
 import TechStack from "./components/home/TechStack";
 import AboutTeaser from "./components/home/AboutTeaser";
 import GitHubContributions from "./components/home/GitHubContributions";
@@ -72,11 +72,20 @@ export default function Home() {
             </p>
           </SectionHeader>
 
-          <div className="border-b border-line">
+          {/* One card per row; each card is image + details side by side from 1024px. */}
+          <ul className="grid gap-8">
             {projects.map((project, i) => (
-              <SchoolProjectRow key={project.slug} project={project} index={i} />
+              <li key={project.slug} className="flex" data-reveal>
+                <SchoolProjectCard
+                  project={project}
+                  index={i}
+                  total={projects.length}
+                  description={project.summary}
+                  titleId={`school-${project.slug}`}
+                />
+              </li>
             ))}
-          </div>
+          </ul>
         </div>
       </section>
 
