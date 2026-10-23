@@ -380,7 +380,252 @@ export const navLinks = [
   { href: "/", label: "Home" },
   { href: "/projects", label: "Projects" },
   { href: "/experience", label: "Experience" },
+  { href: "/resources", label: "Resources" },
   { href: "/contact", label: "Contact" },
+];
+
+/**
+ * /resources page. Links open in a new tab; keep URLs exactly as given.
+ * Every URL here was fetched before publishing, and notes only state what the official page
+ * says (no cost, dates or certificates unless the page confirms them).
+ */
+export type ResourceStatus = "learning" | "next" | "target" | "done";
+
+export type ResourceLink = {
+  title: string;
+  url: string;
+  /** Where I am with it. Shown as a tag and used by the page filter. Edit freely. */
+  status?: ResourceStatus;
+  /** One line on why it's on the list (keep it under ~90 characters). */
+  why?: string;
+  /** Short factual note, only what the official page states. */
+  note?: string;
+  /** Follow-on courses, shown nested under this one as a path (used for CS50). */
+  next?: ResourceLink[];
+};
+
+export type ResourceGroup =
+  | { id: string; label: string; title: string; kind: "links"; links: ResourceLink[] }
+  | { id: string; label: string; title: string; kind: "path"; start: ResourceLink }
+  | { id: string; label: string; title: string; kind: "tools"; tools: string[] };
+
+export const resourceGroups: ResourceGroup[] = [
+  {
+    id: "learn-ai-ml",
+    label: "AI / ML",
+    title: "Learn AI/ML",
+    kind: "links",
+    links: [
+      { title: "Google ML Crash Course", url: "https://developers.google.com/machine-learning/crash-course" },
+      { title: "Hugging Face LLM Course", url: "https://huggingface.co/learn/llm-course/chapter1/1" },
+      { title: "DeepLearning.AI Courses", url: "https://www.deeplearning.ai/courses" },
+      { title: "Kaggle Learn", url: "https://www.kaggle.com/learn" },
+    ],
+  },
+  {
+    id: "where-i-started",
+    label: "Journey",
+    title: "Where I started my journey",
+    kind: "path",
+    start: {
+      title: "CS50: Introduction to Computer Science (Harvard Online)",
+      url: "https://pll.harvard.edu/course/cs50-introduction-computer-science",
+      next: [
+        { title: "Introduction to Programming with Python", url: "https://cs50.harvard.edu/python/" },
+        { title: "Introduction to Artificial Intelligence", url: "https://cs50.harvard.edu/ai/" },
+      ],
+    },
+  },
+  {
+    id: "prompt-engineering",
+    label: "Prompting",
+    title: "Prompt engineering",
+    kind: "links",
+    links: [
+      {
+        title: "Prompt engineering with Claude",
+        url: "https://platform.claude.com/docs/en/build-with-claude/prompt-engineering/overview",
+      },
+      {
+        title: "OpenAI prompt engineering",
+        url: "https://developers.openai.com/api/docs/guides/prompt-engineering?api-mode=responses",
+      },
+    ],
+  },
+  {
+    id: "math-fundamentals",
+    label: "Math",
+    title: "Math and fundamentals",
+    kind: "links",
+    links: [
+      {
+        title: "3Blue1Brown: Essence of Linear Algebra",
+        url: "https://www.3blue1brown.com/topics/linear-algebra",
+        status: "next",
+        why: "The math behind the models.",
+      },
+      {
+        title: "3Blue1Brown: Neural Networks",
+        url: "https://www.3blue1brown.com/topics/neural-networks",
+        status: "next",
+        why: "The math behind the models.",
+      },
+      {
+        title: "Mathematics for Machine Learning",
+        url: "https://mml-book.github.io/",
+        status: "next",
+        why: "The math behind the models.",
+        note: "Book PDF kept freely available by the authors.",
+      },
+      {
+        title: "Khan Academy Math",
+        url: "https://www.khanacademy.org/math",
+        status: "next",
+        why: "The math behind the models.",
+      },
+    ],
+  },
+  {
+    id: "mlops-data",
+    label: "MLOps",
+    title: "MLOps, DevOps and data engineering",
+    kind: "links",
+    links: [
+      {
+        title: "MLOps Zoomcamp",
+        url: "https://datatalks.club/blog/mlops-zoomcamp.html",
+        status: "learning",
+        why: "Tracking, pipelines, deployment and monitoring.",
+        note: "Live cohort or self-paced; materials on GitHub.",
+      },
+      {
+        title: "Machine Learning Zoomcamp",
+        url: "https://datatalks.club/blog/machine-learning-zoomcamp.html",
+        status: "learning",
+        why: "ML models plus Docker and Kubernetes deployment.",
+        note: "Live cohort or self-paced; materials on GitHub.",
+      },
+      {
+        title: "Data Engineering Zoomcamp",
+        url: "https://datatalks.club/blog/data-engineering-zoomcamp.html",
+        status: "next",
+        why: "Pipelines, warehouses, dbt, Spark, Kafka.",
+        note: "Materials available to follow at your own pace.",
+      },
+      { title: "Made With ML", url: "https://madewithml.com/", status: "next", why: "Production ML practice." },
+      {
+        title: "Full Stack Deep Learning",
+        url: "https://fullstackdeeplearning.com/",
+        status: "next",
+        why: "Production ML practice.",
+      },
+    ],
+  },
+  {
+    id: "llms-agents-mcp",
+    label: "LLMs",
+    title: "LLMs, agents and MCP",
+    kind: "links",
+    links: [
+      {
+        title: "LLM Zoomcamp",
+        url: "https://datatalks.club/blog/llm-zoomcamp.html",
+        status: "learning",
+        why: "RAG, vector search, evaluation, agent patterns.",
+        note: "Live cohort or self-paced; materials on GitHub.",
+      },
+      {
+        title: "Hugging Face MCP Course",
+        url: "https://huggingface.co/learn/mcp-course/unit0/introduction",
+        status: "learning",
+        why: "Connecting models to tools with the Model Context Protocol.",
+      },
+      {
+        title: "Hugging Face Agents Course",
+        url: "https://huggingface.co/learn/agents-course/",
+        status: "next",
+        why: "Building and evaluating AI agents.",
+      },
+      {
+        title: "AI Dev Tools Zoomcamp",
+        url: "https://datatalks.club/blog/ai-dev-tools-zoomcamp.html",
+        status: "next",
+        why: "Coding agents, MCP, AI for DevOps.",
+        note: "Live cohort started August 31, 2026; self-paced anytime.",
+      },
+    ],
+  },
+  {
+    id: "deep-learning",
+    label: "Deep learning",
+    title: "Deep learning depth",
+    kind: "links",
+    links: [
+      { title: "fast.ai Practical Deep Learning", url: "https://course.fast.ai/", status: "next" },
+      { title: "Andrej Karpathy: Neural Networks: Zero to Hero", url: "https://karpathy.ai/zero-to-hero.html", status: "next" },
+      { title: "Stanford CS224n: NLP with Deep Learning", url: "https://web.stanford.edu/class/cs224n/", status: "next" },
+    ],
+  },
+  {
+    id: "stretch-goals",
+    label: "Stretch",
+    title: "Stretch goals",
+    kind: "links",
+    links: [
+      {
+        title: "Stanford CS336: Language Modeling from Scratch",
+        url: "https://cs336.stanford.edu",
+        status: "target",
+        why: "How LLMs are really built.",
+        note: "Lecture recordings on a YouTube playlist.",
+      },
+      {
+        title: "Google Summer of Code",
+        url: "https://developers.google.com/open-source/gsoc/timeline",
+        status: "target",
+        why: "Goal: GSoC 2027.",
+        note: "Contributor applications usually open in March.",
+      },
+      {
+        title: "Kaggle competitions",
+        url: "https://www.kaggle.com/competitions",
+        status: "target",
+        why: "Public notebooks as proof of work.",
+      },
+    ],
+  },
+  {
+    id: "communities",
+    label: "Community",
+    title: "Communities and workshops",
+    kind: "links",
+    links: [
+      {
+        title: "Cohere Labs Community",
+        url: "https://labscommunity.cohere.com/community-programs",
+        status: "next",
+        why: "BIRDS for research beginners, plus Regional Asia, ML Math, NLP and ML Agents groups.",
+        note: "Groups meet on Discord.",
+      },
+      {
+        title: "DataTalks.Club community",
+        url: "https://datatalks.club/slack.html",
+        why: "The Slack community behind the Zoomcamps.",
+      },
+      {
+        title: "DurianPy",
+        url: "https://www.durianpy.org/",
+        why: "Davao’s Python community: monthly meetups and workshops.",
+      },
+    ],
+  },
+  {
+    id: "tools",
+    label: "Tools",
+    title: "Tools I use",
+    kind: "tools",
+    tools: ["Claude Code", "Codex", "Antigravity", "Copilot", "Gemini"],
+  },
 ];
 
 
