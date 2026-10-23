@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import { ArrowUpRight, Check } from "lucide-react";
 import { resourceGroups, type ResourceLink, type ResourceStatus } from "@/lib/content";
-import ResourcesToolbar, { type StatusFilter } from "../components/resources/ResourcesToolbar";
+import SectionRail from "../components/resources/SectionRail";
 import Doodle from "../components/ui/Doodle";
 import { CornerMarks, Highlight, LabelRule, SectionHeader } from "../components/ui/primitives";
 
@@ -163,31 +163,59 @@ function ToolChips({ tools }: { tools: string[] }) {
   );
 }
 
-export default function Resources() {
-  // Counts per filter for the toolbar's screen-reader announcement.
-  const allLinks = resourceGroups.flatMap((g) =>
+/**
+ * One-line status summary under the subtitle ("4 LEARNING NOW · 8 NEXT UP · 3 TARGETS"),
+ * computed from the data. Each count has a marker matching the card tags, so it doubles as a
+ * legend: solid square = learning, outlined = next, dashed = target. Plain text, not interactive.
+ */
+function StatusSummary() {
+  const all = resourceGroups.flatMap((g) =>
     g.kind === "links" ? g.links : g.kind === "path" ? [g.start, ...(g.start.next ?? [])] : [],
   );
-  const counts: Record<StatusFilter, number> = {
-    all: allLinks.length,
-    learning: allLinks.filter((l) => l.status === "learning").length,
-    next: allLinks.filter((l) => l.status === "next").length,
-    target: allLinks.filter((l) => l.status === "target").length,
-  };
+  const count = (s: ResourceStatus) => all.filter((l) => l.status === s).length;
+  const items = [
+    { n: count("learning"), label: "Learning now", marker: "border border-ink bg-ink" },
+    { n: count("next"), label: "Next up", marker: "border border-ink" },
+    { n: count("target"), label: count("target") === 1 ? "Target" : "Targets", marker: "border border-dashed border-ink" },
+  ].filter((i) => i.n > 0);
 
+  return (
+    <p className="mt-5 flex flex-wrap items-center gap-x-3 gap-y-2 font-mono text-[0.7rem] uppercase tracking-[0.1em] text-muted">
+      {items.map((i, idx) => (
+        <span key={i.label} className="inline-flex items-center gap-3">
+          {idx > 0 && <span aria-hidden>·</span>}
+          <span className="inline-flex items-center gap-2">
+            <span aria-hidden className={`size-2 shrink-0 ${i.marker}`} />
+            <span>
+              <span className="text-ink">{i.n}</span> {i.label}
+            </span>
+          </span>
+        </span>
+      ))}
+    </p>
+  );
+}
+
+export default function Resources() {
   return (
     <div className="container-x section">
       <SectionHeader as="h1" rule label="Resources" title={<>Resources<Highlight>.</Highlight></>}>
         <p>What I learn from, what I’m learning now, and where I’m headed.</p>
+        <StatusSummary />
       </SectionHeader>
 
-      <ResourcesToolbar groups={resourceGroups.map((g) => ({ id: g.id, label: g.label }))} counts={counts}>
+      {/* One hairline between the header and the first section. */}
+      <hr className="-mt-2 mb-14 border-line sm:-mt-6" />
+
+      {/* Sections, with the desktop-only rail (≥1280px) sticky in the left gutter beside them. */}
+      <div className="relative">
+        <SectionRail sections={resourceGroups.map((g) => ({ id: g.id, label: g.label }))} />
         <div className="space-y-16 sm:space-y-20">
           {resourceGroups.map((g, gi) => {
             const style = styleFor(g.id);
             const headingId = `${g.id}-title`;
             return (
-              <section key={g.id} id={g.id} aria-labelledby={headingId} data-filter-group>
+              <section key={g.id} id={g.id} aria-labelledby={headingId}>
                 <div data-reveal>
                   <LabelRule index={pad(gi + 1)} className="mb-5">
                     {g.label}
@@ -203,7 +231,7 @@ export default function Resources() {
                 {g.kind === "links" && (
                   <ul className="grid gap-6 md:grid-cols-2">
                     {g.links.map((l) => (
-                      <li key={l.url} className="flex" data-reveal data-status-item data-status={l.status ?? "none"}>
+                      <li key={l.url} className="flex" data-reveal>
                         <LinkCard link={l} texture={style.texture} dashed={style.dashed} />
                       </li>
                     ))}
@@ -223,7 +251,7 @@ export default function Resources() {
             );
           })}
         </div>
-      </ResourcesToolbar>
+      </div>
     </div>
   );
 }

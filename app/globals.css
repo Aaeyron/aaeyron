@@ -636,26 +636,6 @@ html:has(dialog[open]) {
 .contact-form [tabindex="-1"]:focus-visible {
   outline: none;
 }
-/* /resources status filter (ResourcesToolbar sets data-filter). Hides items whose status
-   doesn't match, and whole groups with no match. "all" shows everything. */
-.resources-filter[data-filter="learning"] [data-status-item]:not([data-status="learning"]),
-.resources-filter[data-filter="next"] [data-status-item]:not([data-status="next"]),
-.resources-filter[data-filter="target"] [data-status-item]:not([data-status="target"]),
-.resources-filter[data-filter="learning"] [data-filter-group]:not(:has([data-status="learning"])),
-.resources-filter[data-filter="next"] [data-filter-group]:not(:has([data-status="next"])),
-.resources-filter[data-filter="target"] [data-filter-group]:not(:has([data-status="target"])) {
-  display: none;
-}
-/* Jump links land below the sticky toolbar (sticky from 768px). */
-.resources-filter section[id] {
-  scroll-margin-top: 5rem;
-}
-@media (min-width: 768px) {
-  .resources-filter section[id] {
-    scroll-margin-top: 12rem;
-  }
-}
-
 /* Ink buttons stay black/white on keyboard focus too. */
 .btn-dots:focus-visible {
   outline-color: var(--ink);
