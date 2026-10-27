@@ -1,83 +1,53 @@
-import type { IconType } from "react-icons";
-import {
-  SiCanva,
-  SiCmake,
-  SiCplusplus,
-  SiCss3,
-  SiDart,
-  SiDjango,
-  SiFigma,
-  SiFlutter,
-  SiHtml5,
-  SiJavascript,
-  SiKotlin,
-  SiMysql,
-  SiNextdotjs,
-  SiNodedotjs,
-  SiPhp,
-  SiPostgresql,
-  SiPostman,
-  SiPython,
-  SiReact,
-  SiSupabase,
-  SiTypescript,
-  SiVercel,
-} from "react-icons/si";
+import Link from "next/link";
+import { ArrowRight } from "lucide-react";
 import { techStack } from "@/lib/content";
-import { Label, SectionHeader } from "../ui/primitives";
+import TechChip from "../stack/TechChip";
+import { Highlight, Label, SectionHeader } from "../ui/primitives";
 
-/** Logos for items in lib/content.ts `techStack` (monochrome via currentColor). */
-const icons: Record<string, IconType> = {
-  SiCanva,
-  SiCmake,
-  SiCplusplus,
-  SiCss3,
-  SiDart,
-  SiDjango,
-  SiFigma,
-  SiFlutter,
-  SiHtml5,
-  SiJavascript,
-  SiKotlin,
-  SiMysql,
-  SiNextdotjs,
-  SiNodedotjs,
-  SiPhp,
-  SiPostgresql,
-  SiPostman,
-  SiPython,
-  SiReact,
-  SiSupabase,
-  SiTypescript,
-  SiVercel,
-};
-
+/**
+ * Accent treatment, matching the other sections (max ~3 accent touches per element):
+ * - header: accent "03" and the drawn-in rule with an accent tip (SectionHeader `rule`).
+ * - group headings: a short accent tick, the accent group number, a neutral hairline.
+ * - items: TechChip (card shadow + hover lift, accent border and corner mark on hover).
+ * A "See the full stack" link in the header's action slot goes to /stack.
+ */
 export default function TechStack() {
   return (
     <section aria-labelledby="stack-title" className="section border-t border-line">
       <div className="container-x">
-        <SectionHeader id="stack-title" index="03" label="Tech Stack" title="What I work with.">
+        <SectionHeader
+          rule
+          id="stack-title"
+          index="03"
+          label="Tech Stack"
+          title={<>What I <Highlight>work</Highlight> with.</>}
+          action={
+            <Link
+              href="/stack"
+              className="group inline-flex min-h-11 items-center gap-1.5 font-medium transition-colors duration-200 hover:text-accent-text"
+            >
+              See the full stack
+              <ArrowRight size={16} aria-hidden className="transition-transform duration-200 group-hover:translate-x-0.5" />
+            </Link>
+          }
+        >
           <p>Languages, frameworks, and tools I’ve used in my projects.</p>
         </SectionHeader>
 
         <div className="grid gap-x-10 gap-y-10 md:grid-cols-2 lg:grid-cols-3">
           {techStack.map((group, g) => (
             <div key={group.group}>
-              <h3 className="mb-4" data-reveal>
+              <h3 className="mb-4 flex items-center gap-3" data-reveal>
+                <span aria-hidden className="h-4 w-0.5 shrink-0 bg-accent" />
                 <Label index={String(g + 1).padStart(2, "0")}>{group.group}</Label>
+                <span aria-hidden className="h-px min-w-6 flex-1 bg-line" />
               </h3>
               <ul className="flex flex-wrap gap-2">
-                {group.items.map((item) => {
-                  const Icon = item.icon ? icons[item.icon] : undefined;
-                  return (
-                    <li key={item.name} data-reveal>
-                      <span className="inline-flex min-h-10 items-center gap-2 border border-line bg-bg px-3 text-sm font-medium text-ink transition-colors duration-200 hover:border-accent hover:text-accent-text">
-                        {Icon && <Icon size={15} aria-hidden className="shrink-0" />}
-                        {item.name}
-                      </span>
-                    </li>
-                  );
-                })}
+                {group.items.map((item) => (
+                  <li key={item.name} data-reveal>
+                    <TechChip item={item} />
+                  </li>
+                ))}
               </ul>
             </div>
           ))}

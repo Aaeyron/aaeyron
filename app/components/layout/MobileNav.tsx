@@ -53,7 +53,7 @@ export default function MobileNav({ pathname }: { pathname: string }) {
         onClick={(e) => {
           if (e.target === dialogRef.current) close();
         }}
-        className="m-0 ml-auto h-dvh max-h-none w-[min(24rem,100vw)] max-w-none overflow-y-auto border-l border-line bg-bg p-0 md:hidden"
+        className="m-0 ml-auto h-dvh max-h-none w-[min(24rem,100vw)] max-w-none overflow-y-auto border-l border-line bg-chrome p-0 md:hidden"
       >
         <div className="flex min-h-full flex-col px-[var(--gutter)] pb-8">
           <div className="flex h-16 items-center justify-between">

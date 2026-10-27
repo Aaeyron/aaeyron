@@ -6,9 +6,9 @@ const removedCaseStudies = ["library-management-system", "janas-boutique", "flas
 const nextConfig: NextConfig = {
   async redirects() {
     return [
-      // About and Certificates were merged into /experience; keep old links working.
+      // About was merged into /experience; keep old links working.
+      // (/certificates is a real page again, so its old redirect is gone.)
       { source: "/about", destination: "/experience", permanent: true },
-      { source: "/certificates", destination: "/experience#certifications", permanent: true },
       // Old case study URLs go to the "Early solo projects" section.
       ...removedCaseStudies.map((slug) => ({
         source: `/projects/${slug}`,

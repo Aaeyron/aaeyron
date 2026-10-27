@@ -6,7 +6,7 @@ import SocialIcons from "./SocialIcons";
 
 export default function SiteFooter() {
   return (
-    <footer className="border-t border-line">
+    <footer className="border-t border-line bg-chrome">
       <div className="container-x grid-12 gap-y-10 py-12 sm:py-16">
         <div className="col-span-4 sm:col-span-8 lg:col-span-5">
           <p className="h3">{profile.name}</p>

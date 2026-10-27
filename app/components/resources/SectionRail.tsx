@@ -65,7 +65,7 @@ export default function SectionRail({ sections }: { sections: { id: string; labe
                   {pad(i + 1)}
                 </span>
                 {/* Section name: slides out on hover / keyboard focus. */}
-                <span className="pointer-events-none absolute left-full ml-2 -translate-x-1 whitespace-nowrap bg-bg px-1.5 py-0.5 uppercase tracking-[0.1em] text-ink opacity-0 transition-[opacity,transform] duration-200 group-hover:translate-x-0 group-hover:opacity-100 group-focus-visible:translate-x-0 group-focus-visible:opacity-100">
+                <span className="pointer-events-none absolute left-full ml-2 -translate-x-1 whitespace-nowrap bg-chrome px-1.5 py-0.5 uppercase tracking-[0.1em] text-ink opacity-0 transition-[opacity,transform] duration-200 group-hover:translate-x-0 group-hover:opacity-100 group-focus-visible:translate-x-0 group-focus-visible:opacity-100">
                   {s.label}
                 </span>
               </a>

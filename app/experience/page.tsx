@@ -14,7 +14,7 @@ import {
   techEvents,
 } from "@/lib/content";
 import { hasInternshipStarted, internshipCopy } from "@/lib/internship";
-import CertificationRows from "../components/certificates/CertificationRows";
+import { CertificateList } from "../components/certificates/CertificateCard";
 import SchoolProjectCard from "../components/projects/SchoolProjectCard";
 import PhotoFrame from "../components/ui/PhotoFrame";
 import InternshipText, { InternshipBadge } from "../components/ui/InternshipText";
@@ -375,10 +375,10 @@ export default function Experience() {
         <div className="container-x">
           <SectionHeader rule id="certs-title" index="06" label="Certifications" title={<>Skills, <Highlight>certified</Highlight>.</>}>
             <p>
-              Courses I’ve completed. <span className="font-medium text-ink">Select a certificate</span> to view it larger.
+              Courses I’ve completed.
             </p>
           </SectionHeader>
-          <CertificationRows certs={certifications} boxed />
+          <CertificateList certs={certifications} />
         </div>
       </section>
     </>

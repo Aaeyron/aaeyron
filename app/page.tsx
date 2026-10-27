@@ -9,7 +9,7 @@ import AboutTeaser from "./components/home/AboutTeaser";
 import GitHubContributions from "./components/home/GitHubContributions";
 import ContactBlock from "./components/home/ContactBlock";
 import SelectedProjectCard from "./components/projects/SelectedProjectCard";
-import CertificationRows from "./components/certificates/CertificationRows";
+import { CertificateList } from "./components/certificates/CertificateCard";
 import { Highlight, SectionHeader } from "./components/ui/primitives";
 
 // Re-render hourly so the internship "incoming" → "currently" switch also reaches the HTML.
@@ -100,9 +100,9 @@ export default function Home() {
             title={<>Skills, <Highlight>certified</Highlight>.</>}
             action={<MoreLink href="/experience#certifications">View all certificates</MoreLink>}
           >
-            <p>Courses I’ve completed. Select a certificate to view it larger.</p>
+            <p>Courses I’ve completed.</p>
           </SectionHeader>
-          <CertificationRows certs={certifications} />
+          <CertificateList certs={certifications} />
         </div>
       </section>
 

@@ -32,7 +32,7 @@ export default function SocialIcons({ className = "" }: { className?: string }) 
                 target="_blank"
                 rel="noopener noreferrer"
                 aria-label={`${firstName} on ${s.label} (opens in a new tab)`}
-                className="group relative grid size-11 place-items-center border border-line bg-bg text-ink transition-[background-color,border-color,color,transform] duration-200 hover:border-accent hover:bg-accent hover:text-on-accent focus-visible:border-accent focus-visible:bg-accent focus-visible:text-on-accent active:scale-95"
+                className="group relative grid size-11 place-items-center border border-line bg-chrome text-ink transition-[background-color,border-color,color,transform] duration-200 hover:border-accent hover:bg-accent hover:text-on-accent focus-visible:border-accent focus-visible:bg-accent focus-visible:text-on-accent active:scale-95"
               >
                 <CornerMarks hover inset="-4px" />
                 <Icon

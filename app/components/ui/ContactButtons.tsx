@@ -66,7 +66,7 @@ export function ContactButtonsCompact({ className = "", startIndex = 0 }: { clas
               href={link.href}
               aria-label={link.ariaLabel}
               {...(link.external ? { target: "_blank", rel: "noopener noreferrer" } : {})}
-              className="group relative flex min-h-12 items-center gap-3 border border-line bg-bg px-2 transition-[border-color,transform] duration-200 hover:border-accent focus-visible:border-accent active:scale-[0.97]"
+              className="group relative flex min-h-12 items-center gap-3 border border-line bg-chrome px-2 transition-[border-color,transform] duration-200 hover:border-accent focus-visible:border-accent active:scale-[0.97]"
             >
               <CornerMarks hover inset="-4px" />
               <span

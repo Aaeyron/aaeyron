@@ -289,15 +289,25 @@ export const techStack: TechGroup[] = [
 // Certifications shown on the site (home + /experience), in display order.
 // Event certificates (GDG Certificate.png, Cyber Hygiene Cert.png)
 // stay in /public/images but are intentionally not displayed.
+/**
+ * Certificates: one list used by the home "Skills, certified" section, the Experience page and
+ * /certificates. Images are shown on the cards (no click-to-enlarge). Add more entries here.
+ */
 export type Certificate = {
   id: string;
   title: string;
   issuer: string;
+  /** Human-readable issue date, e.g. "October 7, 2026". */
   date: string;
+  /** Machine-readable issue date, used for <time> and newest-first sorting. */
+  dateIso: string;
   image: string;
   alt: string;
   description?: string;
+  /** Public verification link. Leave unset until there is a real one. */
   credentialUrl?: string;
+  /** Shows a "Final project" note on the card. */
+  finalProject?: boolean;
 };
 
 export const certifications: Certificate[] = [
@@ -306,6 +316,7 @@ export const certifications: Certificate[] = [
     title: "CodeChum Certificate",
     issuer: "CodeChum Academy",
     date: "May 18, 2025",
+    dateIso: "2025-05-18",
     image: "/images/Certificate1.png",
     credentialUrl: "https://hcdc.codechum.com/certificates/11063",
     alt: "CodeChum Academy certificate",
@@ -317,6 +328,8 @@ export const certifications: Certificate[] = [
     title: "CS50’s Introduction to Artificial Intelligence with Python",
     issuer: "Harvard University · CS50",
     date: "October 3, 2026",
+    dateIso: "2026-10-03",
+    finalProject: true,
     image: "/images/Certificate 2.png",
     credentialUrl: "https://certificates.cs50.io/f6099366-f074-40a8-9d1b-13bc8e4a362d.pdf?size=letter",
     alt: "CS50 certificate awarded to Aaron Seth Nagtalon for completing Introduction to Artificial Intelligence with Python, including twelve projects, in 2026",
@@ -328,6 +341,8 @@ export const certifications: Certificate[] = [
     title: "CS50’s Introduction to Programming with Python",
     issuer: "Harvard University · CS50P",
     date: "October 7, 2026",
+    dateIso: "2026-10-07",
+    finalProject: true,
     image: "/images/Certificate3.png",
     credentialUrl: "https://certificates.cs50.io/d68a6b9c-467a-496d-8ea1-4c2be6a093fc.pdf?size=letter",
     alt: "CS50 certificate awarded to Aaron Seth Nagtalon for completing Introduction to Programming with Python, including nine problem sets and one final project, in 2026",
@@ -381,6 +396,8 @@ export const navLinks = [
   { href: "/projects", label: "Projects" },
   { href: "/experience", label: "Experience" },
   { href: "/resources", label: "Resources" },
+  { href: "/stack", label: "Stack" },
+  { href: "/certificates", label: "Certificates" },
   { href: "/contact", label: "Contact" },
 ];
 
