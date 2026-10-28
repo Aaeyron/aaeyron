@@ -106,11 +106,11 @@ export default function Experience() {
             </div>
 
             {/* Profile: two capability areas side by side (stacked on phones), split by a hairline.
-                Details: card shadow + lift, a cut top-left corner, a fine crosshatch texture fading in
-                from the top-right, an accent tick on the left border, a "Profile" caption with a
-                hairline rule, and an icon box per area that inverts to ink on hover. */}
+                Static (not clickable), so nothing reacts on hover. Details: card shadow, a cut
+                top-left corner, a fine crosshatch texture fading in from the top-right, an accent tick
+                on the left border, a "Profile" caption with a hairline rule, and an icon box per area. */}
             <div className="relative mt-8">
-              <div className="card card-lift relative border border-line bg-bg p-6">
+              <div className="card relative border border-line bg-bg p-6">
                 <span aria-hidden className="notch" />
                 <span aria-hidden className="tex tex-cross fade-tr" />
                 <span aria-hidden className="absolute -left-px top-6 h-5 w-0.5 bg-accent" />
@@ -127,14 +127,14 @@ export default function Experience() {
                     return (
                       <li
                         key={c.id}
-                        className={`group/cap ${
+                        className={`${
                           i === 0 ? "pb-6 sm:pb-0 sm:pr-6" : "border-t border-line-strong pt-6 sm:border-l sm:border-t-0 sm:pl-6 sm:pt-0"
                         }`}
                       >
                         <div className="flex items-center gap-3">
                           <span
                             aria-hidden
-                            className="field-label grid size-9 shrink-0 place-items-center border bg-bg text-ink transition-colors duration-200 group-hover/cap:bg-ink group-hover/cap:text-bg"
+                            className="field-label grid size-9 shrink-0 place-items-center border bg-bg text-ink"
                           >
                             <Icon size={17} aria-hidden />
                           </span>
@@ -160,16 +160,17 @@ export default function Experience() {
           <SectionHeader rule id="current-title" index="02" label="Currently working on" title={<>What I’m <Highlight>building</Highlight> now.</>} />
 
           {/* All three projects in one row on desktop (capstone first), stacked below 1024px.
-              Black/white cards: index tab on the top border, corner marks, a dot-grid accent in the
-              top-right, and a short ink rule that grows on hover while the border darkens to ink. */}
+              Black/white cards: index tab on the top border, plus marks, a dot-grid accent in the
+              top-right, and a short ink rule. The cards themselves are static; only the links inside
+              react on hover (arrow nudge). */}
           <ul className="grid gap-8 lg:grid-cols-3">
             {current.map((p, i) => (
               <li key={p.slug} className="flex" data-reveal>
-                <article className="group card card-lift relative flex w-full flex-col border border-line bg-bg p-6 hover:border-ink focus-within:border-ink">
-                  <PlusMarks hover />
+                <article className="card relative flex w-full flex-col border border-line bg-bg p-6">
+                  <PlusMarks />
                   <span
                     aria-hidden
-                    className="chip absolute -top-2.5 left-4 z-10 py-0 text-[0.65rem] transition-colors duration-200 group-hover:border-ink group-hover:text-ink"
+                    className="chip absolute -top-2.5 left-4 z-10 py-0 text-[0.65rem]"
                   >
                     <span className="text-accent-text">{pad(i + 1)}</span> / {pad(current.length)}
                   </span>
@@ -185,7 +186,7 @@ export default function Experience() {
                   </div>
                   <span
                     aria-hidden
-                    className="draw-x mt-6 block h-px w-8 bg-ink transition-[width] duration-300 group-hover:w-16"
+                    className="draw-x mt-6 block h-px w-8 bg-ink"
                   />
                   <h3 className="mt-5 text-2xl font-semibold leading-tight tracking-[-0.02em]">{p.title}</h3>
                   <p className="mt-2 text-sm text-muted">{p.category}</p>
@@ -222,19 +223,18 @@ export default function Experience() {
         <div className="container-x">
           <SectionHeader rule id="internship-title" index="03" label="Internship" title={<><InternshipText field="headingLead" serverStarted={started} /> <Highlight>working</Highlight>.</>} />
 
-          {/* Internship card, in the same language as the Tech events / current-project cards: card
-              shadow + lift, index tab on the top border (accent number), corner brackets that turn
-              accent on hover, an accent tick on the left border, an accent line drawing along the
-              top on hover, and an ink rule that grows on hover. Fields sit in a divided grid. */}
+          {/* Internship card, in the same language as the Tech events / current-project cards (static,
+              not clickable): card shadow, index tab on the top border (accent number), corner
+              brackets, an accent tick on the left border and a short ink rule. Fields sit in a
+              divided grid. */}
           <ol className="grid gap-8">
             {experience.map((job, i) => (
               <li key={job.company} data-reveal>
-                <article className="group card card-lift relative border border-line bg-bg p-6 hover:border-ink sm:p-8">
-                  <CornerMarks hover />
-                  <span aria-hidden className="edge-draw" />
+                <article className="card relative border border-line bg-bg p-6 sm:p-8">
+                  <CornerMarks />
                   <span
                     aria-hidden
-                    className="chip absolute -top-2.5 left-4 z-10 py-0 text-[0.65rem] transition-colors duration-200 group-hover:border-ink group-hover:text-ink"
+                    className="chip absolute -top-2.5 left-4 z-10 py-0 text-[0.65rem]"
                   >
                     <span className="text-accent-text">{pad(i + 1)}</span> / {pad(experience.length)}
                   </span>
@@ -257,7 +257,7 @@ export default function Experience() {
                   <p className="relative mt-1 text-lg font-semibold text-ink">{job.company}</p>
                   <span
                     aria-hidden
-                    className="draw-x relative mt-5 block h-px w-8 bg-ink transition-[width] duration-300 group-hover:w-16"
+                    className="draw-x relative mt-5 block h-px w-8 bg-ink"
                   />
 
                   {/* Fields: Type / Start / Company in three divided cells, About full width below. */}
@@ -340,17 +340,17 @@ export default function Experience() {
             </p>
           </div>
 
-          {/* 2×2 grid of equal event cards (stacked on phones): card shadow + lift, a cut top-left
-              corner, index tab on the top border (accent number), an accent tick on the left
-              border, and a short ink rule that grows on hover while the border darkens to ink. */}
+          {/* 2×2 grid of equal event cards (stacked on phones), static (not clickable): card shadow,
+              a cut top-left corner, index tab on the top border (accent number), an accent tick on
+              the left border, and a short ink rule. */}
           <ul className="grid gap-8 sm:grid-cols-2">
             {techEvents.map((e, i) => (
               <li key={e.title} className="flex" data-reveal>
-                <article className="group card card-lift relative flex w-full flex-col border border-line bg-bg p-6 hover:border-ink">
+                <article className="card relative flex w-full flex-col border border-line bg-bg p-6">
                   <span aria-hidden className="notch" />
                   <span
                     aria-hidden
-                    className="chip absolute -top-2.5 left-6 z-10 py-0 text-[0.65rem] transition-colors duration-200 group-hover:border-ink group-hover:text-ink"
+                    className="chip absolute -top-2.5 left-6 z-10 py-0 text-[0.65rem]"
                   >
                     <span className="text-accent-text">{pad(i + 1)}</span> / {pad(techEvents.length)}
                   </span>
@@ -359,7 +359,7 @@ export default function Experience() {
                   <span className="relative font-mono text-[0.7rem] uppercase tracking-[0.08em] text-muted">Event</span>
                   <span
                     aria-hidden
-                    className="draw-x relative mt-4 block h-px w-8 bg-ink transition-[width] duration-300 group-hover:w-16"
+                    className="draw-x relative mt-4 block h-px w-8 bg-ink"
                   />
                   <h3 className="relative mt-4 text-xl font-semibold leading-snug tracking-[-0.02em] text-ink">{e.title}</h3>
                   <p className="relative mt-auto pt-3 font-mono text-xs text-muted">{e.org}</p>

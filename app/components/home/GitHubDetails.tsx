@@ -45,7 +45,7 @@ const percentLabel = (p: number) => (p > 0 && p < 1 ? "<1%" : `${Math.round(p)}%
 
 /**
  * Top languages as a ranked list: one row per language (rank · name · percentage on the
- * right), split by hairlines; no separators between items. A row's rank darkens on hover.
+ * right), split by hairlines; no separators between items. Static (not links).
  */
 async function TopLanguages() {
   const data = await getTopLanguages();
@@ -55,8 +55,8 @@ async function TopLanguages() {
     <>
       <ol className="mt-6">
         {data.languages.map((language, i) => (
-          <li key={language.name} className="group/lang flex items-baseline gap-3 border-b border-line py-3.5 first:border-t">
-            <span aria-hidden className="w-5 shrink-0 font-mono text-[0.65rem] text-muted transition-colors duration-200 group-hover/lang:text-ink">
+          <li key={language.name} className="flex items-baseline gap-3 border-b border-line py-3.5 first:border-t">
+            <span aria-hidden className="w-5 shrink-0 font-mono text-[0.65rem] text-muted">
               {String(i + 1).padStart(2, "0")}
             </span>
             <span className="min-w-0 flex-1 truncate text-[0.9375rem] font-medium text-ink">{language.name}</span>
@@ -83,7 +83,8 @@ function TickRule({ className = "" }: { className?: string }) {
 }
 
 /**
- * One GitHub activity panel. Frame: 1px border that darkens to ink on hover, corner marks,
+ * One GitHub activity panel (the panel itself is static; only the commit rows and the profile
+ * link inside react on hover). Frame: 1px border, corner marks,
  * a faint diagonal texture fading in from the top-right, and an accent tick on the left
  * border. Inside: a full-width "GitHub activity" caption with a tick-ended rule; Recent
  * commits (left, ~60%) and Top languages (right, ~40%) split by a vertical hairline; and a
@@ -92,10 +93,9 @@ function TickRule({ className = "" }: { className?: string }) {
  */
 export default function GitHubDetails() {
   return (
-    <div className="group relative mt-8" data-reveal>
-      <CornerMarks hover />
-      <div className="card relative border border-line bg-bg p-6 hover:border-ink sm:p-8">
-        <span aria-hidden className="edge-draw" />
+    <div className="relative mt-8" data-reveal>
+      <CornerMarks />
+      <div className="card relative border border-line bg-bg p-6 sm:p-8">
         <span
           aria-hidden
           className="pointer-events-none absolute inset-0 bg-[repeating-linear-gradient(135deg,var(--lines)_0_1px,transparent_1px_9px)] [mask-image:linear-gradient(225deg,#000,transparent_40%)]"

@@ -1,8 +1,8 @@
 "use client";
 
 import { Moon, Sun } from "lucide-react";
-import { useSyncExternalStore } from "react";
-import { toggleTheme, type Theme } from "@/lib/client";
+import { useEffect, useSyncExternalStore } from "react";
+import { followSystemTheme, toggleTheme, type Theme } from "@/lib/client";
 
 /** Follows <html data-theme>, which the pre-paint theme script sets. */
 function subscribe(onChange: () => void) {
@@ -15,6 +15,8 @@ const getServerTheme = (): Theme | null => null;
 
 export default function ThemeToggle() {
   const theme = useSyncExternalStore(subscribe, getTheme, getServerTheme);
+  // Fade along with OS light/dark changes when no theme has been picked on the site.
+  useEffect(() => followSystemTheme(), []);
   const label = theme === "dark" ? "Switch to light mode" : theme === "light" ? "Switch to dark mode" : "Toggle dark mode";
 
   return (

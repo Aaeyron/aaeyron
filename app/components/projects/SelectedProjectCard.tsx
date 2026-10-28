@@ -16,9 +16,9 @@ export default function SelectedProjectCard({ project, index, total }: Props) {
     <article
       id={project.slug}
       aria-labelledby={`sp-${project.slug}`}
-      className="group card card-lift relative flex w-full flex-col border border-line bg-bg hover:border-line-strong"
+      className="card relative flex w-full flex-col border border-line bg-bg"
     >
-      <CornerMarks hover />
+      <CornerMarks />
 
       {project.image && (
         <div className="relative aspect-[16/10] overflow-hidden border-b border-line bg-surface">
@@ -27,7 +27,7 @@ export default function SelectedProjectCard({ project, index, total }: Props) {
             alt={project.image.alt}
             fill
             sizes="(min-width: 1024px) 33vw, (min-width: 768px) 50vw, 100vw"
-            className="object-cover object-top transition-transform duration-300 group-hover:scale-[1.02]"
+            className="object-cover object-top"
           />
         </div>
       )}
@@ -48,7 +48,7 @@ export default function SelectedProjectCard({ project, index, total }: Props) {
 
         <span
           aria-hidden
-          className="draw-x mt-6 block h-px w-8 bg-accent transition-[width] duration-300 group-hover:w-16"
+          className="draw-x mt-6 block h-px w-8 bg-accent"
         />
 
         <h3 id={`sp-${project.slug}`} className="mt-5 text-2xl font-semibold tracking-[-0.025em] sm:text-[1.75rem]">

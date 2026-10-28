@@ -15,8 +15,8 @@ const pad = (n: number) => String(n).padStart(2, "0");
  * - Details side: COMPLETED tag, title, a mono meta line (issuer · issued date), description
  *   (15px, ~1.65 line-height, ~65ch), a "Final project" note when one was required, and a
  *   "Verify credential" link when a public one exists.
- * Card: site shadow + hover lift (the card lifts, the image doesn't zoom), corner marks that
- * turn accent on hover, and an index tab on the top border.
+ * Card (static; only the Verify credential link reacts on hover): site shadow, corner marks,
+ * and an index tab on the top border.
  */
 export default function CertificateCard({
   cert,
@@ -36,12 +36,12 @@ export default function CertificateCard({
   return (
     <article
       aria-labelledby={titleId}
-      className="group card card-lift relative flex flex-col border border-line bg-bg hover:border-ink md:grid md:grid-cols-[minmax(0,9fr)_minmax(0,11fr)]"
+      className="card relative flex flex-col border border-line bg-bg md:grid md:grid-cols-[minmax(0,9fr)_minmax(0,11fr)]"
     >
-      <CornerMarks hover />
+      <CornerMarks />
       <span
         aria-hidden
-        className="chip absolute -top-2.5 left-4 z-10 py-0 text-[0.65rem] transition-colors duration-200 group-hover:border-ink group-hover:text-ink"
+        className="chip absolute -top-2.5 left-4 z-10 py-0 text-[0.65rem]"
       >
         <span className="text-accent-text">{pad(index + 1)}</span> / {pad(total)}
       </span>

@@ -32,7 +32,8 @@ const pad = (n: number) => String(n).padStart(2, "0");
  * Card for one of the three 3rd-year school projects (home "Where I started" and Experience
  * "Early solo projects"), one card per row.
  *
- * Shell: site card shadow + hover lift, 1px field-style border, a 4px tinted top bar.
+ * Shell (static; only the links inside react on hover): site card shadow, 1px field-style
+ * border, a 4px tinted top bar.
  * Layout: from 1024px two columns, about 40% framed image / 60% details, split by a hairline;
  * stacked (image on top) below that.
  * - Image side: a framed box in the PhotoFrame family. 1px border, padding ring with a faint
@@ -68,7 +69,7 @@ export default function SchoolProjectCard({
     <article
       aria-labelledby={titleId}
       style={{ "--tint": look.tint } as CSSProperties}
-      className="field-frame card card-lift group relative flex w-full flex-col border border-[var(--field-line)] bg-bg lg:grid lg:grid-cols-[minmax(0,2fr)_minmax(0,3fr)]"
+      className="field-frame card relative flex w-full flex-col border border-[var(--field-line)] bg-bg lg:grid lg:grid-cols-[minmax(0,2fr)_minmax(0,3fr)]"
     >
       {/* Tinted top bar across the whole card. */}
       <span aria-hidden className="absolute inset-x-0 -top-px z-10 h-1 bg-[var(--tint)]" />
@@ -88,7 +89,7 @@ export default function SchoolProjectCard({
                 alt={project.image.alt}
                 fill
                 sizes={imageSizes}
-                className="object-cover object-top transition-transform duration-300 group-hover:scale-[1.02]"
+                className="object-cover object-top"
               />
             ) : (
               <div className="tex-dots absolute inset-0 grid place-items-center">

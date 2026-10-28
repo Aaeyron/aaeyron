@@ -8,7 +8,7 @@ import { Highlight, Label, SectionHeader } from "../ui/primitives";
  * Accent treatment, matching the other sections (max ~3 accent touches per element):
  * - header: accent "03" and the drawn-in rule with an accent tip (SectionHeader `rule`).
  * - group headings: a short accent tick, the accent group number, a neutral hairline.
- * - items: TechChip (card shadow + hover lift, accent border and corner mark on hover).
+ * - items: TechChip (static labels with the card shadow; they don't react on hover).
  * A "See the full stack" link in the header's action slot goes to /stack.
  */
 export default function TechStack() {

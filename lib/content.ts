@@ -393,11 +393,11 @@ export const techEvents = [
 
 export const navLinks = [
   { href: "/", label: "Home" },
-  { href: "/projects", label: "Projects" },
   { href: "/experience", label: "Experience" },
-  { href: "/resources", label: "Resources" },
+  { href: "/projects", label: "Projects" },
   { href: "/stack", label: "Stack" },
   { href: "/certificates", label: "Certificates" },
+  { href: "/resources", label: "Resources" },
   { href: "/contact", label: "Contact" },
 ];
 

@@ -79,9 +79,9 @@ export default function Hero() {
         </div>
 
         {/* Capabilities: a small caption + hairline rule, then the boxes side by side under the bio
-            on desktop (same width as the bio), stacked below that. Each box: card shadow + lift,
-            crop marks on two corners (accent on hover), accent tick on the left border, and an
-            accent line drawing along the top on hover. A small hand-drawn arrow points at them. */}
+            on desktop (same width as the bio), stacked below that. Each box (static, not clickable): card shadow,
+            crop marks on two corners and an accent tick on the left border.
+            A small hand-drawn arrow points at them. */}
         <div
           className="enter measure mt-4 w-full md:col-start-1 md:row-start-3 md:mt-2"
           style={enterStyle(4)}
@@ -93,10 +93,9 @@ export default function Hero() {
           </div>
           <ul className="grid gap-3 text-left lg:grid-cols-2">
             {capabilities.map((c) => (
-              <li key={c.title} className="field-frame card card-lift group relative border border-[var(--field-line)] bg-bg p-3">
-                <span aria-hidden className="corner corner-hover" style={markTL} />
-                <span aria-hidden className="corner corner-hover" style={markBR} />
-                <span aria-hidden className="edge-draw" />
+              <li key={c.title} className="field-frame card relative border border-[var(--field-line)] bg-bg p-3">
+                <span aria-hidden className="corner" style={markTL} />
+                <span aria-hidden className="corner" style={markBR} />
                 <span aria-hidden className="absolute -left-px top-3 h-4 w-0.5 bg-accent" />
                 <p className="text-base font-semibold leading-snug tracking-[-0.01em] text-ink">{c.title}</p>
                 <p className="mt-0.5 text-[0.8125rem] leading-snug text-ink">{c.detail}</p>
