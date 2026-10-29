@@ -10,13 +10,15 @@ const MESSAGE_MIN = 10;
 const MESSAGE_MAX = 1000;
 const COOLDOWN_S = 30;
 const ENDPOINT = "https://api.web3forms.com/submit";
-// Inlined at build time. Missing → the form falls back to a mailto: link.
+// Inlined at build time (public by design: Web3Forms keys are meant for the browser). If it's
+// missing the form shows its error state; it never opens the visitor's email app.
 const ACCESS_KEY = process.env.NEXT_PUBLIC_WEB3FORMS_KEY;
+const DEV = process.env.NODE_ENV === "development";
 
 type Values = { firstName: string; lastName: string; email: string; phone: string; subject: string; message: string };
 type Field = keyof Values;
 type Errors = Partial<Record<Field, string>>;
-type Status = "idle" | "sending" | "success" | "error" | "mailto";
+type Status = "idle" | "sending" | "success" | "error";
 
 const EMPTY: Values = { firstName: "", lastName: "", email: "", phone: "", subject: "", message: "" };
 const REQUIRED: Field[] = ["firstName", "lastName", "email", "subject", "message"];
@@ -36,18 +38,7 @@ function validate(v: Values): Errors {
 }
 
 const fullName = (v: Values) => `${v.firstName.trim()} ${v.lastName.trim()}`;
-const subjectFor = (v: Values) => `Portfolio message: ${v.subject.trim()} from ${fullName(v)}`;
-
-function mailtoHref(v: Values) {
-  const body = [
-    `Name: ${fullName(v)}`,
-    `Email: ${v.email.trim()}`,
-    `Phone: ${v.phone.trim() || "Not given"}`,
-    "",
-    v.message.trim(),
-  ].join("\n");
-  return `mailto:${profile.email}?subject=${encodeURIComponent(subjectFor(v))}&body=${encodeURIComponent(body)}`;
-}
+const subjectFor = (v: Values) => `New message from aaeyron.tech: ${v.subject.trim()}`;
 
 function FieldLabel({ htmlFor, optional, children }: { htmlFor: string; optional?: boolean; children: ReactNode }) {
   return (
@@ -136,13 +127,9 @@ export default function ContactForm() {
     // Bots fill the hidden field: pretend it worked, send nothing.
     if (honeypot.current?.value) return finishSuccess();
 
-    // Debug: the key is public by design (NEXT_PUBLIC_ is inlined into the browser bundle).
-    console.log("[contact] Web3Forms key:", ACCESS_KEY || "(missing)", "endpoint:", ENDPOINT);
-
     if (!ACCESS_KEY) {
-      console.warn("[contact] NEXT_PUBLIC_WEB3FORMS_KEY is not set at build time; opening mailto instead.");
-      window.location.href = mailtoHref(values);
-      setStatus("mailto");
+      if (DEV) console.warn("[contact] NEXT_PUBLIC_WEB3FORMS_KEY is not set (add it to .env.local / Vercel and rebuild). The form can't send.");
+      setStatus("error"); // entered text is kept
       return;
     }
 
@@ -155,34 +142,26 @@ export default function ContactForm() {
         body: JSON.stringify({
           access_key: ACCESS_KEY,
           subject: subjectFor(values),
-          from_name: "Portfolio contact form",
-          replyto: email,
+          from_name: "aaeyron.tech contact form",
+          replyto: email, // Web3Forms' Reply-To field, so replying goes straight to the visitor
           name: fullName(values),
-          firstName: values.firstName.trim(),
-          lastName: values.lastName.trim(),
           email,
           phone: values.phone.trim() || "Not given",
           topic: values.subject.trim(),
           message: values.message.trim(),
-          botcheck: "",
+          botcheck: false,
         }),
       });
-      const data = (await res.json().catch(() => null)) as { success?: boolean; message?: string } | null;
-      console.log("[contact] Web3Forms response:", res.status, data);
-      if (!res.ok || !data?.success) throw new Error(data?.message || `HTTP ${res.status}`);
+      const data = (await res.json().catch(() => null)) as { success?: boolean } | null;
+      if (!res.ok || !data?.success) throw new Error(`Web3Forms responded ${res.status}`);
       finishSuccess();
     } catch (err) {
-      console.error("[contact] Web3Forms send failed:", err);
+      if (DEV) console.error("[contact] Web3Forms send failed:", err);
       setStatus("error"); // entered text is kept
     }
   };
 
   const describedBy = (...ids: (string | false | undefined)[]) => ids.filter(Boolean).join(" ") || undefined;
-  const emailLink = (
-    <a href={`mailto:${profile.email}`} className="link break-all">
-      {profile.email}
-    </a>
-  );
 
   /** A single-line text input with label, corner marks and inline error. */
   const textField = (
@@ -302,16 +281,19 @@ export default function ContactForm() {
           </div>
         </form>
 
-        {/* Announces and shows errors and the mailto note. */}
+        {/* Announces and shows a failed send. The email link is an optional manual fallback
+            the visitor can choose; nothing ever opens their mail app automatically. */}
         <div role="status" aria-live="polite">
           {status === "error" && (
             <p className="mt-8 border border-ink p-4 text-sm">
-              Could not send. Please try again or email me directly at {emailLink}.
-            </p>
-          )}
-          {status === "mailto" && (
-            <p className="mt-8 border border-line-strong p-4 text-sm text-muted">
-              Your email app should open with your message filled in. If it does not, email me at {emailLink}.
+              Couldn’t send your message. Please try again.{" "}
+              <span className="text-muted">
+                Or{" "}
+                <a href={`mailto:${profile.email}`} className="link">
+                  email me instead
+                </a>{" "}
+                at <span className="break-all">{profile.email}</span>.
+              </span>
             </p>
           )}
         </div>
