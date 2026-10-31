@@ -31,9 +31,9 @@ function CopyEmail() {
         type="button"
         onClick={onCopy}
         aria-label={copied ? "Email address copied" : "Copy email address"}
-        className="relative z-10 grid w-12 place-items-center text-muted transition-colors duration-200 hover:bg-surface hover:text-accent-text"
+        className="relative z-10 grid w-12 place-items-center text-muted transition-colors duration-200 hover:bg-surface hover:text-ink"
       >
-        {copied ? <Check size={17} aria-hidden className="text-accent-text" /> : <Copy size={16} aria-hidden />}
+        {copied ? <Check size={17} aria-hidden className="text-ink" /> : <Copy size={16} aria-hidden />}
       </button>
       {/* Visual "Copied!" flag; screen readers get the live region below. */}
       <span
@@ -66,12 +66,12 @@ export function ContactButtonsCompact({ className = "", startIndex = 0 }: { clas
               href={link.href}
               aria-label={link.ariaLabel}
               {...(link.external ? { target: "_blank", rel: "noopener noreferrer" } : {})}
-              className="group relative flex min-h-12 items-center gap-3 border border-line bg-chrome px-2 transition-[border-color,transform] duration-200 hover:border-accent focus-visible:border-accent active:scale-[0.97]"
+              className="group relative flex min-h-12 items-center gap-3 border border-line bg-chrome px-2 transition-[border-color,transform] duration-200 hover:border-ink focus-visible:border-ink active:scale-[0.97]"
             >
               <CornerMarks hover inset="-4px" />
               <span
                 aria-hidden
-                className="grid size-8 shrink-0 place-items-center border border-line transition-colors duration-200 group-hover:border-accent group-hover:bg-accent group-hover:text-on-accent group-focus-visible:border-accent group-focus-visible:bg-accent group-focus-visible:text-on-accent group-active:border-accent group-active:bg-accent group-active:text-on-accent"
+                className="grid size-8 shrink-0 place-items-center border border-line transition-colors duration-200 group-hover:border-ink group-hover:bg-ink group-hover:text-bg group-focus-visible:border-ink group-focus-visible:bg-ink group-focus-visible:text-bg group-active:border-ink group-active:bg-ink group-active:text-bg"
               >
                 <Icon size={15} aria-hidden />
               </span>
@@ -80,7 +80,7 @@ export function ContactButtonsCompact({ className = "", startIndex = 0 }: { clas
               <ArrowUpRight
                 size={16}
                 aria-hidden
-                className="mr-1 shrink-0 text-muted transition-[transform,color] duration-200 group-hover:-translate-y-0.5 group-hover:translate-x-0.5 group-hover:text-accent-text"
+                className="mr-1 shrink-0 text-muted transition-[transform,color] duration-200 group-hover:-translate-y-0.5 group-hover:translate-x-0.5 group-hover:text-ink"
               />
             </a>
           </li>
@@ -108,11 +108,11 @@ export default function ContactButtons({ className = "" }: { className?: string 
             <CornerMarks hover />
 
             {/* Index label, sitting on the top border. */}
-            <span aria-hidden className="chip absolute -top-2.5 left-3 z-10 py-0 text-[0.65rem] transition-colors duration-200 group-hover:border-accent group-hover:text-accent-text group-focus-within:border-accent group-focus-within:text-accent-text">
+            <span aria-hidden className="chip absolute -top-2.5 left-3 z-10 py-0 text-[0.65rem] transition-colors duration-200 group-hover:border-ink group-hover:text-ink group-focus-within:border-ink group-focus-within:text-ink">
               {String(i + 1).padStart(2, "0")}
             </span>
 
-            <div className="card relative flex border border-line bg-bg group-hover:border-accent group-focus-within:border-accent">
+            <div className="card relative flex border border-line bg-bg group-hover:border-ink group-focus-within:border-ink">
               <a
                 href={link.href}
                 aria-label={link.ariaLabel}
@@ -122,7 +122,7 @@ export default function ContactButtons({ className = "" }: { className?: string 
               >
                 <span
                   aria-hidden
-                  className="grid size-11 shrink-0 place-items-center border border-line text-ink transition-colors duration-200 group-hover:border-accent group-hover:bg-accent group-hover:text-on-accent group-focus-within:border-accent group-focus-within:bg-accent group-focus-within:text-on-accent"
+                  className="grid size-11 shrink-0 place-items-center border border-line text-ink transition-colors duration-200 group-hover:border-ink group-hover:bg-ink group-hover:text-bg group-focus-within:border-ink group-focus-within:bg-ink group-focus-within:text-bg"
                 >
                   <Icon size={18} aria-hidden />
                 </span>
@@ -133,16 +133,16 @@ export default function ContactButtons({ className = "" }: { className?: string 
                 <ArrowUpRight
                   size={18}
                   aria-hidden
-                  className="shrink-0 text-muted transition-[transform,color] duration-200 group-hover:-translate-y-0.5 group-hover:translate-x-0.5 group-hover:text-accent-text group-focus-within:-translate-y-0.5 group-focus-within:translate-x-0.5 group-focus-within:text-accent-text"
+                  className="shrink-0 text-muted transition-[transform,color] duration-200 group-hover:-translate-y-0.5 group-hover:translate-x-0.5 group-hover:text-ink group-focus-within:-translate-y-0.5 group-focus-within:translate-x-0.5 group-focus-within:text-ink"
                 />
               </a>
 
               {link.id === "email" && <CopyEmail />}
 
-              {/* Thin accent line drawn across the bottom on hover / focus. */}
+              {/* Thin ink line drawn across the bottom on hover / focus. */}
               <span
                 aria-hidden
-                className="pointer-events-none absolute -bottom-px left-0 h-0.5 w-full origin-left scale-x-0 bg-accent transition-transform duration-300 group-hover:scale-x-100 group-focus-within:scale-x-100"
+                className="pointer-events-none absolute -bottom-px left-0 h-0.5 w-full origin-left scale-x-0 bg-ink transition-transform duration-300 group-hover:scale-x-100 group-focus-within:scale-x-100"
               />
             </div>
           </li>

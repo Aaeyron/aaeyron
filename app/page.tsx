@@ -23,7 +23,7 @@ function MoreLink({ href, children }: { href: string; children: React.ReactNode 
   return (
     <Link
       href={href}
-      className="group inline-flex min-h-11 items-center gap-1.5 font-medium transition-colors duration-200 hover:text-accent-text"
+      className="group inline-flex min-h-11 items-center gap-1.5 font-medium text-ink"
     >
       {children}
       <ArrowRight size={16} aria-hidden className="transition-transform duration-200 group-hover:translate-x-0.5" />
@@ -98,7 +98,7 @@ export default function Home() {
             index="04"
             label="Certifications"
             title={<>Skills, <Highlight>certified</Highlight>.</>}
-            action={<MoreLink href="/experience#certifications">View all certificates</MoreLink>}
+            action={<MoreLink href="/certificates">View all certificates</MoreLink>}
           >
             <p>Courses I’ve completed.</p>
           </SectionHeader>

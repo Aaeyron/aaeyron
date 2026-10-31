@@ -16,7 +16,7 @@ const firstName = profile.shortName.split(" ")[0];
 /**
  * Icon-only social links in square boxes with corner marks. Icons use
  * currentColor, so they follow the theme (dark on light, light on dark);
- * hover/focus fills the box with the accent colour.
+ * hover/focus fills the box with ink (inverting, like the "See my work" button).
  */
 export default function SocialIcons({ className = "" }: { className?: string }) {
   return (
@@ -32,7 +32,7 @@ export default function SocialIcons({ className = "" }: { className?: string }) 
                 target="_blank"
                 rel="noopener noreferrer"
                 aria-label={`${firstName} on ${s.label} (opens in a new tab)`}
-                className="group relative grid size-11 place-items-center border border-line bg-chrome text-ink transition-[background-color,border-color,color,transform] duration-200 hover:border-accent hover:bg-accent hover:text-on-accent focus-visible:border-accent focus-visible:bg-accent focus-visible:text-on-accent active:scale-95"
+                className="group relative grid size-11 place-items-center border border-line bg-chrome text-ink transition-[background-color,border-color,color,transform] duration-200 hover:border-ink hover:bg-ink hover:text-bg focus-visible:border-ink focus-visible:bg-ink focus-visible:text-bg active:scale-95"
               >
                 <CornerMarks hover inset="-4px" />
                 <Icon

@@ -3,16 +3,21 @@ import type { ComponentProps, ReactNode } from "react";
 
 type Variant = "primary" | "secondary" | "ghost" | "ink";
 
+// Every boxed button copies the home hero's "See my work" / "View résumé" pair: sharp corners,
+// the same size and type, and no blue in any state (the accent is for text and static details).
 const base =
-  "group inline-flex min-h-11 cursor-pointer items-center disabled:cursor-not-allowed disabled:opacity-50 justify-center gap-2 rounded-md px-5 text-[0.9375rem] font-medium whitespace-nowrap transition-[background-color,border-color,color,transform] duration-200 ease-out active:translate-y-px";
+  "sharp group inline-flex min-h-11 cursor-pointer items-center disabled:cursor-not-allowed disabled:opacity-50 justify-center gap-2 rounded-none px-5 text-[0.9375rem] font-medium whitespace-nowrap transition-[background-color,border-color,color,transform] duration-200 ease-out active:translate-y-px";
+
+// "See my work": ink fill that inverts on hover, plus a faint dot strip on the right
+// (.btn-dots in globals.css; extra right padding keeps it clear of the label/icon).
+const inkButton = "btn-dots relative border border-ink bg-ink pr-9 text-bg hover:bg-bg hover:text-ink";
 
 const variants: Record<Variant, string> = {
-  primary: "bg-accent text-on-accent hover:bg-[color-mix(in_srgb,var(--accent)_82%,black)]",
-  secondary: "border border-line-strong bg-transparent text-ink hover:border-accent hover:text-accent-text",
-  ghost: "px-3 text-ink hover:text-accent-text",
-  // Black/white only: ink fill that inverts on hover, plus a faint dot strip on the right
-  // (.btn-dots in globals.css; extra right padding keeps it clear of the label/icon).
-  ink: "btn-dots relative border border-ink bg-ink pr-9 text-bg hover:bg-bg hover:text-ink",
+  primary: inkButton,
+  // "View résumé": outline that firms up to ink on hover.
+  secondary: "border border-line-strong bg-transparent text-ink hover:border-ink",
+  ghost: "px-3 text-muted hover:text-ink",
+  ink: inkButton,
 };
 
 export const buttonClass = (variant: Variant = "primary", extra = "") =>

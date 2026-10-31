@@ -1,13 +1,13 @@
 import { ArrowUpRight, ExternalLink } from "lucide-react";
 import type { Project } from "@/lib/content";
+import { buttonClass } from "../ui/ButtonLink";
 
-const githubCls =
-  "group/gh inline-flex min-h-11 items-center gap-1.5 font-medium text-ink transition-colors duration-200 hover:text-accent-text";
+// Text link: ink in every state; only the arrow moves on hover.
+const githubCls = "group/gh inline-flex min-h-11 items-center gap-1.5 font-medium text-ink";
 
 /**
- * Actions for a school project: "Live demo" (primary, accent) when a real
- * demo URL exists, then "View on GitHub" (secondary). Side by side, stacked
- * on small phones.
+ * Actions for a school project: "Live demo" (the shared ink button, like "See my work") when a
+ * real demo URL exists, then "View on GitHub" (text link). Side by side, stacked on small phones.
  */
 export default function ProjectLinks({ project, className = "" }: { project: Project; className?: string }) {
   if (!project.live && !project.repo) return null;
@@ -22,13 +22,13 @@ export default function ProjectLinks({ project, className = "" }: { project: Pro
           target="_blank"
           rel="noopener noreferrer"
           aria-label={`Open ${project.title} live demo (opens in a new tab)`}
-          className="group/live inline-flex min-h-11 items-center gap-2 bg-accent px-4 font-medium text-on-accent transition-[background-color,transform] duration-200 hover:bg-[color-mix(in_srgb,var(--accent)_82%,black)] active:scale-[0.97]"
+          className={buttonClass("ink")}
         >
           Live demo
           <ExternalLink
             size={15}
             aria-hidden
-            className="transition-transform duration-200 group-hover/live:-translate-y-0.5 group-hover/live:translate-x-0.5"
+            className="transition-transform duration-200 group-hover:-translate-y-0.5 group-hover:translate-x-0.5"
           />
         </a>
       )}

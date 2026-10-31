@@ -12,9 +12,8 @@ const markTL: CSSProperties = { top: -4, left: -4, borderTopWidth: 1, borderLeft
 const markBR: CSSProperties = { bottom: -4, right: -4, borderBottomWidth: 1, borderRightWidth: 1, transformOrigin: "bottom right" };
 
 /**
- * From 768px: a text column (name → bio → capabilities → buttons) beside the photo. The About
- * label sits in its own row, so the photo's top lines up with the name. The text column and the
- * photo end at about the same height, so nothing is left floating and the buttons stay in view.
+ * From 768px: a text column (About → name → bio → capabilities → buttons) beside the photo. The
+ * photo starts in the About label's row, so the top of the label and the top of the frame line up.
  * Under 768px: one left-aligned column (photo centered): About → name → bio → photo → capabilities → buttons.
  *
  * The photo is sized exactly like the "05 Focus" photo (grid-12 col-span-4, 4:5), measured from
@@ -23,10 +22,12 @@ const markBR: CSSProperties = { bottom: -4, right: -4, borderBottomWidth: 1, bor
  */
 export default function Hero() {
   return (
-    <section aria-labelledby="hero-title" className="@container container-x pb-20 pt-12 sm:pb-28 sm:pt-20 lg:pt-24">
-      <div className="grid gap-y-8 md:grid-cols-[minmax(0,1fr)_calc(50cqw-12px)] md:grid-rows-[auto_auto_auto_auto_1fr] md:gap-x-10 lg:grid-cols-[minmax(0,1fr)_calc(100cqw/3-16px)] lg:gap-x-16">
+    <section aria-labelledby="hero-title" className="@container container-x py-[var(--section-pad)]">
+      <div className="grid gap-y-8 md:grid-cols-[minmax(0,1fr)_calc(50cqw-12px)] md:grid-rows-[auto_auto_auto_1fr] md:gap-x-10 lg:grid-cols-[minmax(0,1fr)_calc(100cqw/3-16px)] lg:gap-x-16">
         <div className="md:col-start-1 md:row-start-1">
-          <div className="enter" style={enterStyle(0)}>
+          {/* md:flex (not a line box) so, beside the photo, the label's top border sits exactly on the
+              row's top line. Phones keep the original line box. */}
+          <div className="enter md:flex" style={enterStyle(0)}>
             {/* "About" + a short tagline, split by a thin divider (same as the index divider in <Label>). */}
             <Label className="field-label" wrap>
               <span className="inline-flex flex-wrap items-center gap-x-2 gap-y-1">
@@ -61,10 +62,12 @@ export default function Hero() {
           </p>
         </div>
 
-        {/* Photo in the shared PhotoFrame (same frame as the 05 Focus and Experience photos).
-            Spans the text rows on desktop; the trailing 1fr row absorbs any extra height. */}
+        {/* Photo in the shared PhotoFrame (same frame as the 05 Focus photo). From 768px it starts
+            in the About label's row (both align to the top), so the label's top border and the
+            frame's top border share one line. The buttons sit in the last (1fr) row, which takes
+            any extra height when the photo is taller, without leaving an empty row gap below. */}
         <div
-          className="enter mx-auto mt-2 w-[min(100cqw,300px)] md:col-start-2 md:row-span-4 md:row-start-2 md:mx-0 md:mt-0 md:w-full md:self-start"
+          className="enter mx-auto mt-2 w-[min(100cqw,300px)] md:col-start-2 md:row-span-4 md:row-start-1 md:mx-0 md:mt-0 md:w-full md:self-start"
           style={enterStyle(3)}
         >
           <PhotoFrame
@@ -107,7 +110,7 @@ export default function Hero() {
         {/* Directly under the capabilities, set off by a hairline divider the same width as the
             bio and boxes. Stacked full-width on small phones. */}
         <div
-          className="enter measure flex w-full flex-col gap-3 border-t border-line pt-6 min-[400px]:flex-row md:col-start-1 md:row-start-4"
+          className="enter measure flex w-full flex-col gap-3 border-t border-line pt-6 min-[400px]:flex-row md:col-start-1 md:row-start-4 md:self-start"
           style={enterStyle(5)}
         >
           <ButtonLink href="#work" variant="ink" className="sharp w-full rounded-none! min-[400px]:w-auto">

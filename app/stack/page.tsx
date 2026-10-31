@@ -37,7 +37,7 @@ export default function Stack() {
         <p>Languages, frameworks and tools I build with.</p>
       </SectionHeader>
 
-      <div className="space-y-16 sm:space-y-20">
+      <div className="space-y-[var(--block-gap)]">
         {techStack.map((group, gi) => {
           const id = group.group.toLowerCase().replace(/&/g, "and").replace(/[^a-z0-9]+/g, "-");
           return (

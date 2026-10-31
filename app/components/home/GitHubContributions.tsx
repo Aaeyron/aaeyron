@@ -113,7 +113,7 @@ export default function GitHubContributions() {
           title={<>Learning through <Highlight>building</Highlight>.</>}
           action={
             <a href={githubProfile.href} target="_blank" rel="noopener noreferrer" aria-label={githubProfile.ariaLabel}
-              className="group inline-flex min-h-11 items-center gap-1.5 font-medium transition-colors duration-200 hover:text-accent-text">
+              className="group inline-flex min-h-11 items-center gap-1.5 font-medium text-ink">
               View GitHub <ArrowUpRight size={16} aria-hidden className="transition-transform duration-200 group-hover:-translate-y-0.5 group-hover:translate-x-0.5" />
             </a>
           }

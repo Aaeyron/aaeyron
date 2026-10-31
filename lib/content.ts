@@ -19,11 +19,11 @@ export const profile = {
   whatsapp: { display: "09156604726", href: "https://wa.me/639156604726" },
   status: "Open to opportunities & collaborations",
   availability: "Open to opportunities & collaborations. Feel free to reach out.",
-  /** Profile photo, shared by the home About section and /experience "About me". */
+  /** Profile photo, used by the home Focus section. */
   photo: "/images/MeAgain.jpeg",
 };
 
-/** About text in Aaron's own wording: /experience "About me" section. */
+/** About text in Aaron's own wording. Not shown anywhere right now (the About page was removed). */
 export const aboutMe = {
   heading: "Hi, I’m Aaron.",
   paragraphs: [
@@ -33,13 +33,13 @@ export const aboutMe = {
   ],
 };
 
-/** Home "Focus" section: work and direction only (personal details stay on /experience). */
+/** Home "Focus" section: work and direction only. */
 export const homeFocus = {
   heading: "What I’m working toward.",
   text: "I’m building my skills as a software and AI/ML engineer through real projects, from full-stack web apps to an AI-assisted accessibility app for my capstone. I focus on making software that is simple, useful, and easy to use.",
 };
 
-/** /experience "Profile" box: two capability areas side by side (icons are picked in the page by id). */
+/** "Profile" box: two capability areas side by side. Not shown anywhere right now (the About page was removed). */
 export const profileCapabilities = [
   {
     id: "architecture",
@@ -286,7 +286,7 @@ export const techStack: TechGroup[] = [
   },
 ];
 
-// Certifications shown on the site (home + /experience), in display order.
+// Certifications shown on the site (home + /certificates), in display order.
 // Event certificates (GDG Certificate.png, Cyber Hygiene Cert.png)
 // stay in /public/images but are intentionally not displayed.
 /**
@@ -351,7 +351,7 @@ export const certifications: Certificate[] = [
   },
 ];
 
-/** "Currently working on" copy for /experience (Aaron's wording). */
+/** "Currently working on" copy (Aaron's wording). Not shown anywhere right now. */
 export const currentWork = {
   featured: {
     slug: "tactilelens",
@@ -362,7 +362,7 @@ export const currentWork = {
   also: ["mg-sakura-learning-platform", "jm-learning-hub"],
 };
 
-/** "Where I started" section on /experience: the 3 school projects, framed as early solo work. */
+/** "Early solo projects" framing for the 3 school projects. Not shown anywhere right now (the About page was removed). */
 export const earlySolo = {
   intro:
     "My 3rd year of college was my first time building projects on my own as a solo developer. These three school projects are where I practised, made mistakes, and strengthened my skills across frontend, backend, and UI/UX.",
@@ -370,6 +370,161 @@ export const earlySolo = {
   note: "I built them to learn. They were class projects, not real products. Two of them were never put online; FlashMind has a live demo.",
   labels: ["School project", "3rd year college", "Solo developer"],
   marker: "v1 · first solo build",
+};
+
+/** A bullet in a product detail group: plain text, or a bold lead-in followed by text. */
+export type ProductBullet = string | { lead: string; text: string };
+
+/**
+ * A product built during an internship: a short summary in its internship card on Experience,
+ * and the full write-up on its own page at /experience/<slug>.
+ */
+export type InternshipProduct = {
+  slug: string;
+  title: string;
+  /** Page heading: `titleHighlight` (accent colour) followed by `titleTail`. */
+  titleHighlight: string;
+  titleTail: string;
+  tagline: string;
+  /** `title` split into the two lines shown on the Experience card (joined, they equal `title`). */
+  titleLines: [string, string];
+  /** Short version for the Experience card: two-line overview and four chips. */
+  summary: string;
+  summaryStack: string[];
+  links: { live: string; code: string };
+  overview: string;
+  startingPoint: string;
+  stats: { value: string; label: string }[];
+  stack: string[];
+  /** Numbered detail sections (01–07) on the product page; `id` is the section anchor. */
+  groups: { id: string; title: string; items: ProductBullet[] }[];
+  footnotes: string[];
+  /** Optional screenshots (files in /public). Not rendered yet; add entries when images exist. */
+  screenshots: { src: string; alt: string; caption?: string }[];
+};
+
+/** First product from the Apno AI internship. Only facts Aaron provided. */
+export const aiCareerCopilot: InternshipProduct = {
+  slug: "ai-career-copilot",
+  title: "AI Career Copilot: LLM Resume Analyzer",
+  titleHighlight: "AI Career Copilot",
+  titleTail: ": LLM Resume Analyzer",
+  titleLines: ["AI Career", "Copilot: LLM Resume Analyzer"],
+  tagline: "Built during my AI/ML internship at Apno AI (Oct 2026)",
+  summary:
+    "A web app that compares a resume against a job description and returns an ATS-style match score, matched and missing keywords, strengths, specific rewrite suggestions, and projects to close skill gaps.",
+  summaryStack: ["Gemini API", "Vercel Serverless", "Prompt Engineering", "pdf.js"],
+  links: {
+    live: "https://ai-career-copilot-aaeyron.vercel.app",
+    code: "https://github.com/Aaeyron/AI-Career-Copilot",
+  },
+  overview:
+    "A web app that compares a resume against a job description and returns an ATS-style match score, matched and missing keywords, strengths, specific rewrite suggestions, and projects to close skill gaps. It’s aimed at students and fresh graduates applying to software, data, and AI/ML roles.",
+  startingPoint:
+    "The internship starter was a single HTML file with the API key exposed in the browser and one basic prompt. I turned it into a secured, tested, deployed product.",
+  stats: [
+    { value: "7 / 7", label: "scored test pairings landed in their expected range" },
+    { value: "26", label: "automated API checks" },
+    { value: "77", label: "automated UI checks" },
+  ],
+  stack: [
+    "HTML, CSS, JavaScript",
+    "Node.js serverless on Vercel",
+    "Google Gemini API (gemini-3.5-flash)",
+    "pdf.js",
+    "Tesseract.js",
+    "localStorage",
+    "Git and GitHub",
+    "PowerShell",
+  ],
+  groups: [
+    {
+      id: "security",
+      title: "Security and architecture",
+      items: [
+        "Moved the Gemini API key out of the browser into a Vercel serverless function (Node.js), so it exists only as an environment variable.",
+        "Sent the key in a request header (not the URL) and kept it out of logs.",
+        "Escaped all AI and user text before rendering, to prevent XSS.",
+        "Added input limits and prompt-injection defenses: user text is wrapped in tags and treated as data.",
+        { lead: "Handled secrets properly:", text: ".gitignore, a placeholder .env.example, and a pre-commit scan." },
+      ],
+    },
+    {
+      id: "llm",
+      title: "LLM and prompt engineering",
+      items: [
+        { lead: "Prompt structure:", text: "role, task, scoring rubric with calibration bands, format, rules, and one few-shot example." },
+        "Structured output with Gemini’s responseSchema and JSON mode, which removed malformed-JSON failures.",
+        "A server-side check that moves any “missing” keyword actually present in the resume back to “matched”.",
+        "Versioned prompts (v1, v2, and a v3 I tested and reverted when it measured no better), all logged in PROMPT_LOG.md.",
+      ],
+    },
+    {
+      id: "reliability",
+      title: "Reliability",
+      items: [
+        "Diagnosed a production failure (a retired model returning 404) by testing candidate models with the real key.",
+        "Moved to gemini-3.5-flash with an automatic fallback to gemini-3.1-flash-lite on 503, 429, or 404.",
+        "Added a 45-second timeout, correct Gemini 3 thinking settings, and logging of status and error messages.",
+      ],
+    },
+    {
+      id: "evaluation",
+      title: "Evaluation",
+      items: [
+        "Wrote a test plan with 5 fictional resumes, 2 job descriptions, and 7 scored pairings with expected ranges.",
+        "Every v2 score landed in its expected range, and the ordering held (strong candidate > fresh grad > weak and non-tech resumes).",
+        { lead: "Edge tests:", text: "a prompt-injection resume was ignored, an XSS payload was not executed, and a recipe pasted as a resume scored 0." },
+        { lead: "Automated tests:", text: "26 API checks and 77 UI checks, plus a real end-to-end script." },
+      ],
+    },
+    {
+      id: "features",
+      title: "Features",
+      items: [
+        {
+          lead: "PDF resume upload:",
+          text: "client-side with pdf.js. It joins wrapped lines, normalizes bullets, reads two-column layouts, and gives friendly errors for scanned, password-protected, renamed, and oversized files.",
+        },
+        {
+          lead: "Job description screenshot upload:",
+          text: "in-browser OCR with Tesseract.js, with drag-and-drop and paste. Large images are scaled down, dark-mode screenshots are inverted, and low-confidence text gets a warning. Nothing is sent to a server.",
+        },
+        {
+          lead: "Saved history:",
+          text: "the last 10 results in localStorage, reopened with no API call. It stores results and a label, not the resume text.",
+        },
+        {
+          lead: "UI:",
+          text: "aligned layout, 44px mobile tap targets, and an accessible inline SVG icon set in place of emoji, with a test that fails if an emoji comes back.",
+        },
+      ],
+    },
+    {
+      id: "learned",
+      title: "What I learned",
+      items: [
+        { lead: "Prompt changes need measurement.", text: "My v3 prompt looked reasonable but did no better than v2, so I reverted it." },
+        { lead: "Model names go stale.", text: "Production broke because a model was retired, which is why I added a fallback and logging." },
+        { lead: "Secrets belong on the server.", text: "Anything in browser code is public." },
+        { lead: "Free-tier limits are a design constraint.", text: "The main model allows about 20 requests a day, which shaped the fallback design." },
+      ],
+    },
+    {
+      id: "limitations",
+      title: "Known limitations",
+      items: [
+        "Some rewrite suggestions can add details not in the resume. I measured this, and a stricter prompt did not fix it. A server-side check would be the next step.",
+        "“Or” requirements (AWS or GCP or Azure) are counted as missing.",
+        "OCR accuracy depends on image quality, and PDFs with 3+ columns aren’t perfectly cleaned.",
+      ],
+    },
+  ],
+  footnotes: [
+    "The live demo runs on the free Gemini tier, so a response may be slow or use the fallback model.",
+    "Built with AI-assisted development; I designed the prompts, ran the evaluation, and made the deployment decisions.",
+  ],
+  screenshots: [],
 };
 
 /** Experience entries. Only details Aaron provided. */
@@ -380,6 +535,8 @@ export const experience = [
     companyNote: "A Government of India registered MSME enterprise.",
     type: "Internship",
     start: { label: "October 1, 2026", iso: "2026-10-01" },
+    /** Products built during this internship (featured under the card on Experience). */
+    builtDuring: [aiCareerCopilot],
   },
 ];
 
@@ -428,18 +585,6 @@ export type ResourceGroup =
 
 export const resourceGroups: ResourceGroup[] = [
   {
-    id: "learn-ai-ml",
-    label: "AI / ML",
-    title: "Learn AI/ML",
-    kind: "links",
-    links: [
-      { title: "Google ML Crash Course", url: "https://developers.google.com/machine-learning/crash-course" },
-      { title: "Hugging Face LLM Course", url: "https://huggingface.co/learn/llm-course/chapter1/1" },
-      { title: "DeepLearning.AI Courses", url: "https://www.deeplearning.ai/courses" },
-      { title: "Kaggle Learn", url: "https://www.kaggle.com/learn" },
-    ],
-  },
-  {
     id: "where-i-started",
     label: "Journey",
     title: "Where I started my journey",
@@ -452,196 +597,6 @@ export const resourceGroups: ResourceGroup[] = [
         { title: "Introduction to Artificial Intelligence", url: "https://cs50.harvard.edu/ai/" },
       ],
     },
-  },
-  {
-    id: "prompt-engineering",
-    label: "Prompting",
-    title: "Prompt engineering",
-    kind: "links",
-    links: [
-      {
-        title: "Prompt engineering with Claude",
-        url: "https://platform.claude.com/docs/en/build-with-claude/prompt-engineering/overview",
-      },
-      {
-        title: "OpenAI prompt engineering",
-        url: "https://developers.openai.com/api/docs/guides/prompt-engineering?api-mode=responses",
-      },
-    ],
-  },
-  {
-    id: "math-fundamentals",
-    label: "Math",
-    title: "Math and fundamentals",
-    kind: "links",
-    links: [
-      {
-        title: "3Blue1Brown: Essence of Linear Algebra",
-        url: "https://www.3blue1brown.com/topics/linear-algebra",
-        status: "next",
-        why: "The math behind the models.",
-      },
-      {
-        title: "3Blue1Brown: Neural Networks",
-        url: "https://www.3blue1brown.com/topics/neural-networks",
-        status: "next",
-        why: "The math behind the models.",
-      },
-      {
-        title: "Mathematics for Machine Learning",
-        url: "https://mml-book.github.io/",
-        status: "next",
-        why: "The math behind the models.",
-        note: "Book PDF kept freely available by the authors.",
-      },
-      {
-        title: "Khan Academy Math",
-        url: "https://www.khanacademy.org/math",
-        status: "next",
-        why: "The math behind the models.",
-      },
-    ],
-  },
-  {
-    id: "mlops-data",
-    label: "MLOps",
-    title: "MLOps, DevOps and data engineering",
-    kind: "links",
-    links: [
-      {
-        title: "MLOps Zoomcamp",
-        url: "https://datatalks.club/blog/mlops-zoomcamp.html",
-        status: "learning",
-        why: "Tracking, pipelines, deployment and monitoring.",
-        note: "Live cohort or self-paced; materials on GitHub.",
-      },
-      {
-        title: "Machine Learning Zoomcamp",
-        url: "https://datatalks.club/blog/machine-learning-zoomcamp.html",
-        status: "learning",
-        why: "ML models plus Docker and Kubernetes deployment.",
-        note: "Live cohort or self-paced; materials on GitHub.",
-      },
-      {
-        title: "Data Engineering Zoomcamp",
-        url: "https://datatalks.club/blog/data-engineering-zoomcamp.html",
-        status: "next",
-        why: "Pipelines, warehouses, dbt, Spark, Kafka.",
-        note: "Materials available to follow at your own pace.",
-      },
-      { title: "Made With ML", url: "https://madewithml.com/", status: "next", why: "Production ML practice." },
-      {
-        title: "Full Stack Deep Learning",
-        url: "https://fullstackdeeplearning.com/",
-        status: "next",
-        why: "Production ML practice.",
-      },
-    ],
-  },
-  {
-    id: "llms-agents-mcp",
-    label: "LLMs",
-    title: "LLMs, agents and MCP",
-    kind: "links",
-    links: [
-      {
-        title: "LLM Zoomcamp",
-        url: "https://datatalks.club/blog/llm-zoomcamp.html",
-        status: "learning",
-        why: "RAG, vector search, evaluation, agent patterns.",
-        note: "Live cohort or self-paced; materials on GitHub.",
-      },
-      {
-        title: "Hugging Face MCP Course",
-        url: "https://huggingface.co/learn/mcp-course/unit0/introduction",
-        status: "learning",
-        why: "Connecting models to tools with the Model Context Protocol.",
-      },
-      {
-        title: "Hugging Face Agents Course",
-        url: "https://huggingface.co/learn/agents-course/",
-        status: "next",
-        why: "Building and evaluating AI agents.",
-      },
-      {
-        title: "AI Dev Tools Zoomcamp",
-        url: "https://datatalks.club/blog/ai-dev-tools-zoomcamp.html",
-        status: "next",
-        why: "Coding agents, MCP, AI for DevOps.",
-        note: "Live cohort started August 31, 2026; self-paced anytime.",
-      },
-    ],
-  },
-  {
-    id: "deep-learning",
-    label: "Deep learning",
-    title: "Deep learning depth",
-    kind: "links",
-    links: [
-      { title: "fast.ai Practical Deep Learning", url: "https://course.fast.ai/", status: "next" },
-      { title: "Andrej Karpathy: Neural Networks: Zero to Hero", url: "https://karpathy.ai/zero-to-hero.html", status: "next" },
-      { title: "Stanford CS224n: NLP with Deep Learning", url: "https://web.stanford.edu/class/cs224n/", status: "next" },
-    ],
-  },
-  {
-    id: "stretch-goals",
-    label: "Stretch",
-    title: "Stretch goals",
-    kind: "links",
-    links: [
-      {
-        title: "Stanford CS336: Language Modeling from Scratch",
-        url: "https://cs336.stanford.edu",
-        status: "target",
-        why: "How LLMs are really built.",
-        note: "Lecture recordings on a YouTube playlist.",
-      },
-      {
-        title: "Google Summer of Code",
-        url: "https://developers.google.com/open-source/gsoc/timeline",
-        status: "target",
-        why: "Goal: GSoC 2027.",
-        note: "Contributor applications usually open in March.",
-      },
-      {
-        title: "Kaggle competitions",
-        url: "https://www.kaggle.com/competitions",
-        status: "target",
-        why: "Public notebooks as proof of work.",
-      },
-    ],
-  },
-  {
-    id: "communities",
-    label: "Community",
-    title: "Communities and workshops",
-    kind: "links",
-    links: [
-      {
-        title: "Cohere Labs Community",
-        url: "https://labscommunity.cohere.com/community-programs",
-        status: "next",
-        why: "BIRDS for research beginners, plus Regional Asia, ML Math, NLP and ML Agents groups.",
-        note: "Groups meet on Discord.",
-      },
-      {
-        title: "DataTalks.Club community",
-        url: "https://datatalks.club/slack.html",
-        why: "The Slack community behind the Zoomcamps.",
-      },
-      {
-        title: "DurianPy",
-        url: "https://www.durianpy.org/",
-        why: "Davao’s Python community: monthly meetups and workshops.",
-      },
-    ],
-  },
-  {
-    id: "tools",
-    label: "Tools",
-    title: "Tools I use",
-    kind: "tools",
-    tools: ["Claude Code", "Codex", "Antigravity", "Copilot", "Gemini"],
   },
 ];
 

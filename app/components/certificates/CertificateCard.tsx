@@ -96,7 +96,7 @@ export default function CertificateCard({
                 href={cert.credentialUrl}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="sharp group/v inline-flex min-h-11 items-center gap-1.5 font-medium text-ink transition-colors duration-200 hover:text-accent-text"
+                className="sharp group/v inline-flex min-h-11 items-center gap-1.5 font-medium text-ink"
               >
                 Verify credential
                 <span className="sr-only"> for {cert.title} (opens in a new tab)</span>

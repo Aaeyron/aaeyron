@@ -5,9 +5,9 @@ import { useEffect, useState } from "react";
 const pad = (n: number) => String(n).padStart(2, "0");
 
 /**
- * Slim section rail for /resources, desktop only (≥1280px). A hairline with a short tick and
+ * Slim section rail for /resources and the internship case study, desktop only (≥1280px). A hairline with a short tick and
  * the section number for each group, like a ruler. Scroll-spy (IntersectionObserver) marks the
- * section in view: its number turns ink with a longer accent tick and the link gets
+ * section in view: its number turns ink with a longer ink tick and the link gets
  * aria-current. Each number is a plain anchor (Lenis smooth-scrolls it, or it jumps instantly
  * with reduced motion); the section name slides out on hover/focus.
  *
@@ -54,7 +54,7 @@ export default function SectionRail({ sections }: { sections: { id: string; labe
                 <span
                   aria-hidden
                   className={`h-px shrink-0 transition-[width,background-color] duration-200 ${
-                    current ? "w-3 bg-accent" : "w-1.5 bg-line-strong group-hover:bg-ink group-focus-visible:bg-ink"
+                    current ? "w-3 bg-ink" : "w-1.5 bg-line-strong group-hover:bg-ink group-focus-visible:bg-ink"
                   }`}
                 />
                 <span

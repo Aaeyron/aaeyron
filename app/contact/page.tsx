@@ -31,7 +31,7 @@ export default function Contact() {
           <WhatsAppCard />
         </div>
       </section>
-      <section aria-labelledby="reach-directly" className="mt-[var(--space-section)]">
+      <section aria-labelledby="reach-directly" className="mt-[var(--section-pad)]">
         <div data-reveal>
           <Label index="03" className="mb-5">
             <span id="reach-directly">Or reach me directly</span>

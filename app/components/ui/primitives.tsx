@@ -40,8 +40,8 @@ export function Tag({ children, accent = false }: { children: ReactNode; accent?
 
 /**
  * Crop marks at the four corners of the nearest `relative` parent.
- * Decorative: aria-hidden, no pointer events. `hover` turns them accent
- * when a parent `.group` is hovered or focused.
+ * Decorative: aria-hidden, no pointer events. `hover` turns them ink
+ * when a parent `.group` (a link) is hovered or focused.
  */
 export function CornerMarks({ hover = false, inset = "-5px" }: { hover?: boolean; inset?: string }) {
   const cls = `corner ${hover ? "corner-hover" : ""}`;
@@ -58,7 +58,7 @@ export function CornerMarks({ hover = false, inset = "-5px" }: { hover?: boolean
 
 /**
  * Small "+" marks at the four corners of the nearest `relative` parent (a corner
- * treatment alternative to <CornerMarks>). `hover` turns them accent when a parent
+ * treatment alternative to <CornerMarks>). `hover` turns them ink when a parent
  * `.group` is hovered or focused. Decorative.
  */
 export function PlusMarks({ hover = false, inset = "-5px" }: { hover?: boolean; inset?: string }) {
@@ -111,7 +111,7 @@ export function Emphasis({ text, phrase, bold = false }: { text: string; phrase:
 
 /**
  * 1px bordered container with corner marks and an optional index tab on the
- * top border. With `hover`, the border, corner marks and index turn accent
+ * top border. With `hover`, the border, corner marks and index turn ink
  * on hover / keyboard focus (it also becomes a `.group` for child effects).
  */
 export function Panel({
@@ -130,7 +130,7 @@ export function Panel({
       className={`relative border border-line bg-bg ${
         // Only hover panels need the colour transition; leaving it off lets a `.card`
         // class supply its own (shadow + lift) transition.
-        hover ? "group transition-colors duration-200 hover:border-accent focus-within:border-accent" : ""
+        hover ? "group transition-colors duration-200 hover:border-ink focus-within:border-ink" : ""
       } ${className}`}
     >
       <CornerMarks hover={hover} />
@@ -139,7 +139,7 @@ export function Panel({
           aria-hidden
           className={`chip absolute -top-2.5 left-4 z-10 py-0 text-[0.65rem] ${
             hover
-              ? "transition-colors duration-200 group-hover:border-accent group-hover:text-accent-text group-focus-within:border-accent group-focus-within:text-accent-text"
+              ? "transition-colors duration-200 group-hover:border-ink group-hover:text-ink group-focus-within:border-ink group-focus-within:text-ink"
               : ""
           }`}
         >
@@ -176,7 +176,7 @@ export function SectionHeader({ index, label, title, children, action, id, as: H
   const enter = (i: number) => (isPage ? { className: "enter", style: enterStyle(i) } : {});
 
   return (
-    <div className="mb-10 flex flex-col gap-6 sm:mb-14 md:flex-row md:items-end md:justify-between">
+    <div className="mb-[var(--section-header-gap)] flex flex-col gap-6 md:flex-row md:items-end md:justify-between">
       <div className="measure" {...(isPage ? {} : { "data-reveal": true })}>
         <div {...enter(0)}>
           {rule ? (

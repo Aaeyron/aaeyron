@@ -71,10 +71,14 @@ export default function SelectedProjectCard({ project, index, total }: Props) {
               href={project.repo}
               target="_blank"
               rel="noopener noreferrer"
-              className="inline-flex min-h-11 items-center gap-1.5 font-medium transition-colors duration-200 hover:text-accent-text"
+              className="group inline-flex min-h-11 items-center gap-1.5 font-medium text-ink"
             >
               View on GitHub <span className="sr-only">: {project.title}</span>
-              <ArrowUpRight size={16} aria-hidden />
+              <ArrowUpRight
+                size={16}
+                aria-hidden
+                className="transition-transform duration-200 group-hover:-translate-y-0.5 group-hover:translate-x-0.5"
+              />
             </a>
           ) : (
             <Label>Repository coming soon</Label>

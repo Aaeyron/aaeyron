@@ -22,7 +22,7 @@ export default function WhatsAppCard() {
             target="_blank"
             rel="noopener noreferrer"
             aria-label={`Message me on WhatsApp at ${profile.whatsapp.display} (opens in a new tab)`}
-            className="group flex min-h-12 w-full cursor-pointer items-center gap-3 border border-[var(--field-line)] bg-bg px-3 py-2.5 text-ink transition-[border-color] duration-200 hover:border-accent focus-visible:border-accent"
+            className="group flex min-h-12 w-full cursor-pointer items-center gap-3 border border-[var(--field-line)] bg-bg px-3 py-2.5 text-ink transition-[border-color] duration-200 hover:border-ink focus-visible:border-ink"
           >
             <MessageCircle size={20} aria-hidden className="shrink-0" />
             <span className="min-w-0 flex-1">

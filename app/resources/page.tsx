@@ -9,7 +9,7 @@ export const metadata: Metadata = {
   title: "Resources",
   alternates: { canonical: "/resources" },
   description:
-    "What Aaron Seth Nagtalon learns from, what he’s learning now, and where he’s headed: AI/ML, MLOps, LLMs and agents, deep learning, communities and tools.",
+    "Where Aaron Seth Nagtalon started learning: Harvard’s CS50 path, from CS50’s Introduction to Computer Science to Programming with Python and Artificial Intelligence.",
 };
 
 const pad = (n: number) => String(n).padStart(2, "0");
@@ -73,7 +73,7 @@ function ExternalArrow() {
 /**
  * Link card: title with the status tag top-right, a muted "why" line, an optional short note,
  * then the domain and arrow at the bottom. Details: card shadow + hover lift, corner marks
- * (accent on hover), and the group's texture; stretch goals use a dashed border.
+ * (ink on hover), and the group's texture; stretch goals use a dashed border.
  */
 function LinkCard({ link, texture, dashed }: { link: ResourceLink; texture: string; dashed?: boolean }) {
   return (
@@ -178,6 +178,7 @@ function StatusSummary() {
     { n: count("next"), label: "Next up", marker: "border border-ink" },
     { n: count("target"), label: count("target") === 1 ? "Target" : "Targets", marker: "border border-dashed border-ink" },
   ].filter((i) => i.n > 0);
+  if (!items.length) return null;
 
   return (
     <p className="mt-5 flex flex-wrap items-center gap-x-3 gap-y-2 font-mono text-[0.7rem] uppercase tracking-[0.1em] text-muted">
@@ -205,12 +206,13 @@ export default function Resources() {
       </SectionHeader>
 
       {/* One hairline between the header and the first section. */}
-      <hr className="-mt-2 mb-14 border-line sm:-mt-6" />
+      <hr className="-mt-2 mb-[var(--section-header-gap)] border-line sm:-mt-6" />
 
       {/* Sections, with the desktop-only rail (≥1280px) sticky in the left gutter beside them. */}
       <div className="relative">
-        <SectionRail sections={resourceGroups.map((g) => ({ id: g.id, label: g.label }))} />
-        <div className="space-y-16 sm:space-y-20">
+        {/* The rail only helps when there's more than one section to jump between. */}
+        {resourceGroups.length > 1 && <SectionRail sections={resourceGroups.map((g) => ({ id: g.id, label: g.label }))} />}
+        <div className="space-y-[var(--block-gap)]">
           {resourceGroups.map((g, gi) => {
             const style = styleFor(g.id);
             const headingId = `${g.id}-title`;
