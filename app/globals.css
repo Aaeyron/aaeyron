@@ -322,6 +322,13 @@ select:disabled {
 h1, h2, h3, h4 {
   text-wrap: balance;
 }
+/* A visual line break drawn by CSS: the element starts on a new line, but the text itself keeps
+   its real space, so page text, copied text and the accessible name stay on one line
+   (e.g. "AI Career Copilot: …" on Experience). */
+.line-break-before::before {
+  content: "\A";
+  white-space: pre;
+}
 p {
   text-wrap: pretty;
 }

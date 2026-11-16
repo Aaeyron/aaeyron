@@ -4,7 +4,7 @@ import { experience } from "@/lib/content";
 import { hasInternshipStarted, internshipCopy } from "@/lib/internship";
 import ButtonLink from "../components/ui/ButtonLink";
 import { InternshipBadge } from "../components/ui/InternshipText";
-import { Highlight, LabelRule, SectionHeader } from "../components/ui/primitives";
+import { CornerMarks, Highlight, LabelRule, SectionHeader } from "../components/ui/primitives";
 
 // Re-render hourly so the internship "incoming" → "currently" switch also reaches the HTML and meta tags.
 export const revalidate = 3600;
@@ -34,98 +34,106 @@ export default function Experience() {
         </SectionHeader>
       </div>
 
-      {/* 01 · Internship. The page title already says "Where I've worked.", so the section shows
-          only its number + label (the heading stays for screen readers). */}
+      {/* 01 · Internship. The page title already says "Where I've worked.", so the section's only
+          title is its number + label, rendered as the h2 itself (no hidden duplicate heading). */}
       <section id="internship" aria-labelledby="internship-title" className="border-t border-line pb-[var(--section-pad)] pt-[var(--section-header-gap)]">
         <div className="container-x">
-          <LabelRule index="01" className="mb-6 max-w-md">
+          <LabelRule as="h2" id="internship-title" index="01" className="mb-6 max-w-md">
             Internship
           </LabelRule>
-          <h2 id="internship-title" className="sr-only">
-            Internship
-          </h2>
 
-          {/* Per job: text straight on the page (no cards). Two columns from 1024px, 50/50, split
-              by a 1px hairline in the middle of a 96px gutter; stacked below with a hairline
-              between, role first. The only bordered bits are small: the date badge, chips and button.
-              Spacing sticks to 8 / 16 / 24 / 32 / 48px. */}
+          {/* Per job: one raised container (--bg fill, 1px border, sharp corners, the card shadow,
+              corner marks) so the graph paper and drawings never sit behind the text. Not
+              clickable: no hover, no lift; only the "View project details" button animates.
+              Inside, two columns from 1024px, 50/50, split by a 1px hairline in the middle of a
+              96px gutter; stacked below with a hairline between, role first. No boxes inside
+              except the small date badge, chips and button. Spacing sticks to 8 / 16 / 24 / 32 / 48px. */}
           <ol className="grid gap-12">
             {experience.map((job) => (
-              <li key={job.company} className="grid lg:grid-cols-2" data-reveal>
-                {/* The role. */}
-                <article aria-labelledby="internship-role" className="pb-8 lg:border-r lg:border-line lg:pb-0 lg:pr-12">
-                  {/* Caption + hairline rule + date badge (h-6 so both captions share a top line). */}
-                  <div className="flex h-6 items-center gap-4">
-                    <span className="font-mono text-[0.7rem] uppercase tracking-[0.08em] text-muted">Position</span>
-                    <span aria-hidden className="h-px min-w-4 flex-1 bg-line" />
-                    <InternshipBadge
-                      serverStarted={started}
-                      mono
-                      icon={<CalendarDays size={13} aria-hidden className="text-muted" />}
-                    />
-                  </div>
-
-                  <h3 id="internship-role" className="mt-4 text-xl font-semibold leading-tight tracking-[-0.02em] sm:text-2xl">
-                    {job.role}
-                  </h3>
-                  <p className="mt-2 font-semibold text-ink">{job.company}</p>
-
-                  {/* Details: a plain definition list split by hairlines. */}
-                  <dl className="mt-4">
-                    {[
-                      { k: "Type", v: job.type },
-                      { k: "Start", v: <time dateTime={job.start.iso}>{job.start.label}</time> },
-                      { k: "Company", v: job.company },
-                      { k: "About", v: job.companyNote },
-                    ].map((f) => (
-                      <div key={f.k} className="flex items-baseline gap-4 border-t border-line py-2">
-                        <dt className="w-20 shrink-0 font-mono text-[0.7rem] uppercase tracking-[0.08em] text-muted">{f.k}</dt>
-                        <dd className="text-[0.9375rem] leading-[1.6] text-ink">{f.v}</dd>
-                      </div>
-                    ))}
-                  </dl>
-                </article>
-
-                {/* The project(s) built during it, with one blue accent line on the left (static). The
-                    button (to /experience/<slug>) is the only thing here that reacts on hover. */}
-                {job.builtDuring.map((product) => (
-                  <article
-                    key={product.slug}
-                    aria-labelledby={`built-${product.slug}`}
-                    className="border-t border-line pt-8 lg:border-t-0 lg:pl-12 lg:pt-0"
-                  >
-                    <div className="border-l-2 border-accent pl-4 sm:pl-6">
-                      <div className="flex h-6 items-center gap-4">
-                        <span className="font-mono text-[0.7rem] uppercase tracking-[0.08em] text-muted">Built during this internship</span>
-                        <span aria-hidden className="h-px min-w-4 flex-1 bg-line" />
-                      </div>
-
-                      {/* Two deliberate lines: "AI Career" / "Copilot: LLM Resume Analyzer". The second
-                          stays on one line from 768px (size eases down with clamp() to fit the column);
-                          on phones it may wrap, balanced. The trailing space keeps the accessible name
-                          "AI Career Copilot: …" with a space between the lines. */}
-                      <h3
-                        id={`built-${product.slug}`}
-                        className="mt-4 text-xl font-semibold leading-tight tracking-[-0.02em] md:text-[clamp(1.25rem,0.75rem+1.1vw,1.5rem)]"
-                      >
-                        <span className="block">{product.titleLines[0]} </span>
-                        <span className="block text-balance md:whitespace-nowrap">{product.titleLines[1]}</span>
-                      </h3>
-                      <p className="mt-2 max-w-[65ch] text-[0.9375rem] leading-[1.6] text-muted">{product.summary}</p>
-                      <ul className="mt-4 flex flex-wrap gap-2" aria-label="Stack">
-                        {product.summaryStack.map((t) => (
-                          <li key={t} className="border border-line px-2 font-mono text-[0.7rem] leading-6 text-ink">
-                            {t}
-                          </li>
-                        ))}
-                      </ul>
-                      <ButtonLink href={`/experience/${product.slug}`} variant="secondary" className="sharp mt-6 rounded-none!">
-                        View project details <span className="sr-only">: {product.title}</span>
-                        <ArrowRight size={16} aria-hidden className="transition-transform duration-200 group-hover:translate-x-0.5" />
-                      </ButtonLink>
+              <li key={job.company} data-reveal>
+                <div className="card relative grid border border-line bg-bg p-4 sm:p-6 lg:grid-cols-2 lg:p-7">
+                  <CornerMarks />
+                  {/* The role. */}
+                  <article aria-labelledby="internship-role" className="pb-8 lg:border-r lg:border-line lg:pb-0 lg:pr-12">
+                    {/* Caption + hairline rule + date badge (h-6 so both captions share a top line).
+                        The zero-size ", " keeps the text "Position, Oct 2026 · Present" for screen
+                        readers and copied/extracted text (the non-breaking space survives the
+                        line break between the flex items). */}
+                    <div className="flex h-6 items-center gap-4">
+                      <span className="font-mono text-[0.7rem] uppercase tracking-[0.08em] text-muted">
+                        Position<span className="text-[0px]">{",\u00a0"}</span>
+                      </span>
+                      <span aria-hidden className="h-px min-w-4 flex-1 bg-line" />
+                      <InternshipBadge
+                        serverStarted={started}
+                        mono
+                        icon={<CalendarDays size={13} aria-hidden className="text-muted" />}
+                      />
                     </div>
+
+                    <h3 id="internship-role" className="mt-4 text-xl font-semibold leading-tight tracking-[-0.02em] sm:text-2xl">
+                      {job.role}
+                    </h3>
+                    <p className="mt-2 font-semibold text-ink">{job.company}</p>
+
+                    {/* Details: a plain definition list split by hairlines. */}
+                    <dl className="mt-4">
+                      {[
+                        { k: "Type", v: job.type },
+                        { k: "Start", v: <time dateTime={job.start.iso}>{job.start.label}</time> },
+                        { k: "Company", v: job.company },
+                        { k: "About", v: job.companyNote },
+                      ].map((f) => (
+                        <div key={f.k} className="flex items-baseline gap-4 border-t border-line py-2">
+                          <dt className="w-20 shrink-0 font-mono text-[0.7rem] uppercase tracking-[0.08em] text-muted">{f.k}</dt>
+                          <dd className="text-[0.9375rem] leading-[1.6] text-ink">{f.v}</dd>
+                        </div>
+                      ))}
+                    </dl>
                   </article>
-                ))}
+
+                  {/* The project(s) built during it, with one blue accent line on the left (static). The
+                      button (to /experience/<slug>) is the only thing here that reacts on hover. */}
+                  {job.builtDuring.map((product) => (
+                    <article
+                      key={product.slug}
+                      aria-labelledby={`built-${product.slug}`}
+                      className="border-t border-line pt-8 lg:border-t-0 lg:pl-12 lg:pt-0"
+                    >
+                      <div className="border-l-2 border-accent pl-4 sm:pl-6">
+                        <div className="flex h-6 items-center gap-4">
+                          <span className="font-mono text-[0.7rem] uppercase tracking-[0.08em] text-muted">Built during this internship</span>
+                          <span aria-hidden className="h-px min-w-4 flex-1 bg-line" />
+                        </div>
+
+                        {/* Two deliberate lines: "AI Career" / "Copilot: LLM Resume Analyzer". The break
+                            is drawn by CSS (.line-break-before), so the text itself is one line with a
+                            real space: page text, copied text and the accessible name all read
+                            "AI Career Copilot: …". The second line stays on one line from 768px (size
+                            eases down with clamp() to fit the column); on phones it may wrap. */}
+                        <h3
+                          id={`built-${product.slug}`}
+                          className="mt-4 text-xl font-semibold leading-tight tracking-[-0.02em] md:text-[clamp(1.25rem,0.75rem+1.1vw,1.5rem)]"
+                        >
+                          <span>{product.titleLines[0]}</span>{" "}
+                          <span className="line-break-before md:whitespace-nowrap">{product.titleLines[1]}</span>
+                        </h3>
+                        <p className="mt-2 max-w-[65ch] text-[0.9375rem] leading-[1.6] text-muted">{product.summary}</p>
+                        <ul className="mt-4 flex flex-wrap gap-2" aria-label="Stack">
+                          {product.summaryStack.map((t) => (
+                            <li key={t} className="border border-line px-2 font-mono text-[0.7rem] leading-6 text-ink">
+                              {t}
+                            </li>
+                          ))}
+                        </ul>
+                        <ButtonLink href={`/experience/${product.slug}`} variant="secondary" className="sharp mt-6 rounded-none! bg-bg!">
+                          View project details <span className="sr-only">: {product.title}</span>
+                          <ArrowRight size={16} aria-hidden className="transition-transform duration-200 group-hover:translate-x-0.5" />
+                        </ButtonLink>
+                      </div>
+                    </article>
+                  ))}
+                </div>
               </li>
             ))}
           </ol>

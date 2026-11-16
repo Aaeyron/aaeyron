@@ -77,9 +77,22 @@ export function PlusMarks({ hover = false, inset = "-5px" }: { hover?: boolean; 
  * Section label box followed by a thin rule that draws in (accent tip, grey line).
  * Decorative rule is aria-hidden.
  */
-export function LabelRule({ index, children, className = "" }: { index?: string; children: ReactNode; className?: string }) {
+export function LabelRule({
+  index,
+  children,
+  className = "",
+  as: Tag = "div",
+  id,
+}: {
+  index?: string;
+  children: ReactNode;
+  className?: string;
+  /** Render the label row as a heading (e.g. "h2") when it is the section's only title. */
+  as?: "div" | "h2" | "h3";
+  id?: string;
+}) {
   return (
-    <div className={`flex items-center gap-3 ${className}`}>
+    <Tag id={id} className={`flex items-center gap-3 ${className}`}>
       {/* wrap: a long label breaks onto a second line on narrow phones instead of overflowing. */}
       <Label index={index} wrap>
         {children}
@@ -88,7 +101,7 @@ export function LabelRule({ index, children, className = "" }: { index?: string;
         aria-hidden
         className="draw-x h-px min-w-8 flex-1 bg-[linear-gradient(to_right,var(--accent)_0,var(--accent)_28px,var(--line-strong)_28px)]"
       />
-    </div>
+    </Tag>
   );
 }
 
