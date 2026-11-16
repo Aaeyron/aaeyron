@@ -6,19 +6,18 @@
 //   public/bg/drawing-sm.svg         neutral layer, phones (1000 × 1250, figures at 75% size)
 //   public/bg/drawing-accent-sm.svg  accent layer, phones
 //
-// Straight lines only: there is no circle, arc, ellipse, curve or dot primitive in this file.
+// Lines only: straight line segments, plus the small filled arrowheads and length numbers that
+// belong to them. No shapes (no polygons, cells, circles, arcs or curves) and no free-standing
+// text: every number sits on its dimension line, ruler or section mark.
 // Everything snaps to the grid: figure anchors sit on grid intersections; dimension lines,
 // section lines, rulers and traces run along grid lines with lengths in whole cells; both tile
 // sizes are exact multiples of 125px, so the drawing repeats in step with the grid (no drift).
 // The tile and the grid share the same origin (top-left of <main>).
 //
 // Elements:
-//   - figures: dimension lines (arrowheads or end ticks, length number), hexagon and
-//     triangle outlines, angle marks (two straight rays and a
-//     degree label), cross-section marks (A–A with short arrows); some carry a note
-//     (fig. 01, scale 1:25, rev. B…) on a straight leader line
-//   - coordinates: tiny mono labels at some major intersections (A3, x:250 y:500)
-//   - highlighted cells: clusters of 1–3 filled or hatched cells (1 in 4 in the accent)
+//   - figures: dimension lines (arrowheads or end ticks, extension lines, length number),
+//     chain dimensions (two segments sharing a middle extension line), cross-section marks
+//     (A–A with short arrows) and straight leader lines (arrowhead, 45° leg, grid-line shoulder)
 //   - dashed traces along grid lines with short end ticks
 //   - tick rulers along a major line with a cell-count label
 //   - small straight fillers: tick pairs, corner marks, one-cell dashes
@@ -31,22 +30,21 @@ import { mkdirSync, writeFileSync } from "node:fs";
 const CELL = 25;
 const MAJOR = 125;
 
-// accentShare (per tile): chance of the accent for figures, fillers, traces and rulers; cell
-// clusters use 1 in 4 and coordinates stay neutral. Tuned so ~1 in 10 elements per tile is blue.
+// accentEvery: every Nth placed element (rulers, traces, figures and fillers alike) is drawn in
+// the accent, so exactly ~1 in 10 is blue.
+// Counts keep the same amount of detail as before the shapes, cells, coordinates and notes were
+// removed (~100 elements per desktop tile, ~58 per phone tile), now all lines.
 const DESKTOP = {
   seed: 20261116,
   W: 1500,
   H: 1750,
   scale: 1,
   lenMul: 1,
-  figures: 26,
-  notes: 6,
-  fillers: 44,
-  coords: 14,
-  cells: 9,
-  traces: 6,
-  rulers: 5,
-  accentShare: 0.1,
+  figures: 30,
+  fillers: 58,
+  traces: 9,
+  rulers: 8,
+  accentEvery: 10,
 };
 const PHONE = {
   seed: 20261117,
@@ -54,14 +52,11 @@ const PHONE = {
   H: 1250,
   scale: 0.75, // figure size on phones
   lenMul: 0.7, // shorter dimension lines / section lines / rulers
-  figures: 16,
-  notes: 2,
-  fillers: 28,
-  coords: 4,
-  cells: 5,
-  traces: 3,
-  rulers: 2,
-  accentShare: 0.08,
+  figures: 20,
+  fillers: 30,
+  traces: 5,
+  rulers: 3,
+  accentEvery: 10,
 };
 const GAP = 40; // min clear space between two items' bounding circles
 
@@ -77,14 +72,12 @@ function mulberry32(a) {
 
 const f = (n) => Math.round(n * 100) / 100;
 const rad = (deg) => (deg * Math.PI) / 180;
-const pt = (r, deg) => [f(Math.cos(rad(deg)) * r), f(Math.sin(rad(deg)) * r)];
 
-// --- Drawing primitives: straight lines, filled arrowheads and text only ---
+// --- Drawing primitives: straight lines, small filled arrowheads and length labels ---
 const S = (w = 1) => ` fill="none" stroke="#000" stroke-width="${w}" stroke-linecap="square" stroke-linejoin="miter"`;
 const DASH = ' stroke-dasharray="3 3"';
 const CENTER = ' stroke-dasharray="9 3 2 3"'; // drafting centre/cutting line (dash-dot)
 const line = (x1, y1, x2, y2, extra = "", w = 1) => `<path d="M${f(x1)} ${f(y1)}L${f(x2)} ${f(y2)}"${S(w)}${extra}/>`;
-const poly = (pts, extra = "", w = 1) => `<path d="M${pts.map(([x, y]) => `${f(x)} ${f(y)}`).join("L")}Z"${S(w)}${extra}/>`;
 const polyline = (pts, extra = "", w = 1) => `<path d="M${pts.map(([x, y]) => `${f(x)} ${f(y)}`).join("L")}"${S(w)}${extra}/>`;
 // Small filled arrowhead with its tip at (x, y), pointing along `deg`.
 const arrow = (x, y, deg, len = 5, half = 2) => {
@@ -125,11 +118,10 @@ function build(cfg) {
   // `free` figures are scaled on phones (grid-length figures keep whole-cell lengths instead);
   // `ox/oy` shift the centre off the intersection when a whole-cell length is odd.
   const KINDS = [
-    ["dimension", 16],
-    ["hexagon", 9],
-    ["triangle", 11],
-    ["angle", 10],
-    ["section", 9],
+    ["dimension", 14],
+    ["chain", 7],
+    ["section", 8],
+    ["leader", 8],
   ];
   function design() {
     const kind = pick(KINDS);
@@ -139,23 +131,17 @@ function build(cfg) {
         const vertical = rnd() < 0.3;
         return { kind, r: (n * CELL) / 2 + 10, n, vertical, ends: one("arrow", "arrow", "tick"), ...(vertical ? { oy: half(n) } : { ox: half(n) }) };
       }
-      case "hexagon": {
-        const R = one(25, 37.5);
-        return { kind, free: true, r: R + 4, R, rot: one(0, 30) };
+      case "chain": {
+        const a = cells(2, 4);
+        const b = cells(2, 4);
+        const n = a + b;
+        const vertical = rnd() < 0.3;
+        return { kind, r: (n * CELL) / 2 + 10, n, a, vertical, ...(vertical ? { oy: half(n) } : { ox: half(n) }) };
       }
-      case "triangle": {
-        // Every vertex on a grid intersection: a right triangle (legs in whole cells) or an
-        // isosceles one with its base on a grid line.
-        const right = rnd() < 0.5;
-        const a = int(2, 3) * CELL;
-        const b = int(2, 3) * CELL;
-        const v = right
-          ? [[-a / 2, b / 2], [a / 2, b / 2], [-a / 2, -b / 2]]
-          : [[-a / 2 - CELL / 2, b / 2], [a / 2 + CELL / 2, b / 2], [0, -b / 2]];
-        return { kind, free: true, r: Math.hypot(a / 2 + CELL / 2, b / 2) + 4, v, rot: rot90() };
-      }
-      case "angle":
-        return { kind, free: true, r: 56, A: one(30, 45, 60), base: rot90() };
+      case "leader":
+        // Tip on an intersection; the 45° leg ends on the next intersection and the shoulder runs
+        // whole cells along a grid line. Any quarter turn keeps it on the grid.
+        return { kind, free: true, r: Math.hypot(3 * CELL, CELL) + 6, rot: rot90() };
       case "section": {
         const n = cells(4, 7);
         const vertical = rnd() < 0.35;
@@ -176,21 +162,23 @@ function build(cfg) {
         const s = line(-h, -5, -h, CELL, "", 0.75) + line(h, -5, h, CELL, "", 0.75) + ends + label(0, -4, d.n * CELL);
         return d.vertical ? `<g transform="rotate(-90)">${s}</g>` : s;
       }
-      case "hexagon":
-        return poly([0, 60, 120, 180, 240, 300].map((deg) => pt(d.R, deg + d.rot)));
-      case "triangle":
-        return `<g transform="rotate(${d.rot})">${poly(d.v)}</g>`;
-      case "angle": {
-        // One ray along a grid line, the other at 30°, 45° or 60°; a short dashed chord marks
-        // the measured span (no arc), with the degree label between the rays.
-        const { A, base } = d;
-        const L = 2 * CELL;
-        const [x0, y0] = pt(L, base);
-        const [x1, y1] = pt(L, base - A);
-        const [a0x, a0y] = pt(18, base);
-        const [a1x, a1y] = pt(18, base - A);
-        const [lx, ly] = pt(30, base - A / 2);
-        return line(0, 0, x0, y0) + line(0, 0, x1, y1) + line(a0x, a0y, a1x, a1y, DASH, 0.75) + label(lx, ly + 3, `${A}°`);
+      case "chain": {
+        // Two dimensions in a row on one grid line: three extension lines, architectural ticks
+        // where they cross, a length number over each segment.
+        const h = (d.n * CELL) / 2;
+        const m = -h + d.a * CELL;
+        const tick = (x) => line(x - 3, 3, x + 3, -3);
+        const s =
+          line(-h, 0, h, 0) +
+          [-h, m, h].map((x) => line(x, -5, x, CELL, "", 0.75) + tick(x)).join("") +
+          label((-h + m) / 2, -4, d.a * CELL) +
+          label((m + h) / 2, -4, (d.n - d.a) * CELL);
+        return d.vertical ? `<g transform="rotate(-90)">${s}</g>` : s;
+      }
+      case "leader": {
+        // Straight leader: arrowhead at the tip, a 45° leg, then a shoulder along a grid line.
+        const s = arrow(0, 0, 225, 4.5, 1.75) + polyline([[0, 0], [CELL, CELL], [CELL * 3, CELL]], "", 0.75);
+        return `<g transform="rotate(${d.rot})">${s}</g>`;
       }
       case "section": {
         // Cutting-plane line (dash-dot) with short heavy end bars, arrows showing the view
@@ -210,7 +198,6 @@ function build(cfg) {
       }
     }
   }
-  const NOTES = ["scale 1:25", "grid 25", "rev. B", "detail A", "sheet 2/4", "rev. C", "scale 1:5", "typ."];
 
   // ---------- Placement on the torus ----------
   const items = []; // { x, y, r, svg, kind, accent }
@@ -266,68 +253,15 @@ function build(cfg) {
   // Figures (after the long rulers and traces, so those always find room), biggest first so
   // spacing stays even; anchors on intersections.
   const designs = Array.from({ length: cfg.figures }, () => design()).sort((a, b) => b.r - a.r);
-  let figNo = 0;
-  let notes = 0;
-  const noteEvery = Math.max(1, Math.floor(cfg.figures / Math.max(1, cfg.notes)));
-  designs.forEach((d, i) => {
-    const note = cfg.notes && i % noteEvery === noteEvery - 1 && notes < cfg.notes ? (notes++, rnd() < 0.4 ? `fig. 0${++figNo}` : one(...NOTES)) : null;
+  designs.forEach((d) => {
     let body = draw(d);
     let r = d.r;
     if (d.free && cfg.scale !== 1) {
       body = `<g transform="scale(${cfg.scale})">${body}</g>`;
       r *= cfg.scale;
     }
-    // A note sits on a straight leader: from just outside the figure (arrowhead pointing back
-    // at it), 45° down-right for one cell, then a shoulder along a grid line.
-    if (note) {
-      const s0 = Math.ceil((r * 0.75) / CELL) * CELL;
-      body +=
-        arrow(s0, s0, 225, 4.5, 1.75) +
-        polyline([[s0, s0], [s0 + CELL, s0 + CELL], [s0 + CELL * 2.4, s0 + CELL]], "", 0.75) +
-        label(s0 + CELL + 2, s0 + CELL - 4, note, "start", 7.5);
-      r = Math.max(r, Math.hypot(s0 + CELL * 2.4, s0 + CELL)) + 6;
-    }
-    tryPlace(() => ({ x: snap(CELL, W) + (d.ox || 0), y: snap(CELL, H) + (d.oy || 0), r, svg: body, kind: "figure" }));
+    tryPlace(() => ({ x: snap(CELL, W) + (d.ox || 0), y: snap(CELL, H) + (d.oy || 0), r, svg: body, kind: "figure", fig: d.kind }));
   });
-
-  // Highlighted cells: clusters of 1–3 filled or hatched cells. 1 in 4 in the accent.
-  const SHAPES = [[[0, 0]], [[0, 0], [1, 0]], [[0, 0], [0, 1]], [[0, 0], [1, 0], [1, 1]], [[0, 0], [1, 0], [2, 0]], [[0, 0], [0, 1], [1, 1]]];
-  const hatch = (cx, cy) => {
-    let s = "";
-    for (let c = -20; c <= 20; c += 6) {
-      const x0 = Math.max(0, c);
-      const y0 = Math.max(0, -c);
-      const x1 = Math.min(CELL, CELL + c);
-      const y1 = Math.min(CELL, CELL - c);
-      s += line(cx + x0, cy + y0, cx + x1, cy + y1, "", 0.75);
-    }
-    return s;
-  };
-  for (let i = 0; i < cfg.cells; i++) {
-    const shape = one(...SHAPES);
-    const filled = rnd() < 0.5;
-    const body = shape
-      .map(([c, r]) =>
-        filled ? `<rect x="${c * CELL}" y="${r * CELL}" width="${CELL}" height="${CELL}" fill-opacity=".25"/>` : hatch(c * CELL, r * CELL),
-      )
-      .join("");
-    // Group origin = the cluster's top-left grid point; bounding circle around its centre.
-    const svg = `<g transform="translate(${-CELL} ${-CELL})">${body}</g>`;
-    tryPlace(() => ({ x: snap(CELL, W) + CELL, y: snap(CELL, H) + CELL, r: 60, svg, kind: "cells", accent: i % 4 === 1, op: filled ? [0.45, 0.6] : [0.5, 0.7] }));
-  }
-
-  // Coordinate labels at some major intersections: column letter + row ("C7") or x/y, with a
-  // short corner mark on the intersection.
-  for (let i = 0; i < cfg.coords; i++) {
-    const useXY = rnd() < 0.4;
-    tryPlace(() => {
-      const x = snap(MAJOR, W);
-      const y = snap(MAJOR, H);
-      const text = useXY ? `x:${x} y:${y}` : `${String.fromCharCode(65 + x / MAJOR)}${y / MAJOR + 1}`;
-      const svg = polyline([[0, -5], [0, 0], [5, 0]]) + label(4, -4, text, "start", 7);
-      return { x, y, r: useXY ? 34 : 18, svg, kind: "coord", op: [0.4, 0.55] };
-    });
-  }
 
   // Small straight fillers on intersections.
   for (let i = 0; i < cfg.fillers; i++) {
@@ -350,24 +284,25 @@ function build(cfg) {
     return xs.flatMap((cx) => ys.map((cy) => [cx, cy]));
   };
   const out = { neutral: [], accent: [] };
-  for (const it of items) {
+  items.forEach((it, i) => {
     const [lo, hi] = it.op || (it.kind === "figure" ? [0.55, 0.85] : [0.6, 0.8]);
     const o = f(between(lo, hi));
-    const accent = it.kind === "cells" ? it.accent : it.kind === "coord" ? false : rnd() < cfg.accentShare;
+    const accent = i % cfg.accentEvery === cfg.accentEvery - 1;
     const el = `<g opacity="${o}">${copies(it.x, it.y, it.r + 12)
       .map(([cx, cy]) => `<g transform="translate(${f(cx)} ${f(cy)})">${it.svg}</g>`)
       .join("")}</g>`;
     (accent ? out.accent : out.neutral).push(el);
-  }
+  });
   // translate(.5 .5): 1px strokes on grid coordinates then cover exactly the same pixel as the
   // CSS grid lines (which fill [x, x + 1)).
   const svg = (body) =>
     `<svg xmlns="http://www.w3.org/2000/svg" width="${W}" height="${H}" viewBox="0 0 ${W} ${H}"><g transform="translate(.5 .5)">${body.join("")}</g></svg>\n`;
   const count = (k) => items.filter((i) => i.kind === k).length;
+  const kinds = () => ["dimension", "chain", "section", "leader"].map((k) => `${items.filter((i) => i.fig === k).length} ${k}`).join(", ");
   return {
     neutral: svg(out.neutral),
     accent: svg(out.accent),
-    summary: `${W}×${H}: ${count("figure")} figures (${notes} notes), ${count("coord")} coords, ${count("cells")} cell clusters, ${count("trace")} traces, ${count("ruler")} rulers, ${count("filler")} fillers; accent ${out.accent.length}/${items.length} (${Math.round((out.accent.length / items.length) * 100)}%)`,
+    summary: `${W}×${H}: ${count("figure")} figures (${kinds()}), ${count("trace")} traces, ${count("ruler")} rulers, ${count("filler")} fillers; accent ${out.accent.length}/${items.length} (${Math.round((out.accent.length / items.length) * 100)}%)`,
   };
 }
 

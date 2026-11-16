@@ -27,7 +27,7 @@ export default function ContactBlock() {
         </div>
 
         {/* Each button reveals on its own (data-reveal is on every button). */}
-        <ContactButtons className="mt-12" />
+        <ContactButtons className="mt-[var(--section-header-gap)]" />
       </div>
     </section>
   );

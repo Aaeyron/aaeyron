@@ -59,7 +59,7 @@ export default function TechChip({ item, size = "md" }: { item: TechItem; size?:
   const Icon = item.icon ? icons[item.icon] : undefined;
   const sizing = size === "lg" ? "min-h-12 gap-2.5 px-4 text-[0.9375rem]" : "min-h-10 gap-2 px-3 text-sm";
   return (
-    <span className={`card relative inline-flex items-center border border-line bg-bg font-medium text-ink ${sizing}`}>
+    <span className={`card no-halo relative inline-flex items-center border border-line bg-bg font-medium text-ink ${sizing}`}>
       {Icon && <Icon size={size === "lg" ? 17 : 15} aria-hidden className="shrink-0" />}
       {item.name}
     </span>

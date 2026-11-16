@@ -157,7 +157,7 @@ export default function AiCareerCopilotPage() {
       </section>
 
       {/* Stack. */}
-      <section aria-labelledby="stack-title" className="mt-10" data-reveal>
+      <section aria-labelledby="stack-title" className="mt-[var(--section-header-gap)]" data-reveal>
         <h2 id="stack-title" className={caption}>
           Stack
         </h2>
@@ -218,7 +218,7 @@ export default function AiCareerCopilotPage() {
             </p>
           ))}
         </div>
-        <BackLink className="mt-10" />
+        <BackLink className="mt-[var(--section-header-gap)]" />
       </div>
     </div>
   );

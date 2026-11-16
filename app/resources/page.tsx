@@ -154,7 +154,7 @@ function ToolChips({ tools }: { tools: string[] }) {
   return (
     <ul className="flex flex-wrap gap-3">
       {tools.map((t) => (
-        <li key={t} className="card flex items-center gap-2.5 border border-line bg-bg px-4 py-3 text-sm font-medium text-ink">
+        <li key={t} className="card no-halo flex items-center gap-2.5 border border-line bg-bg px-4 py-3 text-sm font-medium text-ink">
           <span aria-hidden className="size-1.5 shrink-0 bg-ink" />
           {t}
         </li>
@@ -206,7 +206,7 @@ export default function Resources() {
       </SectionHeader>
 
       {/* One hairline between the header and the first section. */}
-      <hr className="-mt-2 mb-[var(--section-header-gap)] border-line sm:-mt-6" />
+      <hr className="-mt-[calc(var(--section-header-gap)/2)] mb-[var(--section-header-gap)] border-line" />
 
       {/* Sections, with the desktop-only rail (≥1280px) sticky in the left gutter beside them. */}
       <div className="relative">
@@ -226,7 +226,7 @@ export default function Resources() {
                     <h2 id={headingId} className="text-2xl font-semibold tracking-[-0.02em] sm:text-[1.75rem]">
                       {g.title}
                     </h2>
-                    <Doodle variant={style.doodle} className="mb-1 h-6 w-8 shrink-0 text-muted" />
+                    <Doodle variant={style.doodle} className="icon-halo mb-1 h-6 w-8 shrink-0 text-muted" />
                   </div>
                 </div>
 

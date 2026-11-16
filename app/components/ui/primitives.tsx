@@ -9,14 +9,20 @@ type LabelProps = {
   plain?: boolean;
   /** Allow long text to wrap (e.g. long categories on mobile). */
   wrap?: boolean;
+  /**
+   * Section label: semibold (.chip-section). On by default for numbered labels ("01 …");
+   * LabelRule and SectionHeader always set it. Tags, badges and "//" labels stay regular.
+   */
+  section?: boolean;
   className?: string;
 };
 
 /** Sharp-cornered label box for small text: section labels, dates, categories, metadata. */
-export function Label({ children, index, accent, plain, wrap, className = "" }: LabelProps) {
+export function Label({ children, index, accent, plain, wrap, section, className = "" }: LabelProps) {
+  const isSection = section ?? (!!index && index !== "//");
   return (
     <span
-      className={`chip ${accent ? "chip-accent" : ""} ${plain ? "chip-plain" : ""} ${wrap ? "chip-wrap" : ""} ${className}`}
+      className={`chip ${isSection ? "chip-section" : ""} ${accent ? "chip-accent" : ""} ${plain ? "chip-plain" : ""} ${wrap ? "chip-wrap" : ""} ${className}`}
     >
       {index && (
         <>
@@ -94,7 +100,7 @@ export function LabelRule({
   return (
     <Tag id={id} className={`flex items-center gap-3 ${className}`}>
       {/* wrap: a long label breaks onto a second line on narrow phones instead of overflowing. */}
-      <Label index={index} wrap>
+      <Label index={index} wrap section>
         {children}
       </Label>
       <span
@@ -143,7 +149,7 @@ export function Panel({
 }) {
   return (
     <div
-      className={`relative border border-line bg-bg ${
+      className={`bg-halo relative border border-line bg-bg ${
         // Only hover panels need the colour transition; leaving it off lets a `.card`
         // class supply its own (shadow + lift) transition.
         hover ? "group transition-colors duration-200 hover:border-ink focus-within:border-ink" : ""
@@ -192,7 +198,7 @@ export function SectionHeader({ index, label, title, children, action, id, as: H
   const enter = (i: number) => (isPage ? { className: "enter", style: enterStyle(i) } : {});
 
   return (
-    <div className="mb-[var(--section-header-gap)] flex flex-col gap-6 md:flex-row md:items-end md:justify-between">
+    <div className="text-halo mb-[var(--section-header-gap)] flex flex-col gap-6 md:flex-row md:items-end md:justify-between">
       <div className="measure" {...(isPage ? {} : { "data-reveal": true })}>
         <div {...enter(0)}>
           {rule ? (
@@ -200,7 +206,7 @@ export function SectionHeader({ index, label, title, children, action, id, as: H
               {label}
             </LabelRule>
           ) : (
-            <Label index={index} wrap className="mb-5">
+            <Label index={index} wrap section className="mb-5">
               {label}
             </Label>
           )}

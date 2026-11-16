@@ -4,6 +4,9 @@ import type { NextConfig } from "next";
 const removedCaseStudies = ["library-management-system", "janas-boutique", "flashmind"];
 
 const nextConfig: NextConfig = {
+  // The home hero checks which logos exist in public/brand (AiTools.tsx). The page revalidates
+  // hourly on the server, so ship those files with it; otherwise the check would fail there.
+  outputFileTracingIncludes: { "/": ["./public/brand/**/*"] },
   async redirects() {
     return [
       // There's no About page; send old /about links to Experience. Temporary (307), so browsers

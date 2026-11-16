@@ -1,6 +1,7 @@
 import { ArrowDown, FileText } from "lucide-react";
 import { profile, resumeAriaLabel, resumeUrl } from "@/lib/content";
 import heroPhoto from "@/public/images/profile home.png";
+import AiTools from "./AiTools";
 import ButtonLink from "../ui/ButtonLink";
 import PhotoFrame from "../ui/PhotoFrame";
 import { CornerMarks, enterStyle, Label } from "../ui/primitives";
@@ -36,7 +37,7 @@ export default function Hero() {
 
         {/* Name, bio and buttons as one block. From 768px it's centred in the row beside the photo
             (self-center), which keeps it balanced against the photo at every width. */}
-        <div className="pt-6 md:col-start-1 md:row-start-2 md:self-center md:pt-0">
+        <div className="text-halo pt-6 md:col-start-1 md:row-start-2 md:self-center md:pt-0">
           {/* One word group per line so the name always breaks the same way. */}
           <h1
             id="hero-title"
@@ -57,8 +58,17 @@ export default function Hero() {
             projects. Open to opportunities and collaborations.
           </p>
 
-          {/* Buttons directly under the bio: side by side and left-aligned at every width, 32px below
-              the bio and 12px apart; they stack full width only on very narrow phones (<400px). */}
+          {/* Supporting lines under the bio: one size down and muted, so the bio stays the main
+              paragraph; ~65 characters per line. Then the AI tools row. */}
+          <div className="enter" style={enterStyle(2)}>
+            <p className="mt-4 max-w-[65ch] text-muted">
+              Currently focused on generative AI and prompt engineering.
+            </p>
+            <AiTools className="mt-5" />
+          </div>
+
+          {/* Buttons under the hero text: side by side and left-aligned at every width, 32px below
+              it and 12px apart; they stack full width only on very narrow phones (<400px). */}
           <div className="enter mt-8 flex w-full flex-col gap-3 min-[400px]:flex-row" style={enterStyle(3)}>
             <ButtonLink href="#work" variant="ink" className="sharp w-full rounded-none! min-[400px]:w-auto">
               <CornerMarks inset="-4px" />

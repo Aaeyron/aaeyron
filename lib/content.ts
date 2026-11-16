@@ -280,6 +280,38 @@ export const techStack: TechGroup[] = [
   },
 ];
 
+/**
+ * AI tools row in the home hero (rendered by app/components/home/AiTools.tsx), in display order.
+ * Logos only: `logo` is a path under /public, drawn in the ink colour through a CSS mask (the
+ * file's shape is used as-is) inside a circle; the name is screen-reader text. If the logo file
+ * doesn't exist (checked on the server), `fallbackIcon` is drawn in the same circle instead; with
+ * neither, the name is shown as plain text, so a tool is never invisible.
+ *
+ * Logo sources and licenses:
+ * - Codex: /brand/codex.svg isn't in the repo yet. OpenAI's logos were removed from Simple Icons
+ *   (v16.0.0, PR #13944) for lack of brand permission, so add the file only from OpenAI's own
+ *   brand assets (openai.com/brand). Until then: PLACEHOLDER, Lucide's generic "terminal" UI
+ *   icon (ISC license, already a project dependency), not an imitation of any OpenAI or Codex
+ *   logo. The official file replaces it automatically once added.
+ * - Claude Code: /brand/claude-code.svg is Simple Icons "claudecode" v16.38.0, unmodified
+ *   (CC0 1.0; source code.claude.com). The trademark belongs to Anthropic.
+ * - Antigravity: /brand/antigravity.svg is the official "Icon - One Color" SVG from
+ *   antigravity.google/press. Only the viewBox is tightened around the mark (padding); the path
+ *   is unchanged. The trademark belongs to Google.
+ */
+export type AiTool = {
+  name: string;
+  logo: string;
+  /** Generic UI icon shown until the logo file exists (see AiTools.tsx for the available keys). */
+  fallbackIcon?: "terminal";
+};
+
+export const aiTools: AiTool[] = [
+  { name: "Codex", logo: "/brand/codex.svg", fallbackIcon: "terminal" },
+  { name: "Claude Code", logo: "/brand/claude-code.svg" },
+  { name: "Antigravity", logo: "/brand/antigravity.svg" },
+];
+
 // Certifications shown on the site (home + /certificates), in display order.
 // Event certificates (GDG Certificate.png, Cyber Hygiene Cert.png)
 // stay in /public/images but are intentionally not displayed.
