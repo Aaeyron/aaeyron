@@ -14,8 +14,9 @@ const inkButton = "btn-dots relative border border-ink bg-ink pr-9 text-bg hover
 
 const variants: Record<Variant, string> = {
   primary: inkButton,
-  // "View résumé": outline that firms up to ink on hover.
-  secondary: "border border-line-strong bg-transparent text-ink hover:border-ink",
+  // "View résumé": outline that firms up to ink on hover. Solid page-coloured fill so the
+  // background grid and drawing never show through the button.
+  secondary: "border border-line-strong bg-page text-ink hover:border-ink",
   ghost: "px-3 text-muted hover:text-ink",
   ink: inkButton,
 };

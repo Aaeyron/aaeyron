@@ -53,7 +53,10 @@ export default function RootLayout({ children }: Readonly<{ children: React.Reac
           Skip to content
         </a>
         <SiteHeader />
-        <main id="main" tabIndex={-1} className="flex-1 outline-none">
+        {/* relative: anchors the graph-paper + drawing background layers (main::before, .page-drawing,
+            main::after in globals.css). The div is decorative and absolutely positioned (no layout). */}
+        <main id="main" tabIndex={-1} className="relative flex-1 outline-none">
+          <div aria-hidden className="page-drawing" />
           {children}
         </main>
         <SiteFooter />
