@@ -80,7 +80,10 @@ export function PlusMarks({ hover = false, inset = "-5px" }: { hover?: boolean; 
 export function LabelRule({ index, children, className = "" }: { index?: string; children: ReactNode; className?: string }) {
   return (
     <div className={`flex items-center gap-3 ${className}`}>
-      <Label index={index}>{children}</Label>
+      {/* wrap: a long label breaks onto a second line on narrow phones instead of overflowing. */}
+      <Label index={index} wrap>
+        {children}
+      </Label>
       <span
         aria-hidden
         className="draw-x h-px min-w-8 flex-1 bg-[linear-gradient(to_right,var(--accent)_0,var(--accent)_28px,var(--line-strong)_28px)]"
@@ -184,7 +187,7 @@ export function SectionHeader({ index, label, title, children, action, id, as: H
               {label}
             </LabelRule>
           ) : (
-            <Label index={index} className="mb-5">
+            <Label index={index} wrap className="mb-5">
               {label}
             </Label>
           )}

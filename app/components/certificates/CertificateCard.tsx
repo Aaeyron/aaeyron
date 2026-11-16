@@ -6,10 +6,12 @@ import { CornerMarks } from "../ui/primitives";
 const pad = (n: number) => String(n).padStart(2, "0");
 
 /**
- * One certificate (home "Skills, certified", Experience and /certificates all use this).
+ * One certificate (home "Skills, certified" and /certificates use this).
  *
- * From 768px: two columns, image (~45%) left and details right, split by a hairline; stacked
- * below that (image on top). The image is simply shown: no link, no enlarge, no zoom.
+ * From 1024px: two columns, image column (~35% of the card, at most 400px, so the framed image
+ * is ~350px) left and details right, split by a hairline. Below 1024px (tablet and phone) they
+ * stack: image on top, at most 420px wide and left-aligned with the text. The image is simply
+ * shown: no link, no enlarge, no zoom.
  * - Image side: framed box (1px border, padding ring with a faint texture, corner marks) and a
  *   fixed 1.3:1 area with object-fit: contain, so nothing is cropped and all cards align.
  * - Details side: COMPLETED tag, title, a mono meta line (issuer · issued date), description
@@ -36,7 +38,7 @@ export default function CertificateCard({
   return (
     <article
       aria-labelledby={titleId}
-      className="card relative flex flex-col border border-line bg-bg md:grid md:grid-cols-[minmax(0,9fr)_minmax(0,11fr)]"
+      className="card relative flex flex-col border border-line bg-bg lg:grid lg:grid-cols-[min(35%,400px)_minmax(0,1fr)]"
     >
       <CornerMarks />
       <span
@@ -47,8 +49,10 @@ export default function CertificateCard({
       </span>
 
       {/* ---------- Image side ---------- */}
-      <div className="border-b border-line p-5 sm:p-6 md:border-b-0 md:border-r">
-        <figure className="field-frame relative border border-line bg-bg p-2.5">
+      {/* Stacked (below 1024px) it uses the details side's padding, so the image's left edge lines
+          up with the text; side by side it keeps the slightly tighter p-6. */}
+      <div className="border-b border-line p-6 sm:p-8 lg:border-b-0 lg:border-r lg:p-6">
+        <figure className="field-frame relative max-w-[420px] border border-line bg-bg p-2.5">
           <CornerMarks inset="-4px" />
           <span aria-hidden className="tex tex-lines" />
           <div className="relative aspect-[1.3] overflow-hidden border border-[var(--field-line)] bg-surface">
@@ -56,7 +60,7 @@ export default function CertificateCard({
               src={cert.image}
               alt={cert.alt}
               fill
-              sizes="(min-width: 1280px) 520px, (min-width: 768px) 42vw, 100vw"
+              sizes="(min-width: 1024px) 360px, 400px"
               className="object-contain"
             />
           </div>

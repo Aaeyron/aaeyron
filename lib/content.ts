@@ -53,12 +53,6 @@ export const profileCapabilities = [
   },
 ] as const;
 
-/** Home hero capability boxes (under the photo): what I work on. */
-export const capabilities = [
-  { title: "AI & Agents", detail: "Building intelligent systems with LLMs and autonomous agents." },
-  { title: "Design & Engineering", detail: "Full-stack development with thoughtful, user-centric design." },
-];
-
 export const focus = [
   "Building stronger full-stack projects with clearer structure and real-world use cases.",
   "Improving how I turn product ideas into responsive, accessible interfaces.",
